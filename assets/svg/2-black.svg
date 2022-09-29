@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1216px" height="677px" role="img">
+    <defs>
+        <clipPath id="clip_2_black">
+            <path d="M608 0 L0 677 L1216 677  Z "></path>
+        </clipPath>
+    </defs>
+    <path mask="url(#mask_2_black)" d="M608 0 L0 677 L1216 677  Z " style="fill:#212529; stroke:none; stroke-width:0; pointer-events: visiblePainted;"></path>
+</svg>

@@ -42,6 +42,10 @@ a:hover {
     padding-right: 60px;
 }
 
+header.bg-dark, header.bg-light {
+    --bs-bg-opacity: 0.5;
+}
+
 .header-wrap {
     height: 60px;
     display: flex;
@@ -70,7 +74,7 @@ a:hover {
 span.toggle-icon {
     content: "";
     height: 2px;
-    background-color: #2a2a2a;
+    background-color: var(--bs-light);
     position: absolute;
     left: 50%;
     -o-transition: transform .3s;
@@ -118,6 +122,7 @@ span.toggle-icon.opened:last-child {
     transition: opacity .3s ease;
     opacity: 0;
     overflow: auto;
+    z-index: 99999;
 }
 
 .menu-wrap.closed {
@@ -151,12 +156,186 @@ span.toggle-icon.opened:last-child {
 }
 
 #videoAutoplay {
-    height: 500px;
+    height: 100vh;
 }
 
 #videoAutoplay video {
     min-width: 100%;
     position: fixed;
-    top: 0;
+    top: -28px;
     z-index: -9999;
+    object-fit: fill;
+}
+
+.video-content-wrap {
+    position: relative;
+    width: 100%;
+    height: calc(100% - 50px);
+    padding: 0 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.video-content.bg-dark, .video-content.bg-light {
+    --bs-bg-opacity: 0.3;
+}
+
+.video-content {
+    padding: 20px;
+}
+
+.video-content *:last-child {
+    margin-bottom: 0;
+}
+
+.video-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.video-content h3 {
+    font-size: 1.7rem;
+    margin-bottom: 15px;
+}
+
+.video-content h4 {
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+}
+
+.video-content h5 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+#videoAutoplay .scroll-to {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#videoAutoplay .scroll-to svg {
+    width: 50px;
+    height: 50px;
+    color: rgba(var(--bs-light-rgb), 0.6);
+    cursor: pointer;
+}
+
+#videoAutoplay .scroll-to svg:hover {
+    color: rgb(var(--bs-light-rgb));
+}
+
+#main {
+    width: 100%;
+    height: 200vh;
+    background-color: var(--bs-dark);
+    position: relative;
+}
+
+.animation-container {
+    position: absolute;
+    pointer-events: none !important;
+    opacity: 0;
+}
+
+.animation-container.animation-1 {
+    transform: rotate(225deg) scaleX(-1) scaleY(-1);
+}
+
+.animation-1 .effect {
+    position: absolute;
+}
+
+.animation-1 .effect-1 {
+    position: relative;
+}
+
+.animation-1 .effect-2, .animation-1 .effect-3, .animation-1 .effect-4 {
+    left: 160px;
+}
+
+.animation-1 .effect-2 {
+    top: 270px;
+}
+
+.animation-1 .effect-3 {
+    top: 540px;
+}
+
+.animation-1 .effect-4 {
+    top: 725px;
+}
+
+@media (max-width: 767px) {
+    .ms-site, .mx-site {
+        margin-left: 45px;
+    }
+    
+    .me-site, .mx-site {
+        margin-right: 45px;
+    }
+    
+    .ps-site, .px-site {
+        padding-left: 45px;
+    }
+    
+    .pe-site, .px-site {
+        padding-right: 45px;
+    }
+
+    .custom-logo {
+        width: 200px;
+    }
+    
+    .site-menu {
+        width: 200px;
+    }
+
+    span.toggle-icon.closed {
+        width: 38px;
+    }
+    
+    span.toggle-icon.opened {
+        width: 30px;
+    }
+}
+
+@media (max-width: 575px) {
+    .ms-site, .mx-site {
+        margin-left: 30px;
+    }
+    
+    .me-site, .mx-site {
+        margin-right: 30px;
+    }
+    
+    .ps-site, .px-site {
+        padding-left: 30px;
+    }
+    
+    .pe-site, .px-site {
+        padding-right: 30px;
+    }
+
+    .custom-logo {
+        width: 150px;
+    }
+    
+    .site-menu {
+        width: 150px;
+    }
+
+    span.toggle-icon.closed {
+        width: 34px;
+    }
+    
+    span.toggle-icon.opened {
+        width: 26px;
+    }
 }

@@ -15,7 +15,7 @@
 </head>
 <body <?php body_class(); ?>>
     <div id="root">
-        <header class="bg-dark text-light border-bottom border-light">
+        <header class="bg-dark text-light">
             <div class="header-wrap">
                 <div class="site-branding ps-site">
                     <?php
