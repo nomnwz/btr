@@ -1,4 +1,15 @@
 jQuery(document).ready(function($) {
+
+    /**
+     * Header
+     */
+    $(function() {
+        headerPosFix()
+        $(window).resize(function(e) { 
+            headerPosFix()
+        });
+    })
+
     /**
      * Menu toggle
      */
@@ -44,34 +55,27 @@ jQuery(document).ready(function($) {
         var btn = $(".scroll-to")
         var ms  = 100
         btn.on("click", function(e) {
-            var target = $(this).attr("data-target")
-            $([document.documentElement, document.body]).animate({
-                scrollTop: $(target).offset().top
-            }, ms)
+            e.preventDefault()
+            // var target  = btn.attr("data-target")
+            var target = $(this).attr("href")
+            if ($(target).length) {
+                $([document.documentElement, document.body]).animate({
+                    scrollTop: $(target).offset().top
+                }, ms)
+            }
         })
 
         if (btn.length) {
-            var target = btn.attr("data-target")
-            if ($(window).scrollTop() > $(target).offset().top) {
-                btn.css({
-                    opacity: 0
-                })
+            // var target  = btn.attr("data-target")
+            var target = btn.attr("href")
+            if ($(target).length) {
+                if ($(window).scrollTop() > $(target).offset().top) {
+                    btn.css({
+                        opacity: 0
+                    })
+                }
             }
         }
-    })
-
-    /**
-     * Animation
-     */
-    $(function() {
-        var animation_1 = $(".animation-1")
-        // var offset   = ($(window).scrollTop() - animation_1.offset().top)
-        var offset      = $(window).scrollTop()
-        var left        = animation_1.parent().outerWidth() + offset
-        animation_1.css({
-            left: left+"px",
-            opacity: "1"
-        })
     })
 
     /**
@@ -84,34 +88,35 @@ jQuery(document).ready(function($) {
              */
             $(function() {
                 var btn     = $(".scroll-to")
-                var target  = btn.attr("data-target")
-                if ($(window).scrollTop() > $(target).offset().top) {
-                    btn.css({
-                        opacity: 0
-                    })
-                } else {
-                    btn.css({
-                        opacity: 1
-                    })
+                // var target  = btn.attr("data-target")
+                var target  = btn.attr("href")
+                if ($(target).length) {
+                    if ($(window).scrollTop() > $(target).offset().top) {
+                        btn.css({
+                            opacity: 0
+                        })
+                    } else {
+                        btn.css({
+                            opacity: 1
+                        })
+                    }
                 }
             })
 
-            /**
-             * Animation
-             */
-            $(function() {
-                var animation_1 = $(".animation-1")
-                // var offset   = ($(window).scrollTop() - animation_1.offset().top)
-                var offset      = $(window).scrollTop()
-                var left        = animation_1.parent().outerWidth() + offset
-                console.log(left)
-                animation_1.css({
-                    left: left+"px",
-                    opacity: "1"
-                })
-            })
+            // /**
+            //  * Animation
+            //  */
+            // $(function() {
+            //     animation1()
+            // })
         })
     })
+
+    function headerPosFix() {
+        $("header").css({
+            top: $("body").offset().top
+        })
+    }
 
     function menuPosFix() {
         var that        = "header"
@@ -122,10 +127,51 @@ jQuery(document).ready(function($) {
     }
 
     function videoAutoplayHeight() {
-        var that        = "header"
-        var topOffset   = $(that).offset().top + $(that).height()
-        $("#videoAutoplay").css({
-            height: "calc(100vh - "+topOffset+"px)"
+        var topOffset   = parseInt($("header").css("top").replace("px", "")) + $("header").height()
+        // $("#videoAutoplay").css({
+        //     height: "calc(100vh - "+topOffset+"px)"
+        // })
+        $(".top-video .elementor-container").css({
+            "height": "calc(100vh - "+topOffset+"px)",
+            "min-height": "calc(100vh - "+topOffset+"px"
         })
     }
+
+    // function animation1() {
+    //     var animation_1     = $(".animation-1")
+    //     var scrollTop       = $(window).scrollTop()
+    //     var offsetTop       = animation_1.parent().offset().top
+    //     var totalHeight     = animation_1.parent().outerHeight()
+    //     var offsetBottom    = totalHeight + offsetTop
+    //     var totalWidth      = animation_1.outerWidth()
+    //     if (scrollTop > offsetTop && scrollTop < offsetBottom) {
+    //         if (scrollTop > offsetTop) {
+    //             var a   = scrollTop - offsetTop
+    //             var m   = (a / totalHeight) * totalWidth
+    //             animation_1.css({
+    //                 left: "-"+(totalWidth - m)/2+"px",
+    //                 opacity: 1
+    //             })
+    //         } else if (scrollTop < offsetBottom) {
+    //             var a   = offsetBottom - scrollTop
+    //             var m   = (a / totalHeight) * totalWidth
+    //             animation_1.css({
+    //                 left: "-"+(totalWidth - m)/2+"px",
+    //                 opacity: 1
+    //             })
+    //         }
+    //     } else {
+    //         if (scrollTop < offsetTop) {
+    //             animation_1.css({
+    //                 left: "-"+totalWidth+"px",
+    //                 opacity: 1
+    //             })
+    //         } else if (scrollTop > offsetBottom) {
+    //             animation_1.css({
+    //                 left: totalWidth+"px",
+    //                 opacity: 1
+    //             })
+    //         }
+    //     }
+    // }
 })
