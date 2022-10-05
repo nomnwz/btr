@@ -14,6 +14,36 @@
     <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
+    <div id="loader" class="row d-none d-md-block mx-0 w-100 vh-100 position-fixed bg-dark text-light">
+        <?php
+        $slides = array(
+            array(
+                'is_reverse' => true
+            ),
+            array(
+                'is_reverse' => false
+            ),
+            array(
+                'is_reverse' => true
+            )
+            );
+
+            foreach ( $slides as $i => $slide ) {
+                $slide_id = $i + 1;
+                ?>
+                <div class="slide slide-<?php echo $slide_id; ?> auto-slide slide-vertical col-4 px-0 d-flex flex-column<?php echo $slide['is_reverse'] ? ' slide-reverse' : ''; ?>">
+                    <?php
+                    for ( $x=1; $x < 7; $x++ ) { 
+                        ?>
+                        <img src="<?php echo get_stylesheet_directory_uri() . "/assets/img/slide-{$slide_id}-img-{$x}.png"; ?>">
+                        <?php
+                    }
+                    ?>
+                </div>
+                <?php
+            }
+        ?>
+    </div>
     <div id="root">
         <header class="bg-dark text-light sticky-top">
             <div class="header-wrap">

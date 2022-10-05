@@ -1,12 +1,51 @@
 jQuery(document).ready(function($) {
     /**
+     * Loader
+     */
+    $(function() {
+        var loader      = $("#loader")
+        var duration    = 3000
+
+        if (loader.length) {
+            setTimeout(() => {
+                if (loader.hasClass("d-md-block")) {
+                    loader.removeClass("d-md-block")
+                }
+            }, duration + 500)
+        }
+
+        var slides = $(".slide")
+        if (slides.length) {
+            for (let i = 0; i < slides.length; i++) {
+                const slide     = $(slides[i])
+                var direction   = slide.hasClass("slide-vertical") ? "vertical" : "horizontal"
+                var isReverse   = slide.hasClass("slide-reverse") ? true : false
+                if (direction == "vertical") {
+                    var height      = slide.outerHeight()
+                    var translate   = height - loader.height()
+                    var translateY  = `-${translate+"px"}`
+                    if (isReverse) {
+                        slide.animate({
+                            top: translateY
+                        }, duration)
+                    } else {
+                        slide.animate({
+                            bottom: translateY
+                        }, duration)
+                    }
+                }   
+            }
+        }
+    })
+
+    /**
      * Sticky Top
      */
     $(function() {
         stickyTopPosFix()
         $(window).resize(function(e) { 
             stickyTopPosFix()
-        });
+        })
     })
 
     /**
@@ -34,7 +73,7 @@ jQuery(document).ready(function($) {
         menuPosFix()
         $(window).resize(function(e) { 
             menuPosFix()
-        });
+        })
     })
 
     /**
@@ -84,7 +123,7 @@ jQuery(document).ready(function($) {
         var el = $(".fixed-background")
         if (el.length) {
             for (let i = 0; i < el.length; i++) {
-                const element = el[i];
+                const element = el[i]
                 var bgSrc = $(element).attr("data-background-src")
                 if (bgSrc) {
                     $(element).css({
@@ -216,12 +255,12 @@ jQuery(document).ready(function($) {
     function stickyTopPosFix() {
         var stickys = $(".sticky-top")
         for (let i = 0; i < stickys.length; i++) {
-            const stickyTop = stickys[i];
+            const stickyTop = stickys[i]
             if ($(stickyTop).length) {
-                var initTop = 0;
+                var initTop = 0
 
                 if ($(stickyTop).attr("sticky-top")) {
-                    initTop = parseInt($(stickyTop).attr("sticky-top"));
+                    initTop = parseInt($(stickyTop).attr("sticky-top"))
                 }
 
                 $(stickyTop).css({
@@ -295,13 +334,13 @@ const observer = new IntersectionObserver(entries => {
         // If the element is visible
         if (entry.isIntersecting) {
             // Add the animation class
-            entry.target.classList.remove('animation-wipe-out');
-            entry.target.classList.add('animation-wipe-in');
+            entry.target.classList.remove('animation-wipe-out')
+            entry.target.classList.add('animation-wipe-in')
         } else {
-            entry.target.classList.remove('animation-wipe-in');
-            entry.target.classList.add('animation-wipe-out');
+            entry.target.classList.remove('animation-wipe-in')
+            entry.target.classList.add('animation-wipe-out')
         }
-    });
-});
+    })
+})
   
-observer.observe(document.querySelector('.section-5 .section-content'));
+observer.observe(document.querySelector('.section-5 .section-content'))

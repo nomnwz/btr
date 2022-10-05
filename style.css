@@ -6,6 +6,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('assets/fonts/gibson.css');
 
 :root {
     --bs-light: #fff;
@@ -26,7 +27,7 @@ body {
 }
 
 header {
-    font-family: 'Overpass', sans-serif;
+    font-family: 'Gibson';
     z-index: 99999;
 }
 
@@ -100,8 +101,42 @@ header.bg-dark, header.bg-light {
     --bs-bg-opacity: 0.5;
 }
 
-.header-wrap {
+header {
     height: 60px;
+}
+
+#loader {
+    top: 0;
+    left: 0;
+    z-index: 999999;
+}
+
+#loader .slide {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+#loader .slide.slide-2 {
+    left: calc(100% / 3);
+}
+
+#loader .slide.slide-3 {
+    left: calc(100% / 3 * 2);
+}
+
+#loader .slide.slide-reverse {
+    top: 0;
+    bottom: unset;
+}
+
+#loader .slide img {
+    max-width: 100%;
+    height: auto;
+}
+
+.header-wrap {
+    height: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -203,10 +238,10 @@ span.toggle-icon.opened:last-child {
 }
 
 .menu-wrap ul li {
-    font-size: 42px;
+    font-size: 48px;
     font-weight: 900;
     letter-spacing: 4px;
-    line-height: 60px;
+    line-height: 64px;
     border-bottom: 1px solid;
     border-color: rgba(var(--bs-light-rgb),var(--bs-border-opacity))!important;
 }
@@ -330,7 +365,7 @@ span.toggle-icon.opened:last-child {
     top: 725px;
 }
 
-.section-1 {
+.section-1, .section-3 {
     min-height: 150vh;
 }
 
@@ -341,6 +376,10 @@ span.toggle-icon.opened:last-child {
 h1.section-heading {
     font-size: 6rem;
     letter-spacing: 1.2px;
+}
+
+.section-4 .section-content {
+    max-width: 500px;
 }
 
 .list-group-item.content {
