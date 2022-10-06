@@ -120,9 +120,11 @@ function btr_create_otp() {
 
     $user_ip    = btr_get_current_user_ip();
     $otp_id     = ( new OTP() )->exist( $user_ip, 'user_ip' );
-    
+    $send_email = false;
+
     if ( !$otp_id ) {
-        $otp_id = ( new OTP() )->create();
+        $otp_id     = ( new OTP() )->create();
+        $send_email = true;
     } else {
         $object = ( new OTP( array( 'ID' => $otp_id ) ) )->get();
         if ( time() > strtotime( $object->expires_at ) ) {
@@ -132,12 +134,13 @@ function btr_create_otp() {
             $args               = (array) $object;
 
             ( new OTP( $args ) )->update();
+            $send_email         = true;
         }
     }
 
     $object = ( new OTP( array( 'ID' => $otp_id ) ) )->get();
 
-    if ( $object ) {
+    if ( $object && $send_email ) {
         $subject    = 'New OTP generated against the IP ' . $object->user_ip;
         $message    = 'User IP: ' . $object->user_ip;
         $message    .= "\n";

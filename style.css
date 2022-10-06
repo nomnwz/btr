@@ -1,6 +1,6 @@
 /*
 * Theme Name: BTR
-* Version: 1.0.1
+* Version: 1.0.2
 * Author: CodeIcon
 */
 
@@ -169,8 +169,9 @@ header {
     bottom: unset;
 }
 
-#loader .slide .slide-item.slide-item-image {
-    height: calc(100vh / 2);
+#loader .slide img {
+    max-width: 100%;
+    height: auto;
 }
 
 #videoPopup {

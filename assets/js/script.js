@@ -28,7 +28,6 @@ jQuery(document).ready(function($) {
                     otp: otp
                 },
                 success: (res) => {
-                    console.log(res)
                     if (res.success) {
                         if ($(".otp-container .message").hasClass("text-danger")) {
                             $(".otp-container .message").removeClass("text-danger")
@@ -59,7 +58,6 @@ jQuery(document).ready(function($) {
                     $(".otp-container .spinner").addClass("d-none")
                 },
                 error: (err) => {
-                    console.log(err)
                     $(".otp-container .spinner").addClass("d-none")
                 }
             })

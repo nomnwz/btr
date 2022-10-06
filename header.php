@@ -37,13 +37,9 @@
                 $slide_id = $i + 1;
                 ?>
                 <div class="slide slide-<?php echo $slide_id; ?> auto-slide slide-vertical col-4 px-0 d-flex flex-column<?php echo $slide['is_reverse'] ? ' slide-reverse' : ''; ?>">
-                    <?php
-                    for ( $x=1; $x < 7; $x++ ) { 
-                        ?>
-                        <div class="slide-item slide-item-image w-100 image-background" data-background-src="<?php echo get_stylesheet_directory_uri() . "/assets/img/slide-{$slide_id}-img-{$x}-min.png"; ?>"></div>
-                        <?php
-                    }
-                    ?>
+                    <div class="slide-item slide-item-image w-100">
+                        <img src='<?php echo get_stylesheet_directory_uri() . "/assets/img/slide-{$slide_id}.webp"; ?>' alt='<?php echo "slide-{$slide_id}"; ?>'>
+                    </div>
                 </div>
                 <?php
             }
