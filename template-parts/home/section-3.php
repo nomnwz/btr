@@ -1,4 +1,4 @@
-<div id="section3" class="section-container section-3 fixed-background text-light w-100 px-site py-5 d-flex" data-background-src="<?php echo get_stylesheet_directory_uri() . '/assets/img/section-3-bg.png'; ?>">
+<div id="section3" class="section-container section-3 image-background fixed-background text-light w-100 px-site py-5 d-flex" data-background-src="<?php echo get_stylesheet_directory_uri() . '/assets/img/section-3-bg.png'; ?>">
     <div class="col-6 mt-15">
         <div class="section-intro sticky-top" sticky-top="90">
             <h1 class="section-heading">Training</h1>

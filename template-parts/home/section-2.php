@@ -1,4 +1,4 @@
-<div id="section2" class="section-container section-2 fixed-background text-light w-100 vh-100 px-site py-5 d-flex flex-column justify-content-center" data-background-src="<?php echo get_stylesheet_directory_uri() . '/assets/img/section-2-bg.jpg'; ?>">
+<div id="section2" class="section-container section-2 image-background fixed-background text-light w-100 vh-100 px-site py-5 d-flex flex-column justify-content-center" data-background-src="<?php echo get_stylesheet_directory_uri() . '/assets/img/section-2-bg.jpg'; ?>">
     <div class="section-intro text-center">
         <h1 class="section-heading">Who is BTR</h1>
     </div>

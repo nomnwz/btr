@@ -1,6 +1,6 @@
 /*
 * Theme Name: BTR
-* Version: 1.0
+* Version: 1.0.1
 * Author: CodeIcon
 */
 
@@ -81,11 +81,14 @@ a:hover {
     padding-right: 60px;
 }
 
-.fixed-background {
+.image-background {
     background-repeat: no-repeat;
-    background-attachment: fixed;
     background-position: center center;
     background-size: cover;
+}
+
+.fixed-background {
+    background-attachment: fixed;
 }
 
 .background-overlay:before {
@@ -95,6 +98,42 @@ a:hover {
     background-color: #191919;
     content: "";
     opacity: 0.6;
+}
+
+.card {
+    width: 400px;
+    border: none;
+    height: 300px;
+    box-shadow: 0px 5px 20px 0px #d2dae3;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.card h6 {
+    color: #e25a49;
+    font-size: 20px
+}
+
+.inputs input {
+    width: 40px;
+    height: 40px
+}
+
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0
+}
+
+.validate{
+    border-radius: 20px;
+    height: 40px;
+    background-color: #e25a49;
+    border: 1px solid #e25a49;
+    width: 140px
 }
 
 header.bg-dark, header.bg-light {
@@ -130,9 +169,46 @@ header {
     bottom: unset;
 }
 
-#loader .slide img {
-    max-width: 100%;
+#loader .slide .slide-item.slide-item-image {
+    height: calc(100vh / 2);
+}
+
+#videoPopup {
+    top: 0;
+    left: 0;
+    z-index: 999998;
+}
+
+#videoPopup .video {
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+.popup-action {
+    position: absolute;
+    left: 50%;
+    top: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(var(--bs-dark-rgb), 0.6);
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all .5s ease-in-out;
+    z-index: 1;
+}
+
+.popup-action:hover {
+    background: rgba(var(--bs-dark-rgb), 1);
+}
+
+#videoPopup video {
+    width: 100%;
     height: auto;
+    z-index: 0;
 }
 
 .header-wrap {

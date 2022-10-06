@@ -1,20 +1,82 @@
 jQuery(document).ready(function($) {
     /**
+     * OTP
+     */
+    $(function() {
+        otpInput()
+        $(".otp-container .validate").on("click", function(e) {
+            var inputs      = $("#otp > *[id]")
+            var inputName   = $(inputs).attr("name").replace("[]", "")
+            var otp         = []
+
+            for (let i = 0; i < inputs.length; i++) {
+                const input     = inputs[i]
+                var inputValue  = $(input).val()
+                otp.push(inputValue)
+            }
+
+            otp = parseInt(otp.join(""))
+
+            $(".otp-container .spinner").removeClass("d-none")
+
+            $.ajax({
+                type: "post",
+                dataType: "json",
+                url: wp_obj.ajax_url,
+                data: {
+                    action: "btr_validate_otp",
+                    otp: otp
+                },
+                success: (res) => {
+                    console.log(res)
+                    if (res.success) {
+                        if ($(".otp-container .message").hasClass("text-danger")) {
+                            $(".otp-container .message").removeClass("text-danger")
+
+                            $(".otp-container .message").text("Validation error!")
+                        }
+
+                        if (!$(".otp-container .message").hasClass("text-success")) {
+                            $(".otp-container .message").addClass("text-success")
+
+                            $(".otp-container .message").text("Successfully validated!")
+                        }
+
+                        setTimeout(() => {
+                            location.reload()                            
+                        }, 500);
+                    } else {
+                        if ($(".otp-container .message").hasClass("text-success")) {
+                            $(".otp-container .message").removeClass("text-success")
+                        }
+
+                        if (!$(".otp-container .message").hasClass("text-danger")) {
+                            $(".otp-container .message").addClass("text-danger")
+                        }
+
+                        $(".otp-container .message").text("Validation error!")
+                    }
+                    $(".otp-container .spinner").addClass("d-none")
+                },
+                error: (err) => {
+                    console.log(err)
+                    $(".otp-container .spinner").addClass("d-none")
+                }
+            })
+        })
+    })
+
+    /**
      * Loader
      */
     $(function() {
         var loader      = $("#loader")
-        var duration    = 3000
+        var slides      = $(".slide")
+        var duration    = 3500
 
-        if (loader.length) {
-            setTimeout(() => {
-                if (loader.hasClass("d-md-block")) {
-                    loader.removeClass("d-md-block")
-                }
-            }, duration + 500)
-        }
-
-        var slides = $(".slide")
+        loadVideo("#videoPopup", true, 3500)
+        removeEl("#loader", 3500)
+        
         if (slides.length) {
             for (let i = 0; i < slides.length; i++) {
                 const slide     = $(slides[i])
@@ -25,17 +87,39 @@ jQuery(document).ready(function($) {
                     var translate   = height - loader.height()
                     var translateY  = `-${translate+"px"}`
                     if (isReverse) {
-                        slide.animate({
+                        slide.stop().animate({
                             top: translateY
                         }, duration)
                     } else {
-                        slide.animate({
+                        slide.stop().animate({
                             bottom: translateY
                         }, duration)
                     }
                 }   
             }
         }
+    })
+
+    /**
+     * Video Popup
+     */
+    $(function() {
+        $("#videoPopup video").on("ended", function(e) {
+            $("#videoPopup .popup-action").css({
+                display: "flex"
+            })
+        })
+
+        $("#videoPopup").on("click", '.popup-action[data-action="close"]', function(e) {
+            e.preventDefault()
+
+            removeEl("#videoPopup", 500)
+            loadVideo("#videoAutoplay", true, 500)
+
+            setTimeout(() => {
+                $(".scroll-to").trigger("click")
+            }, 500)
+        })
     })
 
     /**
@@ -95,7 +179,6 @@ jQuery(document).ready(function($) {
         btn.on("click", function(e) {
             e.preventDefault()
             var target  = btn.attr("data-target")
-            // var target = $(this).attr("href")
             if ($(target).length) {
                 $([document.documentElement, document.body]).animate({
                     scrollTop: $(target).offset().top
@@ -105,7 +188,6 @@ jQuery(document).ready(function($) {
 
         if (btn.length) {
             var target  = btn.attr("data-target")
-            // var target = btn.attr("href")
             if ($(target).length) {
                 if ($(window).scrollTop() > $(target).offset().top) {
                     btn.css({
@@ -117,10 +199,10 @@ jQuery(document).ready(function($) {
     })
 
     /**
-     * Fixed background
+     * Image background
      */
     $(function() {
-        var el = $(".fixed-background")
+        var el = $(".image-background")
         if (el.length) {
             for (let i = 0; i < el.length; i++) {
                 const element = el[i]
@@ -252,7 +334,62 @@ jQuery(document).ready(function($) {
         })
     })
 
-    function stickyTopPosFix() {
+    const otpInput = () => {
+        var inputs = $("#otp > *[id]")
+        for (let i = 0; i < inputs.length; i++) {
+            const input = inputs[i]
+            $(input).on("keydown", function(e) {
+                if (e.key === "Backspace" ) {
+                    $(input).val("")
+                    if (i !== 0) {
+                        $(inputs[i - 1]).focus()
+                    }
+                } else {
+                    if (e.keyCode > 64 && e.keyCode < 91) {
+                        $(input).val(String.fromCharCode(e.keyCode))
+                    } else {
+                        $(input).val(e.key)
+                    }
+
+                    $(inputs[i + 1]).focus();
+                    e.preventDefault();
+                }
+            })
+        }
+    }
+
+    const removeEl = (el, delay = 3000) => {
+        if (jQuery(el).length) {
+            if (delay) {
+                setTimeout(() => {
+                    jQuery(el).remove()
+                }, delay)
+            } else {
+                jQuery(el).remove()
+            }
+        }
+    }
+
+    const loadVideo = (el, play = true, delay = 3000) => {
+        const load = () => {
+            jQuery(el+" video source").attr("src", jQuery(el+" video source").attr("data-src"))
+            jQuery(el+" video").get(0).load()
+            if (play) {
+                jQuery(el+" video").get(0).play()
+            }
+        }
+        if (jQuery(el).length) {
+            if (delay) {
+                setTimeout(() => {
+                    load()
+                }, delay)
+            } else {
+                load()
+            }
+        }
+    }
+
+    const stickyTopPosFix = () => {
         var stickys = $(".sticky-top")
         for (let i = 0; i < stickys.length; i++) {
             const stickyTop = stickys[i]
@@ -270,7 +407,7 @@ jQuery(document).ready(function($) {
         }
     }
 
-    function menuPosFix() {
+    const menuPosFix = () => {
         var that        = "header"
         var netOffset   = $(that).offset().top + $(that).height()
         $(".menu-wrap").css({
@@ -278,7 +415,7 @@ jQuery(document).ready(function($) {
         })
     }
 
-    function videoAutoplayHeight() {
+    const videoAutoplayHeight = () => {
         var topOffset   = parseInt($("header").css("top").replace("px", "")) + $("header").height()
         $("#videoAutoplay").css({
             height: "calc(100vh - "+topOffset+"px)"
@@ -289,7 +426,7 @@ jQuery(document).ready(function($) {
         })
     }
 
-    function animation1() {
+    const animation1 = () => {
         var animation_1     = $(".animation-1")
         var scrollTop       = $(window).scrollTop()
         var offsetTop       = animation_1.parent().offset().top
