@@ -82,7 +82,7 @@ class OTP
             $table_name = $wpdb->prefix . 'otps';
 
             $wpdb->insert( $table_name, array(
-                'otp'           => (int) $this->generate_otp(),
+                'otp'           => $this->generate_otp(),
                 'user_ip'       => $this->args['user_ip'],
                 'visits'        => (int) '0',
                 'expires_at'    => date( 'Y-m-d H:i:s', strtotime( '+3 days' ) )

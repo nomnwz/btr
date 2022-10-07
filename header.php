@@ -45,14 +45,24 @@
             }
             ?>
         </div>
-        <div id="videoPopup" class="popup d-none d-md-flex align-items-center justify-content-center w-100 vh-100 position-fixed bg-dark text-light">
-            <div class="video position-relative">
-                <div class="popup-action" data-action="close" style="display: none;"><span><i class="fas fa-close"></i></span></div>
-                <video muted>
-                    <source src="" type="video/mp4" data-src="<?php echo get_stylesheet_directory_uri() . '/assets/video.mp4'; ?>">
-                </video>
-            </div>
-        </div>
+        <?php
+        $otp_id = ( new OTP() )->exist( btr_get_current_user_ip(), 'user_ip' );
+        if ( $otp_id ) {
+            $object = ( new OTP( array( 'ID' => $otp_id ) ) )->get();
+            if ( $object->visits < 2 ) {
+                ?>
+                <div id="videoPopup" class="popup d-none d-md-flex align-items-center justify-content-center w-100 vh-100 position-fixed bg-dark text-light">
+                    <div class="video position-relative">
+                        <div class="popup-action" data-action="close" style="display: none;"><span><i class="fas fa-close"></i></span></div>
+                        <video muted>
+                            <source src="" type="video/mp4" data-src="<?php echo get_stylesheet_directory_uri() . '/assets/video.mp4'; ?>">
+                        </video>
+                    </div>
+                </div>
+                <?php
+            }
+        }
+        ?>
         <div id="root">
             <header class="bg-dark text-light sticky-top">
                 <div class="header-wrap">

@@ -114,6 +114,19 @@ function btr_has_current_user_access() {
     return $has_access;
 }
 
+function btr_increase_visits() {
+    $user_ip    = btr_get_current_user_ip();
+    $otp_id     = ( new OTP() )->exist( $user_ip, 'user_ip' );
+
+    if ( $otp_id ) {
+        $object         = ( new OTP( array( 'ID' => $otp_id ) ) )->get();
+        $object->visits = $object->visits + 1;
+        $args           = (array) $object;
+
+        ( new OTP( $args ) )->update();
+    }
+}
+
 add_action( 'init', 'btr_create_otp' );
 function btr_create_otp() {
     if ( is_user_logged_in() ) return;
@@ -208,5 +221,15 @@ function btr_ajax_validate_otp() {
         wp_send_json_error();
     }
 
+    wp_die();
+}
+
+/**
+ * Increase OTP visits
+ */
+add_action( 'wp_ajax_nopriv_btr_increase_visits', 'btr_ajax_increase_visits' );
+function btr_ajax_increase_visits() {
+    btr_increase_visits();
+    wp_send_json_success();
     wp_die();
 }

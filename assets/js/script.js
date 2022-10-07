@@ -111,6 +111,21 @@ jQuery(document).ready(function($) {
         $("#videoPopup").on("click", '.popup-action[data-action="close"]', function(e) {
             e.preventDefault()
 
+            $.ajax({
+                type: "post",
+                dataType: "json",
+                url: wp_obj.ajax_url,
+                data: {
+                    action: "btr_increase_visits"
+                },
+                success: (res) => {
+                    console.log(res)
+                },
+                error: (err) => {
+                    console.log(err)
+                }
+            })
+
             removeEl("#videoPopup", 500)
             loadVideo("#videoAutoplay", true, 500)
 
@@ -118,6 +133,14 @@ jQuery(document).ready(function($) {
                 $(".scroll-to").trigger("click")
             }, 500)
         })
+
+        if (!$("#videoPopup").length) {
+            loadVideo("#videoAutoplay", true, 3500)
+
+            setTimeout(() => {
+                $(".scroll-to").trigger("click")
+            }, 3500)
+        }
     })
 
     /**
