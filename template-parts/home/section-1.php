@@ -1,10 +1,10 @@
-<div id="section1" class="section-container section-1 image-background fixed-background text-light w-100 px-site py-5 d-flex" data-background-src="<?php echo get_stylesheet_directory_uri() . '/assets/img/section-1-bg.png'; ?>">
-    <div class="col-6 mt-15">
+<div id="section1" class="section-container section-1 image-background fixed-background text-light w-100 px-site py-5 d-flex row mx-0" data-background-src="<?php echo get_stylesheet_directory_uri() . '/assets/img/section-1-bg.png'; ?>">
+    <div class="col-12 col-md-6 mt-5 mt-md-10 mt-lg-15">
         <div class="section-intro sticky-top" sticky-top="90">
             <h1 class="section-heading">What is the Experience</h1>
         </div>
     </div>
-    <div class="col-6 d-flex align-items-end">
+    <div class="col-12 col-md-6 d-flex align-items-end">
         <div class="section-content">
             <ul class="content-list list-group ps-0">
                 <li class="content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0 border-bottom border-light">

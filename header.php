@@ -47,16 +47,20 @@
         </div>
         <?php
         $video_popup = false;
-        if ( btr_is_otp_active() ) {
-            $otp_id = ( new OTP() )->exist( btr_get_current_user_ip(), 'user_ip' );
-            if ( $otp_id ) {
-                $object = ( new OTP( array( 'ID' => $otp_id ) ) )->get();
-                if ( $object->visits < 2 ) {
+        if ( !is_user_logged_in() ) {
+            if ( btr_is_otp_active() ) {
+                $otp_id = ( new OTP() )->exist( btr_get_current_user_ip(), 'user_ip' );
+                if ( $otp_id ) {
+                    $object = ( new OTP( array( 'ID' => $otp_id ) ) )->get();
+                    if ( $object->visits < 2 ) {
+                        $video_popup = true;
+                    }
+                } else {
                     $video_popup = true;
                 }
+            } else {
+                $video_popup = true;
             }
-        } else {
-            $video_popup = true;
         }
         if ( $video_popup ) {
             ?>

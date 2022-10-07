@@ -242,7 +242,7 @@ jQuery(document).ready(function($) {
      */
     $(function() {
         var container   = $(".section-1")
-        if (container.length) {
+        if (container.length && $(window).width() > 767) {
             var stickyItem      = container.find(".section-intro")
             var stickyBottom    = parseInt(stickyItem.css("top").replace("px", "")) + stickyItem.outerHeight() + 60
             var content         = container.find(".section-content")
@@ -257,7 +257,7 @@ jQuery(document).ready(function($) {
      */
     $(function() {
         var container   = $(".section-3")
-        if (container.length) {
+        if (container.length && $(window).width() > 767) {
             var stickyItem      = container.find(".section-intro")
             var stickyBottom    = parseInt(stickyItem.css("top").replace("px", "")) + stickyItem.outerHeight() + 60
             var content         = container.find(".section-content")
@@ -415,14 +415,20 @@ jQuery(document).ready(function($) {
         for (let i = 0; i < stickys.length; i++) {
             const stickyTop = stickys[i]
             if ($(stickyTop).length) {
-                var initTop = 0
+                var top = 0
 
-                if ($(stickyTop).attr("sticky-top")) {
-                    initTop = parseInt($(stickyTop).attr("sticky-top"))
+                if ($("#wpadminbar").length) {
+                    if ($(window).width() > 600) {
+                        top = top + $("#wpadminbar").outerHeight()
+                    }
+
+                    if ($(stickyTop).attr("sticky-top")) {
+                        top = top + parseInt($(stickyTop).attr("sticky-top"))
+                    }
                 }
 
                 $(stickyTop).css({
-                    top: initTop + $("body").offset().top
+                    top: top
                 })
             }
         }
