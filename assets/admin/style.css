@@ -1,0 +1,68 @@
+.btr-switch {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 17px;
+}
+  
+.btr-switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.btr-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 17px;
+}
+
+.btr-slider:before {
+    position: absolute;
+    content: "";
+    height: 13px;
+    width: 13px;
+    left: 2px;
+    bottom: 2px;
+    background-color: #fff;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+  
+input:checked + .btr-slider {
+    background-color: #2196F3;
+}
+  
+input:focus + .btr-slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+  
+input:checked + .btr-slider:before {
+    -webkit-transform: translateX(13px);
+    -ms-transform: translateX(13px);
+    transform: translateX(13px);
+}
+
+.btr-table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+  
+.btr-table td, .btr-table th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+  
+.btr-table tr:nth-child(even) {
+    background-color: #dddddd;
+}

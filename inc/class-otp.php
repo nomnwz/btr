@@ -65,6 +65,22 @@ class OTP
     }
 
     /**
+     * Get all OTPs
+     * 
+     * @return array
+     */
+    public function get_all() {
+        global $wpdb;
+
+        $table_name = $wpdb->prefix . 'otps';
+        $results    = $wpdb->get_results( "SELECT * FROM $table_name" );
+
+        if ( !count( $results ) ) return null;
+
+        return $results;
+    }
+
+    /**
      * Create OTP
      *
      * @return int
@@ -85,7 +101,7 @@ class OTP
                 'otp'           => $this->generate_otp(),
                 'user_ip'       => $this->args['user_ip'],
                 'visits'        => (int) '0',
-                'expires_at'    => date( 'Y-m-d H:i:s', strtotime( '+3 days' ) )
+                'expires_at'    => date( 'Y-m-d H:i:s', strtotime( '+' . btr_get_otp_access_period() . ' days' ) )
             ) );
 
             $insert_id  = $wpdb->insert_id;

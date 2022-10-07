@@ -65,25 +65,43 @@ function btr_register_menus() {
  * @return string The current user's IP, or 'UNKNOWN' if not a valid client
  */
 function btr_get_current_user_ip() {
-    $cuip = '';
-
-    if ( getenv( 'HTTP_CLIENT_IP' ) ) {
-        $cuip = getenv( 'HTTP_CLIENT_IP' );
-    } elseif ( getenv( 'HTTP_X_FORWARDED_FOR' ) ) {
-        $cuip = getenv( 'HTTP_X_FORWARDED_FOR' );
-    } elseif ( getenv( 'HTTP_X_FORWARDED' ) ) {
-        $cuip = getenv( 'HTTP_X_FORWARDED' );
-    } elseif ( getenv( 'HTTP_FORWARDED_FOR' ) ) {
-        $cuip = getenv( 'HTTP_FORWARDED_FOR' );
-    } elseif ( getenv( 'HTTP_FORWARDED' ) ) {
-        $cuip = getenv( 'HTTP_FORWARDED' );
-    } elseif ( getenv( 'REMOTE_ADDR' ) ) {
-        $cuip = getenv( 'REMOTE_ADDR' );
+    if( array_key_exists( 'HTTP_X_FORWARDED_FOR', $_SERVER ) && !empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
+        if ( strpos( $_SERVER['HTTP_X_FORWARDED_FOR'], ',' ) > 0 ) {
+            $addr = explode( ",", $_SERVER['HTTP_X_FORWARDED_FOR'] );
+            return trim( $addr[0] );
+        } else {
+            return $_SERVER['HTTP_X_FORWARDED_FOR'];
+        }
     } else {
-        $cuip = 'UNKNOWN';
+        return $_SERVER['REMOTE_ADDR'];
     }
+}
 
-    return $cuip;
+/**
+ * Check if OTP is active
+ */
+function btr_is_otp_active() {
+    $options = get_option( 'otp_options' );
+    $default = false;
+    return ( isset( $options['active'] ) ? ( $options['active'] ?: $default ) : $default );
+}
+
+/**
+ * Get OTP period access
+ */
+function btr_get_otp_access_period() {
+    $options = get_option( 'otp_options' );
+    $default = '3';
+    return ( isset( $options['access_period'] ) ? ( $options['access_period'] ?: $default ) : $default );
+}
+
+/**
+ * Get OTP email
+ */
+function btr_get_otp_email() {
+    $options = get_option( 'otp_options' );
+    $default = get_bloginfo( 'admin_email' );
+    return ( isset( $options['email'] ) ? ( $options['email'] ?: $default ) : $default );
 }
 
 /**
@@ -91,6 +109,10 @@ function btr_get_current_user_ip() {
  */
 require_once get_template_directory() . '/inc/otp-setup.php';
 require_once get_template_directory() . '/inc/class-otp.php';
+
+if ( is_admin() ) {
+    require_once get_template_directory() . '/inc/admin/functions.php';
+}
 
 /**
  * OTP Functions
@@ -131,6 +153,8 @@ add_action( 'init', 'btr_create_otp' );
 function btr_create_otp() {
     if ( is_user_logged_in() ) return;
 
+    if ( !btr_is_otp_active() ) return;
+
     $user_ip    = btr_get_current_user_ip();
     $otp_id     = ( new OTP() )->exist( $user_ip, 'user_ip' );
     $send_email = false;
@@ -143,7 +167,7 @@ function btr_create_otp() {
         if ( time() > strtotime( $object->expires_at ) ) {
             $object->otp        = ( new OTP() )->generate_otp();
             $object->visits     = 0;
-            $object->expires_at = date( 'Y-m-d H:i:s', strtotime( '+3 days' ) );
+            $object->expires_at = date( 'Y-m-d H:i:s', strtotime( '+' . btr_get_otp_access_period() . ' days' ) );
             $args               = (array) $object;
 
             ( new OTP( $args ) )->update();
@@ -158,7 +182,7 @@ function btr_create_otp() {
         $message    = 'User IP: ' . $object->user_ip;
         $message    .= "\n";
         $message    .= 'OTP: ' . $object->otp;
-        wp_mail( get_bloginfo( 'admin_email' ), $subject, $message );
+        wp_mail( btr_get_otp_email(), $subject, $message );
     }
 }
 
@@ -170,7 +194,7 @@ function btr_otp_form() {
             <div class="card p-2 text-center text-dark">
                 <h6>Please enter the OTP <br> to verify your access</h6>
                 <div>
-                    <span>Note: Contact us at <small><a href="mailto:<?php echo get_bloginfo( 'admin_email' ); ?>"><?php echo get_bloginfo( 'admin_email' ); ?></a></small></span>
+                    <span>Note: Contact us at <small><a href="mailto:<?php echo btr_get_otp_email(); ?>"><?php echo btr_get_otp_email(); ?></a></small></span>
                     <span> to get your OTP by mentioning your IP Address.</span>
                 </div>
                 <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2">
@@ -194,6 +218,7 @@ function btr_otp_form() {
  */
 add_action( 'wp_ajax_nopriv_btr_validate_otp', 'btr_ajax_validate_otp' );
 function btr_ajax_validate_otp() {
+    if ( !btr_is_otp_active() ) wp_die();
     $otp    = isset( $_POST['otp'] ) ? $_POST['otp'] : null;
     $valid  = false;
 
@@ -229,6 +254,7 @@ function btr_ajax_validate_otp() {
  */
 add_action( 'wp_ajax_nopriv_btr_increase_visits', 'btr_ajax_increase_visits' );
 function btr_ajax_increase_visits() {
+    if ( !btr_is_otp_active() ) wp_die();
     btr_increase_visits();
     wp_send_json_success();
     wp_die();
