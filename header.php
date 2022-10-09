@@ -68,7 +68,7 @@
                 <div class="video position-relative">
                     <div class="popup-action" data-action="close" style="display: none;"><span><i class="fas fa-close"></i></span></div>
                     <video muted>
-                        <source src="" type="video/mp4" data-src="<?php echo get_stylesheet_directory_uri() . '/assets/video.mp4'; ?>">
+                        <source src="" type="video/webm" data-src="<?php echo get_stylesheet_directory_uri() . '/assets/video.webm'; ?>">
                     </video>
                 </div>
             </div>

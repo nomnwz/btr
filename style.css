@@ -1,6 +1,6 @@
 /*
 * Theme Name: BTR
-* Version: 1.0.4.1
+* Version: 1.0.4.2
 * Author: CodeIcon
 */
 
@@ -373,6 +373,7 @@ span.toggle-icon.opened:last-child {
 
 #videoAutoplay video {
     min-width: 100%;
+    max-width: 100%;
     position: fixed;
     top: -28px;
     z-index: -9999;
@@ -445,41 +446,6 @@ span.toggle-icon.opened:last-child {
 
 #main {
     position: relative;
-}
-
-.animation-container {
-    position: absolute;
-    pointer-events: none !important;
-    opacity: 0;
-}
-
-.animation-container.animation-1 {
-    transform: rotate(225deg) scaleX(-1) scaleY(-1);
-    top: -20px;
-}
-
-.animation-1 .effect {
-    position: absolute;
-}
-
-.animation-1 .effect-1 {
-    position: relative;
-}
-
-.animation-1 .effect-2, .animation-1 .effect-3, .animation-1 .effect-4 {
-    left: 172.5px;
-}
-
-.animation-1 .effect-2 {
-    top: 270px;
-}
-
-.animation-1 .effect-3 {
-    top: 540px;
-}
-
-.animation-1 .effect-4 {
-    top: 725px;
 }
 
 .section-1, .section-3 {
@@ -609,13 +575,7 @@ h1.section-heading {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-    .section-5 .section-content.animation-wipe-in {
-      animation: wipe-in .6s;
-    }
 
-    .section-5 .section-content.animation-wipe-out {
-        animation: wipe-out .6s;
-    }
 }
 
 @keyframes wipe-in {

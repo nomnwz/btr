@@ -6,7 +6,6 @@ jQuery(document).ready(function($) {
         otpInput()
         $(".otp-container .validate").on("click", function(e) {
             var inputs      = $("#otp > *[id]")
-            var inputName   = $(inputs).attr("name").replace("[]", "")
             var otp         = []
 
             for (let i = 0; i < inputs.length; i++) {
@@ -271,7 +270,18 @@ jQuery(document).ready(function($) {
      * All scroll effects
      */
     $(function() {
+        var lastScrollTop = 0
         $(window).scroll(function(e) {
+            var scrollTop = $(this).scrollTop()
+            var scrollDir = ""
+
+            if (scrollTop < lastScrollTop) {
+                scrollDir = "up"
+            } else {
+                scrollDir = "down"
+            }
+
+            lastScrollTop = scrollTop
             /**
              * Header Transparency
              */
@@ -295,12 +305,26 @@ jQuery(document).ready(function($) {
             })
 
             /**
+             * Video Autplay
+             */
+            $(function() {
+                var target      = "#videoAutoplay video"
+                var videoPos    = $(target).outerHeight()
+                console.log($(window).scrollTop())
+                console.log(videoPos)
+                if ($(window).scrollTop() > videoPos) {
+                    $(target).get(0).pause()
+                } else {
+                    $(target).get(0).play()
+                }
+            })
+
+            /**
              * Scroll to effects
              */
             $(function() {
                 var btn     = $(".scroll-to")
                 var target  = btn.attr("data-target")
-                // var target  = btn.attr("href")
                 if ($(target).length) {
                     if ($(window).scrollTop() > $(target).offset().top) {
                         btn.css({
@@ -313,13 +337,6 @@ jQuery(document).ready(function($) {
                     }
                 }
             })
-
-            // /**
-            //  * Animation
-            //  */
-            // $(function() {
-            //     animation1()
-            // })
 
             /**
              * Section 1
@@ -380,26 +397,26 @@ jQuery(document).ready(function($) {
     }
 
     const removeEl = (el, delay = 3000) => {
-        if (jQuery(el).length) {
+        if ($(el).length) {
             if (delay) {
                 setTimeout(() => {
-                    jQuery(el).remove()
+                    $(el).remove()
                 }, delay)
             } else {
-                jQuery(el).remove()
+                $(el).remove()
             }
         }
     }
 
     const loadVideo = (el, play = true, delay = 3000) => {
         const load = () => {
-            jQuery(el+" video source").attr("src", jQuery(el+" video source").attr("data-src"))
-            jQuery(el+" video").get(0).load()
+            $(el+" video source").attr("src", $(el+" video source").attr("data-src"))
+            $(el+" video").get(0).load()
             if (play) {
-                jQuery(el+" video").get(0).play()
+                $(el+" video").get(0).play()
             }
         }
-        if (jQuery(el).length) {
+        if ($(el).length) {
             if (delay) {
                 setTimeout(() => {
                     load()
@@ -452,59 +469,18 @@ jQuery(document).ready(function($) {
             "min-height": "calc(100vh - "+topOffset+"px"
         })
     }
-
-    const animation1 = () => {
-        var animation_1     = $(".animation-1")
-        var scrollTop       = $(window).scrollTop()
-        var offsetTop       = animation_1.parent().offset().top
-        var totalHeight     = animation_1.parent().outerHeight()
-        var offsetBottom    = totalHeight + offsetTop
-        var totalWidth      = animation_1.outerWidth()
-        if (scrollTop > offsetTop && scrollTop < offsetBottom) {
-            if (scrollTop > offsetTop) {
-                var a   = scrollTop - offsetTop
-                var m   = (a / totalHeight) * totalWidth
-                animation_1.css({
-                    left: "-"+(totalWidth - m)/2+"px",
-                    opacity: 1
-                })
-            } else if (scrollTop < offsetBottom) {
-                var a   = offsetBottom - scrollTop
-                var m   = (a / totalHeight) * totalWidth
-                animation_1.css({
-                    left: "-"+(totalWidth - m)/2+"px",
-                    opacity: 1
-                })
-            }
-        } else {
-            if (scrollTop < offsetTop) {
-                animation_1.css({
-                    left: "-"+totalWidth+"px",
-                    opacity: 1
-                })
-            } else if (scrollTop > offsetBottom) {
-                animation_1.css({
-                    left: totalWidth+"px",
-                    opacity: 1
-                })
-            }
-        }
-    }
 })
 
 const observer = new IntersectionObserver(entries => {
-    // Loop over the entries
     entries.forEach(entry => {
-        // If the element is visible
         if (entry.isIntersecting) {
-            // Add the animation class
-            entry.target.classList.remove('animation-wipe-out')
-            entry.target.classList.add('animation-wipe-in')
+            entry.target.classList.remove("animation-wipe-out")
+            entry.target.classList.add("animation-wipe-in")
         } else {
-            entry.target.classList.remove('animation-wipe-in')
-            entry.target.classList.add('animation-wipe-out')
+            entry.target.classList.remove("animation-wipe-in")
+            entry.target.classList.add("animation-wipe-out")
         }
     })
 })
   
-observer.observe(document.querySelector('.section-5 .section-content'))
+observer.observe(document.querySelector(".section-5 .section-content"))

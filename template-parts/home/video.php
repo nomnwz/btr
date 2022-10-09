@@ -1,6 +1,6 @@
 <div id="videoAutoplay">
     <video muted loop>
-        <source src="" data-src="<?php echo get_stylesheet_directory_uri() . '/assets/video.mp4'; ?>" type="video/mp4">
+        <source src="" data-src="<?php echo get_stylesheet_directory_uri() . '/assets/video.webm'; ?>" type="video/webm">
     </video>
     <div class="video-content-wrap">
         <!-- <div class="video-content video-content-1 bg-dark text-light col-8">
