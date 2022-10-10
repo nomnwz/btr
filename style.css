@@ -449,7 +449,32 @@ span.toggle-icon.opened:last-child {
 }
 
 .section-1, .section-3 {
-    min-height: 150vh;
+    min-height: 300vh;
+}
+
+.animation-container h2 {
+    font-family: 'Gibson';
+    font-size: 40rem;
+    line-height: 1;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: rgb(185 68 53 / 10%);
+    white-space: nowrap;
+    -webkit-text-stroke: 0.2rem;
+    -webkit-text-stroke-color: #E9A39B;
+}
+
+#animation1 .animation-content {
+    position: absolute;
+    top: 0;
+    left: 100vw;
+}
+
+.section-intro {
+    top: 0;
+    left: calc(100vw - 60px - calc(var(--bs-gutter-x) * .5));
+    position: absolute;
+    width: 100%;
 }
 
 .section-intro.sticky-top {
@@ -459,6 +484,11 @@ span.toggle-icon.opened:last-child {
 h1.section-heading {
     font-size: 6rem;
     letter-spacing: 1.2px;
+}
+
+.section-content {
+    position: absolute;
+    width: 100%;
 }
 
 .section-4 .section-content {

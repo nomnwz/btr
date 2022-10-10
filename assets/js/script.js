@@ -42,7 +42,7 @@ jQuery(document).ready(function($) {
 
                         setTimeout(() => {
                             location.reload()                            
-                        }, 500);
+                        }, 500)
                     } else {
                         if ($(".otp-container .message").hasClass("text-success")) {
                             $(".otp-container .message").removeClass("text-success")
@@ -71,30 +71,31 @@ jQuery(document).ready(function($) {
         var slides      = $(".slide")
         var duration    = 3500
 
-        loadVideo("#videoPopup", true, 3500)
-        removeEl("#loader", 3500)
+        // loadVideo("#videoPopup", true, 3500)
+        loadVideo("#videoPopup", true, 0)
+        // removeEl("#loader", 3500)
         
-        if (slides.length) {
-            for (let i = 0; i < slides.length; i++) {
-                const slide     = $(slides[i])
-                var direction   = slide.hasClass("slide-vertical") ? "vertical" : "horizontal"
-                var isReverse   = slide.hasClass("slide-reverse") ? true : false
-                if (direction == "vertical") {
-                    var height      = slide.outerHeight()
-                    var translate   = height - loader.height()
-                    var translateY  = `-${translate+"px"}`
-                    if (isReverse) {
-                        slide.stop().animate({
-                            top: translateY
-                        }, duration)
-                    } else {
-                        slide.stop().animate({
-                            bottom: translateY
-                        }, duration)
-                    }
-                }   
-            }
-        }
+        // if (slides.length) {
+        //     for (let i = 0; i < slides.length; i++) {
+        //         const slide     = $(slides[i])
+        //         var direction   = slide.hasClass("slide-vertical") ? "vertical" : "horizontal"
+        //         var isReverse   = slide.hasClass("slide-reverse") ? true : false
+        //         if (direction == "vertical") {
+        //             var height      = slide.outerHeight()
+        //             var translate   = height - loader.height()
+        //             var translateY  = `-${translate+"px"}`
+        //             if (isReverse) {
+        //                 slide.stop().animate({
+        //                     top: translateY
+        //                 }, duration)
+        //             } else {
+        //                 slide.stop().animate({
+        //                     bottom: translateY
+        //                 }, duration)
+        //             }
+        //         }   
+        //     }
+        // }
     })
 
     /**
@@ -243,7 +244,7 @@ jQuery(document).ready(function($) {
         var container   = $(".section-1")
         if (container.length && $(window).width() > 767) {
             var stickyItem      = container.find(".section-intro")
-            var stickyBottom    = parseInt(stickyItem.css("top").replace("px", "")) + stickyItem.outerHeight() + 60
+            var stickyBottom    = parseInt(stickyItem.css("top")) + stickyItem.outerHeight() + 60
             var content         = container.find(".section-content")
             content.css({
                 "margin-top": stickyBottom
@@ -258,7 +259,7 @@ jQuery(document).ready(function($) {
         var container   = $(".section-3")
         if (container.length && $(window).width() > 767) {
             var stickyItem      = container.find(".section-intro")
-            var stickyBottom    = parseInt(stickyItem.css("top").replace("px", "")) + stickyItem.outerHeight() + 60
+            var stickyBottom    = parseInt(stickyItem.css("top")) + stickyItem.outerHeight() + 60
             var content         = container.find(".section-content")
             content.css({
                 "margin-top": stickyBottom
@@ -270,10 +271,11 @@ jQuery(document).ready(function($) {
      * All scroll effects
      */
     $(function() {
-        var lastScrollTop = 0
+        var lastScrollTop   = 0
         $(window).scroll(function(e) {
-            var scrollTop = $(this).scrollTop()
-            var scrollDir = ""
+            var scrollTop   = $(this).scrollTop()
+            var scrollDir   = ""
+            var scrolledBy  = 0
 
             if (scrollTop < lastScrollTop) {
                 scrollDir = "up"
@@ -281,7 +283,8 @@ jQuery(document).ready(function($) {
                 scrollDir = "down"
             }
 
-            lastScrollTop = scrollTop
+            scrolledBy      = lastScrollTop - scrollTop
+            lastScrollTop   = scrollTop
             /**
              * Header Transparency
              */
@@ -302,22 +305,22 @@ jQuery(document).ready(function($) {
                         header.removeClass("border-bottom border-light")
                     }
                 }
+
+                menuPosFix()
             })
 
-            /**
-             * Video Autplay
-             */
-            $(function() {
-                var target      = "#videoAutoplay video"
-                var videoPos    = $(target).outerHeight()
-                console.log($(window).scrollTop())
-                console.log(videoPos)
-                if ($(window).scrollTop() > videoPos) {
-                    $(target).get(0).pause()
-                } else {
-                    $(target).get(0).play()
-                }
-            })
+            // /**
+            //  * Video Autplay
+            //  */
+            // $(function() {
+            //     var target      = "#videoAutoplay video"
+            //     var videoPos    = $(target).outerHeight()
+            //     if ($(window).scrollTop() > videoPos) {
+            //         $(target).get(0).pause()
+            //     } else {
+            //         $(target).get(0).play()
+            //     }
+            // })
 
             /**
              * Scroll to effects
@@ -339,9 +342,96 @@ jQuery(document).ready(function($) {
             })
 
             /**
+             * Animation
+             */
+            $(function() {
+                var animation1  = $("#animation1")
+                var animContent = animation1.find(".animation-content")
+                var animationPL = animContent.css("left")
+                var animationW  = animContent.outerWidth()
+                var animDiff    = parseInt(animationW) - parseInt(animationPL)
+                if (($(window).scrollTop() > (animContent.offset().top - animContent.outerHeight())) && ($(window).scrollTop() < (animContent.offset().top + animContent.outerHeight()))) {
+                    if (scrolledBy < 0) {
+                        scrolledBy = scrolledBy * (-1)
+                    }
+
+                    var scrollLeft = scrolledBy / $(window).height() * parseInt(animationW)
+
+                    if (scrollDir == "up") {
+                        animContent.css({left: parseInt(animationPL)+scrollLeft})
+                    } else {
+                        animContent.css({left: parseInt(animationPL)-scrollLeft})
+                    }
+                }
+            })
+
+            /**
              * Section 1
              */
             $(function() {
+                $(function() {
+                    var section1    = $(".section-1")
+                    var sectContent = section1.find(".section-intro")
+                    var sectionPL   = sectContent.css("left")
+                    var offsetLeft  = parseInt(sectContent.parent().css("padding-left")) + parseInt(sectContent.parent().parent().css("padding-left"))
+                    var sectionW    = sectContent.outerWidth()
+                    var animDiff    = parseInt(sectionW) - parseInt(sectionPL)
+                    if (((sectContent.offset().top - sectContent.outerHeight()) < $(window).scrollTop()) && ($(window).scrollTop() < (sectContent.offset().top + sectContent.outerHeight()))) {
+                        if (scrolledBy < 0) {
+                            scrolledBy = scrolledBy * (-1)
+                        }
+    
+                        if ($(window).scrollTop() < (sectContent.offset().top + (sectContent.outerHeight() / 2))) {
+                            var scrollLeft = scrolledBy / $(window).height() * parseInt(sectionW) * 2
+                            if (scrollDir == "up") {
+                                console.log((sectContent.offset().top))
+                                console.log((sectContent.outerHeight() / 2))
+                                console.log((sectContent.offset().top - (sectContent.outerHeight() / 2)))
+                                if ($(window).scrollTop() < (sectContent.offset().top - (sectContent.outerHeight() / 2))) {
+                                    sectContent.css({
+                                        position: "fixed",
+                                        width: sectionW,
+                                        left: parseInt(sectionPL)+scrollLeft
+                                    })
+                                } else {
+                                    sectContent.css({
+                                        position: "absolute",
+                                        width: sectionW,
+                                        left: "calc(100vw - 60px - calc(var(--bs-gutter-x) * .5))"
+                                    })
+                                }
+                            } else {
+                                if (parseInt(sectionPL) > offsetLeft) {
+                                    sectContent.css({
+                                        position: "fixed",
+                                        width: sectionW,
+                                        left: parseInt(sectionPL)-scrollLeft
+                                    })
+                                } else {
+                                    sectContent.css({
+                                        position: "sticky",
+                                        width: sectionW,
+                                        left: offsetLeft
+                                    })
+                                }
+                            }
+                        } else {
+                            
+                        }
+                    }
+                    // } else if ($(window).scrollTop() < (sectContent.offset().top - sectContent.outerHeight())) {
+                    //     sectContent.css({
+                    //         position: "absolute",
+                    //         left: "calc(100vw - 60px - calc(var(--bs-gutter-x) * .5))"
+                    //     })
+                    // } else if ($(window).scrollTop() > (sectContent.offset().top + sectContent.outerHeight())) {
+                    //     sectContent.css({
+                    //         position: "absolute",
+                    //         left: offsetLeft
+                    //     })
+                    // }
+                })
+                
                 var container   = $(".section-1")
                 if (container.length) {
                     var containerTop    = container.offset().top
@@ -389,8 +479,8 @@ jQuery(document).ready(function($) {
                         $(input).val(e.key)
                     }
 
-                    $(inputs[i + 1]).focus();
-                    e.preventDefault();
+                    $(inputs[i + 1]).focus()
+                    e.preventDefault()
                 }
             })
         }
@@ -434,14 +524,12 @@ jQuery(document).ready(function($) {
             if ($(stickyTop).length) {
                 var top = 0
 
-                if ($("#wpadminbar").length) {
-                    if ($(window).width() > 600) {
-                        top = top + $("#wpadminbar").outerHeight()
-                    }
+                if ($("#wpadminbar").length && $(window).width() > 600) {
+                    top = top + $("#wpadminbar").outerHeight()
+                }
 
-                    if ($(stickyTop).attr("sticky-top")) {
-                        top = top + parseInt($(stickyTop).attr("sticky-top"))
-                    }
+                if ($(stickyTop).attr("sticky-top")) {
+                    top = top + parseInt($(stickyTop).attr("sticky-top"))
                 }
 
                 $(stickyTop).css({
@@ -453,14 +541,14 @@ jQuery(document).ready(function($) {
 
     const menuPosFix = () => {
         var that        = "header"
-        var netOffset   = $(that).offset().top + $(that).height()
+        var netOffset   = parseInt($(that).css("top")) + $(that).outerHeight()
         $(".menu-wrap").css({
-            top: netOffset+1
+            top: netOffset
         })
     }
 
     const videoAutoplayHeight = () => {
-        var topOffset   = parseInt($("header").css("top").replace("px", "")) + $("header").height()
+        var topOffset   = parseInt($("header").css("top")) + $("header").height()
         $("#videoAutoplay").css({
             height: "calc(100vh - "+topOffset+"px)"
         })

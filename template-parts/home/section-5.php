@@ -1,4 +1,4 @@
-<div id="section5" class="section-container section-5 bg-light text-dark w-100 vh-100 px-site py-5 d-flex flex-column justify-content-center align-items-center">
+<div id="section5" class="section-container section-5 position-relative bg-light text-dark w-100 vh-100 px-site py-5 d-flex flex-column justify-content-center align-items-center">
     <div class="section-intro mb-5">
         <h1 class="section-heading">Contact us</h1>
     </div>

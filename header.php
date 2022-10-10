@@ -19,7 +19,8 @@
         do_action( 'otp_setup' );
     } else {
         ?>
-        <div id="loader" class="row d-none d-md-block mx-0 w-100 vh-100 position-fixed bg-dark text-light">
+        <!-- <div id="loader" class="row d-none d-md-block mx-0 w-100 vh-100 position-fixed bg-dark text-light"> -->
+        <div id="loader" class="row d-none mx-0 w-100 vh-100 position-fixed bg-dark text-light">
             <?php
             $slides = array(
                 array(
@@ -67,7 +68,7 @@
             <div id="videoPopup" class="popup d-none d-md-flex align-items-center justify-content-center w-100 vh-100 position-fixed bg-dark text-light">
                 <div class="video position-relative">
                     <div class="popup-action" data-action="close" style="display: none;"><span><i class="fas fa-close"></i></span></div>
-                    <video muted>
+                    <video playsinline muted>
                         <source src="" type="video/webm" data-src="<?php echo get_stylesheet_directory_uri() . '/assets/video.webm'; ?>">
                     </video>
                 </div>

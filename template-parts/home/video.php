@@ -1,5 +1,5 @@
 <div id="videoAutoplay">
-    <video muted loop>
+    <video playsinline muted loop>
         <source src="" data-src="<?php echo get_stylesheet_directory_uri() . '/assets/video.webm'; ?>" type="video/webm">
     </video>
     <div class="video-content-wrap">
