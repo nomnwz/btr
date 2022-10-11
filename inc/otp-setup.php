@@ -22,7 +22,10 @@ function btr_create_tables() {
             otp bigint(20) NOT NULL,
             user_ip varchar(255) NOT NULL,
             visits bigint(20) NOT NULL,
+            is_accessed boolean NOT NULL,
+            is_expired boolean NOT NULL,
             created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            accessed_at datetime NOT NULL,
             expires_at datetime NOT NULL,
             PRIMARY KEY (ID)
         ) $charset_collate;";

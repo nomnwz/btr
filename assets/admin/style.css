@@ -51,6 +51,30 @@ input:checked + .btr-slider:before {
     transform: translateX(13px);
 }
 
+.btr-table-hints {
+    margin-top: 10px;
+}
+
+.btr-table-hints > span:not(:last-child) {
+    margin-right: 10px;
+}
+
+.btr-table-hints > span .color {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 2px;
+    vertical-align: middle;
+}
+
+.btr-table-hints > span.accessed .color {
+    background-color: #00a32a;
+}
+
+.btr-table-hints > span.expired .color {
+    background-color: #e53935;
+}
+
 .btr-table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
@@ -65,4 +89,85 @@ input:checked + .btr-slider:before {
   
 .btr-table tr:nth-child(even) {
     background-color: #dddddd;
+}
+
+.btr-table tr.accessed:nth-child(even), .btr-table tr.accessed:nth-child(odd) {
+    background-color: #00a32a;
+    color: #fff;
+}
+
+.btr-table tr.expired:nth-child(even), .btr-table tr.expired:nth-child(odd) {
+    background-color: #e53935;
+    color: #fff;
+    text-decoration: line-through;
+}
+
+.btr-message {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.btr-message.btr-success {
+    color: #00a32a;
+}
+
+.btr-message.btr-error {
+    color: #e53935;
+}
+
+.btr-modal {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 20px;
+}
+
+.btr-modal label {
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.btr-modal input {
+    margin-bottom: 20px;
+}
+
+.btr-modal .btr-submit {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btr-modal button {
+    width: fit-content;
+}
+
+.btr-spinner {
+    display: none;
+    position: relative;
+    width: 18px;
+    height: 18px;
+    border-radius: 18px;
+    background: #808080;
+    animation: infinite-spinning 1.08s linear infinite;
+}
+
+.btr-spinner:after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 50%;
+    width: 4px;
+    height: 4px;
+    border-radius: 4px;
+    margin-left: 2px;
+    background: #fff;
+}
+
+@keyframes infinite-spinning {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
 }

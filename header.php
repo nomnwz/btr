@@ -14,67 +14,24 @@
     <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
+    <div id="splash" class="bg-dark text-light w-100 vh-100 position-fixed top-0 left-0">
+        <div class="splash-container d-flex flex-column justify-content-between">
+            <div class="d-flex flex-column justify-content-start align-items-center">
+                <h1 class="title">BTR</h1>
+                <h5 class="subtitle">Better Than Reality</h5>
+            </div>
+            <div class="d-flex flex-column justify-content-end align-items-center">
+                <div class="content">
+                    <p><span>Where only</span> extraordinary people succeed...<p>
+                </div>
+                <button id="enterSite" class="btn btn-lg px-5 rounded-0">ENTER</button>
+            </div>
+        </div>
+    </div>
     <?php
     if ( btr_is_otp_active() && !btr_has_current_user_access() ) {
         do_action( 'otp_setup' );
     } else {
-        ?>
-        <!-- <div id="loader" class="row d-none d-md-block mx-0 w-100 vh-100 position-fixed bg-dark text-light"> -->
-        <div id="loader" class="row d-none mx-0 w-100 vh-100 position-fixed bg-dark text-light">
-            <?php
-            $slides = array(
-                array(
-                    'is_reverse' => true
-                ),
-                array(
-                    'is_reverse' => false
-                ),
-                array(
-                    'is_reverse' => true
-                )
-            );
-
-            foreach ( $slides as $i => $slide ) {
-                $slide_id = $i + 1;
-                ?>
-                <div class="slide slide-<?php echo $slide_id; ?> auto-slide slide-vertical col-4 px-0 d-flex flex-column<?php echo $slide['is_reverse'] ? ' slide-reverse' : ''; ?>">
-                    <div class="slide-item slide-item-image w-100">
-                        <img src='<?php echo get_stylesheet_directory_uri() . "/assets/img/slide-{$slide_id}.webp"; ?>' alt='<?php echo "slide-{$slide_id}"; ?>'>
-                    </div>
-                </div>
-                <?php
-            }
-            ?>
-        </div>
-        <?php
-        $video_popup = false;
-        if ( !is_user_logged_in() ) {
-            if ( btr_is_otp_active() ) {
-                $otp_id = ( new OTP() )->exist( btr_get_current_user_ip(), 'user_ip' );
-                if ( $otp_id ) {
-                    $object = ( new OTP( array( 'ID' => $otp_id ) ) )->get();
-                    if ( $object->visits < 2 ) {
-                        $video_popup = true;
-                    }
-                } else {
-                    $video_popup = true;
-                }
-            } else {
-                $video_popup = true;
-            }
-        }
-        if ( $video_popup ) {
-            ?>
-            <div id="videoPopup" class="popup d-none d-md-flex align-items-center justify-content-center w-100 vh-100 position-fixed bg-dark text-light">
-                <div class="video position-relative">
-                    <div class="popup-action" data-action="close" style="display: none;"><span><i class="fas fa-close"></i></span></div>
-                    <video playsinline muted>
-                        <source src="" type="video/webm" data-src="<?php echo get_stylesheet_directory_uri() . '/assets/video.webm'; ?>">
-                    </video>
-                </div>
-            </div>
-            <?php
-        }
         ?>
         <div id="root">
             <header class="bg-dark text-light sticky-top">
@@ -83,23 +40,28 @@
                         <?php
                         if ( has_custom_logo() ) {
                             echo '<div class="site-logo">' . get_custom_logo() . '</div>';
+                        } elseif ( file_exists( get_stylesheet_directory() . '/assets/img/logo.png' ) ) {
+                            echo '<div class="site-logo"><img class="custom-logo" src="' . get_stylesheet_directory_uri() . '/assets/img/logo.png' . '"></div>';
                         } else {
                             echo '<h2 class="site-title">' . get_bloginfo( 'name' ) . '</h2>';
                         }
                         ?>
                     </div>
-                    <div class="site-menu site-menu bg-light text-dark h-100 d-grid">
-                        <div class="menu-toggle">
-                            <span class="toggle-icon closed"></span>
-                            <span class="toggle-icon closed"></span>
-                        </div>
-                        <div class="menu-wrap w-100 bg-dark text-white position-fixed closed px-site">
-                            <?php
-                            wp_nav_menu( array(
-                                'theme_location'    => 'primary-menu',
-                                'container'         => false
-                            ) );
-                            ?>
+                    <div class="site-menu site-menu h-100 d-grid">
+                        <div class="language text-dark" role="radiogroup" aria-labelledby="languageSwitcher">
+                            <p class="d-none" id="languageSwitcher">Choose a language for this website</p>
+                            <div class="language-container language-container-left language-container-en">
+                                <input class="language-control" type="radio" id="language1" name="language-switch" checked>
+                                <label class="language-label" for="language1">
+                                    EN<span class="d-none"> English</span>
+                                </label>
+                            </div>
+                            <div class="language-container language-container-right language-container-ar">
+                                <input class="language-control" type="radio" id="language2" name="language-switch">
+                                <label class="language-label" for="language2">
+                                    AR<span class="d-none"> العربية</span>
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>

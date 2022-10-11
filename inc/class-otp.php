@@ -92,15 +92,17 @@ class OTP
             $this->args['user_ip'] = btr_get_current_user_ip();
         }
 
-        if ( $this->exist( $this->args['user_ip'], 'user_ip' ) ) {
+        if ( $this->args['user_ip'] != '-' && $this->exist( $this->args['user_ip'], 'user_ip' ) ) {
             $otp_id = $this->update( $this->args );
         } else {
             $table_name = $wpdb->prefix . 'otps';
 
             $wpdb->insert( $table_name, array(
-                'otp'           => $this->generate_otp(),
+                'otp'           => isset( $this->args['otp'] ) ? $this->args['otp'] : $this->generate_otp(),
                 'user_ip'       => $this->args['user_ip'],
                 'visits'        => (int) '0',
+                'is_accessed'   => false,
+                'is_expired'    => false,
                 'expires_at'    => date( 'Y-m-d H:i:s', strtotime( '+' . btr_get_otp_access_period() . ' days' ) )
             ) );
 
@@ -135,7 +137,10 @@ class OTP
                 'otp'           => isset( $this->args['otp'] ) ? $this->args['otp'] : $object->otp,
                 'user_ip'       => isset( $this->args['user_ip'] ) ? $this->args['user_ip'] : $object->user_ip,
                 'visits'        => isset( $this->args['visits'] ) ? $this->args['visits'] : $object->visits,
-                'created_at'    => date( 'Y-m-d H:i:s' ),
+                'is_accessed'   => isset( $this->args['is_accessed'] ) ? $this->args['is_accessed'] : $object->is_accessed,
+                'is_expired'    => isset( $this->args['is_expired'] ) ? $this->args['is_expired'] : $object->is_expired,
+                'created_at'    => isset( $this->args['created_at'] ) ? $this->args['created_at'] : $object->created_at,
+                'accessed_at'   => isset( $this->args['accessed_at'] ) ? $this->args['accessed_at'] : $object->accessed_at,
                 'expires_at'    => isset( $this->args['expires_at'] ) ? $this->args['expires_at'] : $object->expires_at
             ), array( 'ID' => $this->args['ID'] ) );
 
@@ -170,12 +175,17 @@ class OTP
      * 
      * @return string|int
      */
-    public function generate_otp( $digits = 4 ) {
+    public function generate_otp( $digits = 6 ) {
         $generator  = '1357902468';
         $result     = '';
 
-        for ( $i = 1; $i <= $digits; $i++ ) {
-            $result .= substr( $generator, ( rand()%( strlen( $generator ) ) ), 1 );
+        for ( $i=1; $i <= $digits; $i++ ) {
+            if ( $i === 1 ) {
+                $generator1 = '135792468';
+                $result .= substr( $generator1, ( rand()%( strlen( $generator1 ) ) ), 1 );   
+            } else {
+                $result .= substr( $generator, ( rand()%( strlen( $generator ) ) ), 1 );   
+            }
         }
 
         return $result;

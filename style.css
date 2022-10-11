@@ -1,7 +1,8 @@
 /*
 * Theme Name: BTR
-* Version: 1.0.4.2
+* Version: 1.0.4.4
 * Author: CodeIcon
+* Text Domain: btr
 */
 
 @import url('https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap');
@@ -121,6 +122,66 @@ a:hover {
     padding-right: 60px;
 }
 
+#splash {
+    z-index: 99999999;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.splash-container {
+    max-width: 900px;
+    margin: 0 auto;
+    height: calc(100% - 150px);
+    margin-top: 150px;
+}
+
+.splash-container .title {
+    color: #dcc607;
+    font-family: roboto-bold,roboto,sans-serif;
+    font-size: 176px;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 0.1em;
+}
+
+.splash-container .subtitle {
+    color: #dcc607;
+    font-family: 'helvetica neue',sans-serif;
+    line-height: normal;
+    text-align: center;
+    font-size: 20px;
+    letter-spacing: 0.5em;
+    margin-top: -30px;
+}
+
+.splash-container .content {
+    color: #dcc607;
+    font-family: fahkwang,sans-serif;
+    font-size: 40px;
+    line-height: 56px;
+    text-align: center;
+}
+
+.splash-container .content span {
+    font-weight: 700;
+}
+
+.splash-container .btn {
+    background-color: rgba(var(--bs-secondary-rgb), 1);
+    border-color: rgba(var(--bs-secondary-rgb), 1);
+    color: #000;
+    font-family: 'helvetica neue',sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    letter-spacing: 0.1em;
+}
+
+.splash-container .btn:hover {
+    color: #000;
+    background-color: rgba(var(--bs-secondary-rgb), 0.7);
+    border-color: rgba(var(--bs-secondary-rgb), 0.7);
+}
+
 .image-background {
     background-repeat: no-repeat;
     background-position: center center;
@@ -152,7 +213,6 @@ a:hover {
 }
 
 .card h6 {
-    color: #e25a49;
     font-size: 20px
 }
 
@@ -266,7 +326,8 @@ header {
 }
 
 .custom-logo {
-    width: 240px;
+    width: auto;
+    max-width: 240px;
     height: auto;
     max-height: 55px;
 }
@@ -274,6 +335,74 @@ header {
 .site-menu {
     width: 230px;
     place-items: center;
+}
+
+.language {
+    width: calc(55px * 2);
+    height: 30px;
+    font-size: 14px;
+    line-height: 1;
+    margin: 1em 0;
+}
+
+.language-container {
+    position: relative;
+    float: left;
+    width: 55px;
+    height: 30px;
+    padding: 5px;
+}
+
+.language-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 55px;
+    height: 30px;
+    border: 1px solid #ccc;
+    padding: 7px 8px 5px 0;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: 7px 7px;
+    background-size: 14px;
+    text-align: right;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.language-container-left .language-label {
+    border-radius: 4px 0 0 4px;
+}
+
+.language-container-right .language-label {
+    border-left: 0;
+    border-radius: 0 4px 4px 0;
+}
+
+.language-control:hover + .language-label,
+.language-control:focus + .language-label {
+    background-color: #eee;
+}
+
+.language-control:checked + .language-label {
+    background-color: #ddd;
+}
+
+.language-control:focus + .language-label,
+.language-control:checked:focus + .language-label {
+    z-index: 2;
+    box-shadow: 0 0 8px #85bffd;
+}
+
+.language-container-en .language-label {
+    background-image: url(assets/svg/en.svg);
+    background-position: 5px 10px;
+}
+
+.language-container-ar .language-label {
+    background-image: url(assets/svg/ar.svg);
+    background-position: 5px 10px;
+    background-size: 20px;
 }
 
 .menu-toggle {

@@ -1,5 +1,19 @@
 jQuery(document).ready(function($) {
     /**
+     * Splash
+     */
+    $(function() {
+        var splash          = $("#splash")
+        var enterSiteBtn    = splash.find("#enterSite")
+        enterSiteBtn.on("click", function(e) {
+            e.preventDefault()
+            splash.hide("slow", function() {
+                splash.remove()
+            })
+        })
+    })
+
+    /**
      * OTP
      */
     $(function() {
@@ -41,7 +55,7 @@ jQuery(document).ready(function($) {
                         }
 
                         setTimeout(() => {
-                            location.reload()                            
+                            location.reload()
                         }, 500)
                     } else {
                         if ($(".otp-container .message").hasClass("text-success")) {
@@ -272,6 +286,7 @@ jQuery(document).ready(function($) {
      */
     $(function() {
         var lastScrollTop   = 0
+        var section1GL      = 0
         $(window).scroll(function(e) {
             var scrollTop   = $(this).scrollTop()
             var scrollDir   = ""
@@ -384,10 +399,7 @@ jQuery(document).ready(function($) {
                         if ($(window).scrollTop() < (sectContent.offset().top + (sectContent.outerHeight() / 2))) {
                             var scrollLeft = scrolledBy / $(window).height() * parseInt(sectionW) * 2
                             if (scrollDir == "up") {
-                                console.log((sectContent.offset().top))
-                                console.log((sectContent.outerHeight() / 2))
-                                console.log((sectContent.offset().top - (sectContent.outerHeight() / 2)))
-                                if ($(window).scrollTop() < (sectContent.offset().top - (sectContent.outerHeight() / 2))) {
+                                if (parseInt($(window).scrollTop()+(sectContent.outerHeight() / 2)) < section1GL) {
                                     sectContent.css({
                                         position: "fixed",
                                         width: sectionW,
@@ -395,7 +407,7 @@ jQuery(document).ready(function($) {
                                     })
                                 } else {
                                     sectContent.css({
-                                        position: "absolute",
+                                        position: "sticky",
                                         width: sectionW,
                                         left: "calc(100vw - 60px - calc(var(--bs-gutter-x) * .5))"
                                     })
@@ -408,6 +420,9 @@ jQuery(document).ready(function($) {
                                         left: parseInt(sectionPL)-scrollLeft
                                     })
                                 } else {
+                                    if (parseInt(sectionPL) == offsetLeft) {
+                                        section1GL = $(window).scrollTop()
+                                    }
                                     sectContent.css({
                                         position: "sticky",
                                         width: sectionW,

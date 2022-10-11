@@ -91,7 +91,7 @@ function btr_get_current_user_ip() {
 function btr_is_otp_active() {
     $options = get_option( 'otp_options' );
     $default = false;
-    return ( isset( $options['active'] ) ? ( $options['active'] ?: $default ) : $default );
+    return ( isset( $options['active'] ) ? ( (bool) $options['active'] ? (bool) $options['active'] : $default ) : $default );
 }
 
 /**
@@ -134,14 +134,50 @@ function btr_has_current_user_access() {
     
     if ( $otp_id ) {
         $object = ( new OTP( array( 'ID' => $otp_id ) ) )->get();
-        if ( $object->visits > 0 ) {
-            if ( time() <= strtotime( $object->expires_at ) ) {
-                $has_access = true;
-            }
+        if ( $object->is_accessed && !$object->is_expired ) {
+            $has_access = true;
         }
     }
 
     return $has_access;
+}
+
+function btr_give_otp_access( $otp ) {
+    $user_ip    = btr_get_current_user_ip();
+    $otp_id     = ( new OTP() )->exist( $otp, 'otp' );
+    $given      = false;
+
+    if ( $otp_id ) {
+        $object = ( new OTP( array( 'ID' => $otp_id ) ) )->get();
+
+        if ( !$object->is_accessed && !$object->is_expired ) {
+            $object->user_ip        = $user_ip;
+            $object->is_accessed    = true;
+            $object->accessed_at    = date( 'Y-m-d H:i:s' );
+            $object->expires_at     = date( 'Y-m-d H:i:s', strtotime( '+' . btr_get_otp_access_period() . ' days' ) );
+            $args                   = (array) $object;
+            $otp_id                 = ( new OTP( $args ) )->update();
+    
+            if ( $otp_id ) {
+                $given      = true;
+                $subject    = 'OTP ' . $object->otp . ' accessed';
+                $message    = 'OTP ' . $object->otp . ' was accessed at ' . $object->accessed_at . '. Access details are below:';
+                $message    .= "\n";
+                $message    .= "\n";
+                $message    .= 'User IP: ' . $object->user_ip;
+                $message    .= "\n";
+                $message    .= 'Expiring at: ' . $object->expires_at;
+                
+                wp_mail( btr_get_otp_email(), $subject, $message );
+
+                $object = ( new OTP( array( 'ID' => $otp_id ) ) )->get();
+
+                do_action( 'btr_otp_access_given', $object );
+            }
+        }
+    }
+
+    return $given;
 }
 
 function btr_increase_visits() {
@@ -157,62 +193,23 @@ function btr_increase_visits() {
     }
 }
 
-add_action( 'init', 'btr_create_otp' );
-function btr_create_otp() {
-    if ( is_user_logged_in() ) return;
-
-    if ( !btr_is_otp_active() ) return;
-
-    $user_ip    = btr_get_current_user_ip();
-    $otp_id     = ( new OTP() )->exist( $user_ip, 'user_ip' );
-    $send_email = false;
-
-    if ( !$otp_id ) {
-        $otp_id     = ( new OTP() )->create();
-        $send_email = true;
-    } else {
-        $object = ( new OTP( array( 'ID' => $otp_id ) ) )->get();
-        if ( time() > strtotime( $object->expires_at ) ) {
-            $object->otp        = ( new OTP() )->generate_otp();
-            $object->visits     = 0;
-            $object->expires_at = date( 'Y-m-d H:i:s', strtotime( '+' . btr_get_otp_access_period() . ' days' ) );
-            $args               = (array) $object;
-
-            ( new OTP( $args ) )->update();
-            $send_email         = true;
-        }
-    }
-
-    $object = ( new OTP( array( 'ID' => $otp_id ) ) )->get();
-
-    if ( $object && $send_email ) {
-        $subject    = 'New OTP generated against the IP ' . $object->user_ip;
-        $message    = 'User IP: ' . $object->user_ip;
-        $message    .= "\n";
-        $message    .= 'OTP: ' . $object->otp;
-        wp_mail( btr_get_otp_email(), $subject, $message );
-    }
-}
-
 add_action( 'otp_setup', 'btr_otp_form' );
 function btr_otp_form() {
     ?>
     <div class="otp-container bg-dark text-light w-100 vh-100 d-flex justify-content-center align-items-center">
         <div class="position-relative">
-            <div class="card p-2 text-center text-dark">
-                <h6>Please enter the OTP <br> to verify your access</h6>
-                <div>
-                    <span>Note: Contact us at <small><a href="mailto:<?php echo btr_get_otp_email(); ?>"><?php echo btr_get_otp_email(); ?></a></small></span>
-                    <span> to get your OTP by mentioning your IP Address.</span>
-                </div>
+            <div class="card p-2 text-center bg-light text-dark">
+                <h6><?php _e( 'Please enter temporary access code', 'btr' ); ?></h6>
                 <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2">
                     <input class="m-2 text-center form-control rounded" type="text" id="first" name="otp[]" maxlength="1" />
                     <input class="m-2 text-center form-control rounded" type="text" id="second" name="otp[]" maxlength="1" />
                     <input class="m-2 text-center form-control rounded" type="text" id="third" name="otp[]" maxlength="1" />
                     <input class="m-2 text-center form-control rounded" type="text" id="fourth" name="otp[]" maxlength="1" />
-                </div> 
+                    <input class="m-2 text-center form-control rounded" type="text" id="fifth" name="otp[]" maxlength="1" />
+                    <input class="m-2 text-center form-control rounded" type="text" id="sixth" name="otp[]" maxlength="1" />
+                </div>
                 <div class="mt-4">
-                    <button class="btn btn-danger px-4 validate">Validate</button> <span class="spinner ms-2 d-none"><i class="fas fa-spinner fa-spin"></i></span>
+                    <button class="btn btn-danger px-4 validate"><?php _e( 'Continue', 'btr' ); ?></button> <span class="spinner ms-2 d-none"><i class="fas fa-spinner fa-spin"></i></span>
                     <p class="mt-2 message"></p>
                 </div>
             </div>
@@ -227,23 +224,12 @@ function btr_otp_form() {
 add_action( 'wp_ajax_nopriv_btr_validate_otp', 'btr_ajax_validate_otp' );
 function btr_ajax_validate_otp() {
     if ( !btr_is_otp_active() ) wp_die();
+
     $otp    = isset( $_POST['otp'] ) ? $_POST['otp'] : null;
     $valid  = false;
 
     if ( $otp ) {
-        $user_ip    = btr_get_current_user_ip();
-        $otp_id     = ( new OTP() )->exist( $user_ip, 'user_ip' );
-
-        if ( $otp_id ) {
-            $object = ( new OTP( array( 'ID' => $otp_id ) ) )->get();
-            if ( ( $object->otp == $otp ) && ( time() <= strtotime( $object->expires_at ) ) ) {
-                $valid          = true;
-                $object->visits = $object->visits + 1;
-                $args           = (array) $object;
-
-                ( new OTP( $args ) )->update();
-            }
-        }
+        $valid = btr_give_otp_access( $otp );
     }
 
     if ( $valid ) {
@@ -255,6 +241,19 @@ function btr_ajax_validate_otp() {
     }
 
     wp_die();
+}
+
+add_action( 'btr_otp_access_given', 'btr_schedule_otp_expiry' );
+function btr_schedule_otp_expiry( $object ) {
+    wp_schedule_single_event( strtotime( $object->expires_at ), 'btr_otp_expire', array( $object ) );
+}
+
+add_action( 'btr_otp_expire', 'btr_otp_expire' );
+function btr_otp_expire( $object ) {
+    $object->is_expired = true;
+    $args               = (array) $object;
+
+    ( new OTP( $args ) )->update();
 }
 
 /**
