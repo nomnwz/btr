@@ -9,6 +9,7 @@ jQuery(document).ready(function($) {
             e.preventDefault()
             splash.hide("slow", function() {
                 splash.remove()
+                $(document).trigger("strictload")
             })
         })
     })
@@ -78,83 +79,24 @@ jQuery(document).ready(function($) {
     })
 
     /**
-     * Loader
+     * On strict load
      */
     $(function() {
-        var loader      = $("#loader")
-        var slides      = $(".slide")
-        var duration    = 3500
-
-        // loadVideo("#videoPopup", true, 3500)
-        loadVideo("#videoPopup", true, 0)
-        // removeEl("#loader", 3500)
-        
-        // if (slides.length) {
-        //     for (let i = 0; i < slides.length; i++) {
-        //         const slide     = $(slides[i])
-        //         var direction   = slide.hasClass("slide-vertical") ? "vertical" : "horizontal"
-        //         var isReverse   = slide.hasClass("slide-reverse") ? true : false
-        //         if (direction == "vertical") {
-        //             var height      = slide.outerHeight()
-        //             var translate   = height - loader.height()
-        //             var translateY  = `-${translate+"px"}`
-        //             if (isReverse) {
-        //                 slide.stop().animate({
-        //                     top: translateY
-        //                 }, duration)
-        //             } else {
-        //                 slide.stop().animate({
-        //                     bottom: translateY
-        //                 }, duration)
-        //             }
-        //         }   
-        //     }
-        // }
+        $(document).on("strictload", function(e) {
+            if ($("#videoAutoplay").length) {
+                loadVideo("#videoAutoplay", true, 0)
+            }
+        })
     })
 
     /**
-     * Video Popup
+     * Fixed Top
      */
     $(function() {
-        $("#videoPopup video").on("ended", function(e) {
-            $("#videoPopup .popup-action").css({
-                display: "flex"
-            })
+        fixedTopPosFix()
+        $(window).resize(function(e) { 
+            fixedTopPosFix()
         })
-
-        $("#videoPopup").on("click", '.popup-action[data-action="close"]', function(e) {
-            e.preventDefault()
-
-            $.ajax({
-                type: "post",
-                dataType: "json",
-                url: wp_obj.ajax_url,
-                data: {
-                    action: "btr_increase_visits"
-                },
-                success: (res) => {
-                    console.log(res)
-                },
-                error: (err) => {
-                    console.log(err)
-                }
-            })
-
-            removeEl("#videoPopup", 500)
-            loadVideo("#videoAutoplay", true, 500)
-
-            setTimeout(() => {
-                $(".scroll-to").trigger("click")
-            }, 500)
-        })
-
-        if (!$("#videoPopup").length) {
-            loadVideo("#videoAutoplay", true, 3500)
-
-            setTimeout(() => {
-                $(".scroll-to").trigger("click")
-            }, 3500)
-        }
     })
 
     /**
@@ -168,40 +110,24 @@ jQuery(document).ready(function($) {
     })
 
     /**
-     * Menu toggle
-     */
-    $(function() {
-        $(".menu-toggle").on("click", function(e) {
-            e.preventDefault()
-            var that    = this
-            var ms      = 300
-            setTimeout(() => {
-                $(that).find(".toggle-icon").toggleClass("closed opened")
-                $(".menu-wrap").toggleClass("closed opened")
-                $(".menu-wrap").animate({
-                    height: "toggle"
-                }, ms)
-            }, ms)
-        })
-    })
-
-    /**
-     * Menu
-     */
-    $(function() {
-        menuPosFix()
-        $(window).resize(function(e) { 
-            menuPosFix()
-        })
-    })
-
-    /**
-     * Video Autoplay
+     * Video
      */
     $(function() {
         videoAutoplayHeight()
         $(window).resize(function(e) {
             videoAutoplayHeight()
+        })
+
+        $("#videoAutoplay video").on("ended", function(e) {
+            $("#videoAutoplay .video-reloader").show("slow")
+        })
+
+        $(".video-reloader").on("click", function(e) {
+            var targetVideo = $(this).attr("data-video-target")
+            $("#"+targetVideo+" video").get(0).pause()
+            $("#"+targetVideo+" video").get(0).currentTime = 0
+            $("#"+targetVideo+" video").get(0).play()
+            $(this).hide("slow")
         })
     })
 
@@ -252,10 +178,10 @@ jQuery(document).ready(function($) {
     })
 
     /**
-     * Section 1
+     * Sections
      */
     $(function() {
-        var container   = $(".section-1")
+        var container   = $(".section-1, .section-3")
         if (container.length && $(window).width() > 767) {
             var stickyItem      = container.find(".section-intro")
             var stickyBottom    = parseInt(stickyItem.css("top")) + stickyItem.outerHeight() + 60
@@ -267,18 +193,137 @@ jQuery(document).ready(function($) {
     })
 
     /**
-     * Section 3
+     * Animation
      */
     $(function() {
-        var container   = $(".section-3")
-        if (container.length && $(window).width() > 767) {
-            var stickyItem      = container.find(".section-intro")
-            var stickyBottom    = parseInt(stickyItem.css("top")) + stickyItem.outerHeight() + 60
-            var content         = container.find(".section-content")
-            content.css({
-                "margin-top": stickyBottom
+        /**
+         * #1
+         */
+        $(function() {
+            if (!$("#animation1").length) return;
+
+            var windowWidth     = $(window).width()
+            var windowHeight    = $(window).height()
+            var animation       = $("#animation1")
+            var content         = animation.find(".animation-content")
+            var contentWidth    = content.width()
+            var contentOT       = content.offset().top
+            var contentFS       = parseInt(content.css("font-size"))
+            var contentH2       = content.find("h2")
+            var contentH2FS     = parseInt(contentH2.css("font-size"))
+            var contentH2FSTemp = 0
+            var lastScrollTop   = 0
+
+            animation.css({
+                height: contentWidth + windowWidth - windowHeight
             })
-        }
+
+            var contentH2FSPStop = 0
+
+            $(window).scroll(function(e) {
+                var scrollTop   = $(this).scrollTop()
+                var scrollDir   = ""
+                var scrolledBy  = 0
+    
+                if (scrollTop < lastScrollTop) {
+                    scrollDir = "up"
+                } else {
+                    scrollDir = "down"
+                }
+    
+                scrolledBy      = lastScrollTop - scrollTop
+                lastScrollTop   = scrollTop
+
+                $(function() {
+                    if (scrolledBy < 0) {
+                        scrolledBy = scrolledBy * (-1)
+                    }
+
+                    var animationHeight     = animation.height()
+                    var contentLeft         = parseInt(content.css("left"))
+                    var contentH2FSTemp2    = parseInt(contentH2.css("font-size"))
+                    var modifyFont          = scrolledBy / windowHeight * contentH2FSTemp2
+
+                    if ((scrollTop >= contentOT) && (scrollTop <= (contentOT + animationHeight))) {
+                        if ((scrollTop >= contentOT / 2) && (scrollTop <= (contentOT + animationHeight) / 2)) {
+                            if (scrollDir == "up") {
+                                content.css({
+                                    position: "fixed",
+                                    width: "",
+                                    left: contentLeft+scrolledBy
+                                })
+                            } else {
+                                content.css({
+                                    position: "fixed",
+                                    width: "",
+                                    left: contentLeft-scrolledBy
+                                })
+                            }
+
+                            contentH2.css({
+                                fontSize: contentH2FS
+                            })
+                        } else {
+                            if (scrollDir == "up") {
+                                content.css({
+                                    width: "100%"
+                                })
+
+                                if (scrollTop < contentH2FSPStop) {
+                                    content.css({
+                                        left: (contentLeft+scrolledBy) / 2 * (-1)
+                                    })
+    
+                                    contentH2.css({
+                                        fontSize: contentH2FSTemp2+modifyFont
+                                    })
+                                }
+                            } else {
+                                content.css({
+                                    width: "100%"
+                                })
+
+                                if (contentH2FSTemp2-modifyFont > 72) {
+                                    contentH2FSPStop = scrollTop
+                                    content.css({
+                                        left: (contentLeft-scrolledBy) / 2 * (-1)
+                                    })
+
+                                    contentH2.css({
+                                        fontSize: contentH2FSTemp2-modifyFont
+                                    })
+                                }
+                            }
+                        }
+                    } else if (scrollTop < contentOT) {
+                        content.css({
+                            position: "absolute",
+                            left: "100vw"
+                        })
+
+                        contentH2.css({
+                            fontSize: contentH2FS
+                        })
+                    } else if (scrollTop > (contentOT + animationHeight)) {
+                        content.css({
+                            position: "sticky",
+                            top: "0"
+                        })
+
+                        contentH2.css({
+                            fontSize: contentH2FSTemp2
+                        })
+                    }
+
+                    if (scrollTop <= (contentOT + animationHeight)) {
+                        content.css({
+                            position: "fixed",
+                            top: "0"
+                        })
+                    }
+                })
+            })
+        })
     })
 
     /**
@@ -300,6 +345,7 @@ jQuery(document).ready(function($) {
 
             scrolledBy      = lastScrollTop - scrollTop
             lastScrollTop   = scrollTop
+
             /**
              * Header Transparency
              */
@@ -320,22 +366,21 @@ jQuery(document).ready(function($) {
                         header.removeClass("border-bottom border-light")
                     }
                 }
-
-                menuPosFix()
             })
 
-            // /**
-            //  * Video Autplay
-            //  */
-            // $(function() {
-            //     var target      = "#videoAutoplay video"
-            //     var videoPos    = $(target).outerHeight()
-            //     if ($(window).scrollTop() > videoPos) {
-            //         $(target).get(0).pause()
-            //     } else {
-            //         $(target).get(0).play()
-            //     }
-            // })
+            /**
+             * Video Autplay
+             */
+            $(function() {
+                var target = "#videoAutoplay video"
+                if ($(window).scrollTop() > $(window).height()) {
+                    $(target).get(0).pause()
+                } else {
+                    if ($(target).get(0).currentTime != 0 && $(target).get(0).currentTime != $(target).get(0).duration) {
+                        $(target).get(0).play()
+                    }
+                }
+            })
 
             /**
              * Scroll to effects
@@ -357,95 +402,60 @@ jQuery(document).ready(function($) {
             })
 
             /**
-             * Animation
-             */
-            $(function() {
-                var animation1  = $("#animation1")
-                var animContent = animation1.find(".animation-content")
-                var animationPL = animContent.css("left")
-                var animationW  = animContent.outerWidth()
-                var animDiff    = parseInt(animationW) - parseInt(animationPL)
-                if (($(window).scrollTop() > (animContent.offset().top - animContent.outerHeight())) && ($(window).scrollTop() < (animContent.offset().top + animContent.outerHeight()))) {
-                    if (scrolledBy < 0) {
-                        scrolledBy = scrolledBy * (-1)
-                    }
-
-                    var scrollLeft = scrolledBy / $(window).height() * parseInt(animationW)
-
-                    if (scrollDir == "up") {
-                        animContent.css({left: parseInt(animationPL)+scrollLeft})
-                    } else {
-                        animContent.css({left: parseInt(animationPL)-scrollLeft})
-                    }
-                }
-            })
-
-            /**
              * Section 1
              */
             $(function() {
-                $(function() {
-                    var section1    = $(".section-1")
-                    var sectContent = section1.find(".section-intro")
-                    var sectionPL   = sectContent.css("left")
-                    var offsetLeft  = parseInt(sectContent.parent().css("padding-left")) + parseInt(sectContent.parent().parent().css("padding-left"))
-                    var sectionW    = sectContent.outerWidth()
-                    var animDiff    = parseInt(sectionW) - parseInt(sectionPL)
-                    if (((sectContent.offset().top - sectContent.outerHeight()) < $(window).scrollTop()) && ($(window).scrollTop() < (sectContent.offset().top + sectContent.outerHeight()))) {
-                        if (scrolledBy < 0) {
-                            scrolledBy = scrolledBy * (-1)
-                        }
+                // $(function() {
+                //     var section1    = $(".section-1")
+                //     var sectContent = section1.find(".section-intro")
+                //     var sectionPL   = sectContent.css("left")
+                //     var offsetLeft  = parseInt(sectContent.parent().css("padding-left")) + parseInt(sectContent.parent().parent().css("padding-left"))
+                //     var sectionW    = sectContent.outerWidth()
+                //     var animDiff    = parseInt(sectionW) - parseInt(sectionPL)
+                //     if (((sectContent.offset().top - sectContent.outerHeight()) < $(window).scrollTop()) && ($(window).scrollTop() < (sectContent.offset().top + sectContent.outerHeight()))) {
+                //         if (scrolledBy < 0) {
+                //             scrolledBy = scrolledBy * (-1)
+                //         }
     
-                        if ($(window).scrollTop() < (sectContent.offset().top + (sectContent.outerHeight() / 2))) {
-                            var scrollLeft = scrolledBy / $(window).height() * parseInt(sectionW) * 2
-                            if (scrollDir == "up") {
-                                if (parseInt($(window).scrollTop()+(sectContent.outerHeight() / 2)) < section1GL) {
-                                    sectContent.css({
-                                        position: "fixed",
-                                        width: sectionW,
-                                        left: parseInt(sectionPL)+scrollLeft
-                                    })
-                                } else {
-                                    sectContent.css({
-                                        position: "sticky",
-                                        width: sectionW,
-                                        left: "calc(100vw - 60px - calc(var(--bs-gutter-x) * .5))"
-                                    })
-                                }
-                            } else {
-                                if (parseInt(sectionPL) > offsetLeft) {
-                                    sectContent.css({
-                                        position: "fixed",
-                                        width: sectionW,
-                                        left: parseInt(sectionPL)-scrollLeft
-                                    })
-                                } else {
-                                    if (parseInt(sectionPL) == offsetLeft) {
-                                        section1GL = $(window).scrollTop()
-                                    }
-                                    sectContent.css({
-                                        position: "sticky",
-                                        width: sectionW,
-                                        left: offsetLeft
-                                    })
-                                }
-                            }
-                        } else {
+                //         if ($(window).scrollTop() < (sectContent.offset().top + (sectContent.outerHeight() / 2))) {
+                //             var scrollLeft = scrolledBy / $(window).height() * parseInt(sectionW) * 2
+                //             if (scrollDir == "up") {
+                //                 if (parseInt($(window).scrollTop()+(sectContent.outerHeight() / 2)) < section1GL) {
+                //                     sectContent.css({
+                //                         position: "fixed",
+                //                         width: sectionW,
+                //                         left: parseInt(sectionPL)+scrollLeft
+                //                     })
+                //                 } else {
+                //                     sectContent.css({
+                //                         position: "sticky",
+                //                         width: sectionW,
+                //                         left: "calc(100vw - 60px - calc(var(--bs-gutter-x) * .5))"
+                //                     })
+                //                 }
+                //             } else {
+                //                 if (parseInt(sectionPL) > offsetLeft) {
+                //                     sectContent.css({
+                //                         position: "fixed",
+                //                         width: sectionW,
+                //                         left: parseInt(sectionPL)-scrollLeft
+                //                     })
+                //                 } else {
+                //                     if (parseInt(sectionPL) == offsetLeft) {
+                //                         section1GL = $(window).scrollTop()
+                //                     }
+                //                     sectContent.css({
+                //                         position: "sticky",
+                //                         width: sectionW,
+                //                         left: offsetLeft
+                //                     })
+                //                 }
+                //             }
+                //         } else {
                             
-                        }
-                    }
-                    // } else if ($(window).scrollTop() < (sectContent.offset().top - sectContent.outerHeight())) {
-                    //     sectContent.css({
-                    //         position: "absolute",
-                    //         left: "calc(100vw - 60px - calc(var(--bs-gutter-x) * .5))"
-                    //     })
-                    // } else if ($(window).scrollTop() > (sectContent.offset().top + sectContent.outerHeight())) {
-                    //     sectContent.css({
-                    //         position: "absolute",
-                    //         left: offsetLeft
-                    //     })
-                    // }
-                })
+                //         }
+                //     }
+                // })
                 
                 var container   = $(".section-1")
                 if (container.length) {
@@ -532,6 +542,26 @@ jQuery(document).ready(function($) {
         }
     }
 
+    const fixedTopPosFix = () => {
+        var fixed = $("*").filter(function() { 
+            return $(this).attr("id") !== "wpadminbar" && $(this).attr("id") !== "splash" && $(this).css("position") == "fixed"
+        })
+        for (let i = 0; i < fixed.length; i++) {
+            const fixedTop = fixed[i]
+            if ($(fixedTop).length) {
+                var top = parseInt($(fixedTop).css("top"))
+
+                if ($("#wpadminbar").length && $(window).width() > 600) {
+                    top = top + $("#wpadminbar").outerHeight()
+                }
+
+                $(fixedTop).css({
+                    top: top
+                })
+            }
+        }
+    }
+
     const stickyTopPosFix = () => {
         var stickys = $(".sticky-top")
         for (let i = 0; i < stickys.length; i++) {
@@ -552,14 +582,6 @@ jQuery(document).ready(function($) {
                 })
             }
         }
-    }
-
-    const menuPosFix = () => {
-        var that        = "header"
-        var netOffset   = parseInt($(that).css("top")) + $(that).outerHeight()
-        $(".menu-wrap").css({
-            top: netOffset
-        })
     }
 
     const videoAutoplayHeight = () => {

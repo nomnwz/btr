@@ -4,7 +4,8 @@
     </div>
 </div> -->
 
-<div id="section4" class="section-container section-4 image-background fixed-background position-relative text-light w-100 vh-100 px-site py-5 d-flex flex-column justify-content-center" data-background-src="<?php echo get_stylesheet_directory_uri() . '/assets/img/section-4-bg.jpg'; ?>">
+<!-- <div id="section4" class="section-container section-4 image-background fixed-background position-relative text-light w-100 vh-100 px-site py-5 d-flex flex-column justify-content-center" data-background-src="<?php echo get_stylesheet_directory_uri() . '/assets/img/section-4-bg.jpg'; ?>"> -->
+<div id="section4" class="section-container section-4 bg-transparent position-relative text-light w-100 vh-100 px-site py-5 d-flex flex-column justify-content-center" data-background-src="<?php echo get_stylesheet_directory_uri() . '/assets/img/section-4-bg.jpg'; ?>">
     <div class="section-intro text-center">
         <h1 class="section-heading">Join our global network</h1>
     </div>

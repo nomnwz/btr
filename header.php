@@ -17,14 +17,14 @@
     <div id="splash" class="bg-dark text-light w-100 vh-100 position-fixed top-0 left-0">
         <div class="splash-container d-flex flex-column justify-content-between">
             <div class="d-flex flex-column justify-content-start align-items-center">
-                <h1 class="title">BTR</h1>
-                <h5 class="subtitle">Better Than Reality</h5>
+                <h1 class="title"><?php _e( 'BTR', 'btr' ); ?></h1>
+                <h5 class="subtitle"><?php _e( 'Better Than Reality', 'btr' ); ?></h5>
             </div>
             <div class="d-flex flex-column justify-content-end align-items-center">
                 <div class="content">
-                    <p><span>Where only</span> extraordinary people succeed...<p>
+                    <p><span><?php _e( 'Where only', 'btr' ); ?></span> <?php _e( 'extraordinary people succeed...', 'btr' ); ?><p>
                 </div>
-                <button id="enterSite" class="btn btn-lg px-5 rounded-0">ENTER</button>
+                <button id="enterSite" class="btn btn-lg px-5 rounded-0 text-uppercase"><?php _e( 'Enter', 'btr' ); ?></button>
             </div>
         </div>
     </div>

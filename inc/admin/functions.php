@@ -206,8 +206,8 @@ function btr_admin_otp_history_page_callback() {
                         <td><?php echo $obj->user_ip; ?></td>
                         <td><?php echo $obj->otp; ?></td>
                         <td><?php echo $obj->visits; ?></td>
-                        <td><?php echo $obj->is_accessed; ?></td>
-                        <td><?php echo $obj->is_expired; ?></td>
+                        <td><?php echo $obj->is_accessed ? 'Yes' : 'No'; ?></td>
+                        <td><?php echo $obj->is_expired ? 'Yes' : 'No'; ?></td>
                         <td><?php echo $obj->created_at; ?></td>
                         <td><?php echo $obj->accessed_at; ?></td>
                         <td><?php echo $obj->expires_at; ?></td>
