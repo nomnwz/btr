@@ -83,6 +83,7 @@ jQuery(document).ready(function($) {
      */
     $(function() {
         $(document).on("strictload", function(e) {
+            // $(window).trigger("scroll")
             if ($("#videoAutoplay").length) {
                 loadVideo("#videoAutoplay", true, 0)
             }
@@ -196,132 +197,318 @@ jQuery(document).ready(function($) {
      * Animation
      */
     $(function() {
+        // /**
+        //  * Global
+        //  */
+        // $(function() {
+        //     var animationContainer = ".animation-container"
+        //     $(window).scroll(function(e) {
+        //         isInView(animationContainer)
+        //     })
+        //     $(window).resize(function(e) {
+        //         isInView(animationContainer)
+        //     })
+        // })
+
+        // /**
+        //  * Animation
+        //  */
+        //  $(function() {
+        //     var $element    = $(".animation-container")
+        //     var breakpoint  = 0
+        //     $(window).scroll(function(e) {
+        //         if ($element.hasClass("in-view")) {
+        //             var elementHeight       = $element.outerHeight()
+        //             var elementHalfHeight   = elementHeight / 2
+        //             var elementTop          = $element.offset().top
+        //             var elementBottom       = elementTop + elementHeight
+        //             var windowTop           = $(window).scrollTop()
+        //             breakpoint              = windowTop + elementHalfHeight
+
+        //             if ((windowTop >= elementTop) &&
+        //                 (windowTop <= breakpoint)) {
+
+        //             } else {
+                        
+        //             }
+        //         }
+        //     })
+        // })
+
+        // /**
+        //  * #1
+        //  */
+        // $(function() {
+        //     if (!$("#animation1").length) return
+
+        //     var windowWidth     = $(window).width()
+        //     var windowHeight    = $(window).height()
+        //     var animation       = $("#animation1")
+        //     var content         = animation.find(".animation-content")
+        //     var contentWidth    = content.width()
+        //     var contentOT       = content.offset().top
+        //     var contentLeftTemp = ""
+        //     var contentFS       = parseInt(content.css("font-size"))
+        //     var contentH2       = content.find("h2")
+        //     var contentH2FS     = parseInt(contentH2.css("font-size"))
+        //     var contentH2FSTemp = 0
+        //     var lastScrollTop   = 0
+
+        //     animation.css({
+        //         height: contentWidth + windowWidth - windowHeight
+        //     })
+
+        //     var contentH2FSPStop = 0
+
+        //     $(window).scroll(function(e) {
+        //         var scrollTop   = $(this).scrollTop()
+        //         var scrollDir   = ""
+        //         var scrolledBy  = 0
+    
+        //         if (scrollTop < lastScrollTop) {
+        //             scrollDir = "up"
+        //         } else {
+        //             scrollDir = "down"
+        //         }
+    
+        //         scrolledBy      = lastScrollTop - scrollTop
+        //         lastScrollTop   = scrollTop
+
+        //         $(function() {
+        //             if (scrolledBy < 0) {
+        //                 scrolledBy = scrolledBy * (-1)
+        //             }
+
+        //             var animationHeight     = animation.height()
+        //             var contentLeft         = parseInt(content.css("left"))
+        //             var contentH2FSTemp2    = parseInt(contentH2.css("font-size"))
+        //             var modifyFont          = scrolledBy / windowHeight * contentH2FSTemp2
+
+        //             if ((scrollTop >= contentOT) && (scrollTop <= (contentOT + animationHeight))) {
+        //                 if ((scrollTop >= contentOT / 2) && (scrollTop <= (contentOT + animationHeight) / 2)) {
+        //                     // if (scrollTop == (contentOT / 2)) {
+        //                     //     contentLeftTemp = contentLeft
+        //                     // }
+        //                     if (scrollDir == "up") {
+        //                         content.css({
+        //                             position: "fixed",
+        //                             width: "",
+        //                             left: contentLeft+scrolledBy
+        //                         })
+        //                     } else {
+        //                         content.css({
+        //                             position: "fixed",
+        //                             width: "",
+        //                             left: contentLeft-scrolledBy
+        //                         })
+        //                     }
+
+        //                     contentH2.css({
+        //                         fontSize: contentH2FS
+        //                     })
+        //                 } else {
+        //                     if (scrollDir == "up") {
+        //                         content.css({
+        //                             width: "100%"
+        //                         })
+
+        //                         if (scrollTop < contentH2FSPStop) {
+        //                             content.css({
+        //                                 left: (contentLeft+scrolledBy) / 2 * (-1)
+        //                             })
+    
+        //                             contentH2.css({
+        //                                 fontSize: contentH2FSTemp2+modifyFont
+        //                             })
+        //                         }
+        //                     } else {
+        //                         content.css({
+        //                             width: "100%"
+        //                         })
+
+        //                         if (contentH2FSTemp2-modifyFont > 72) {
+        //                             contentH2FSPStop    = scrollTop
+        //                             content.css({
+        //                                 left: (contentLeft-scrolledBy) / 2 * (-1)
+        //                             })
+
+        //                             contentH2.css({
+        //                                 fontSize: contentH2FSTemp2-modifyFont
+        //                             })
+        //                         }
+        //                     }
+        //                 }
+        //             } else if (scrollTop < contentOT) {
+        //                 content.css({
+        //                     position: "absolute",
+        //                     left: "100vw"
+        //                 })
+
+        //                 contentH2.css({
+        //                     fontSize: contentH2FS
+        //                 })
+        //             } else if (scrollTop > (contentOT + animationHeight)) {
+        //                 content.css({
+        //                     position: "sticky",
+        //                     top: "0"
+        //                 })
+
+        //                 contentH2.css({
+        //                     fontSize: contentH2FSTemp2
+        //                 })
+        //             }
+
+        //             if (scrollTop <= (contentOT + animationHeight)) {
+        //                 content.css({
+        //                     position: "fixed",
+        //                     top: "0"
+        //                 })
+        //             }
+        //         })
+        //     })
+        // })
+
         /**
          * #1
          */
         $(function() {
-            if (!$("#animation1").length) return;
+            if (!$("#animation1").length) return
 
-            var windowWidth     = $(window).width()
-            var windowHeight    = $(window).height()
-            var animation       = $("#animation1")
-            var content         = animation.find(".animation-content")
-            var contentWidth    = content.width()
-            var contentOT       = content.offset().top
-            var contentFS       = parseInt(content.css("font-size"))
-            var contentH2       = content.find("h2")
-            var contentH2FS     = parseInt(contentH2.css("font-size"))
-            var contentH2FSTemp = 0
-            var lastScrollTop   = 0
+            var $window                     = $(window)
+            var windowWidth                 = $window.width()
+            var windowHeight                = $window.height()
+            var $element                    = $("#animation1")
+            var $content                    = $element.find(".animation-content")
+            var contentWidth                = $content.outerWidth()
+            var contentHeight               = $content.outerHeight()
+            var contentTop                  = $content.offset().top
+            var contentLeft                 = parseInt($content.css("left"))
+            var contentFontSize             = parseInt($content.css("font-size"))
+            var $contentH2                  = $content.find("h2")
+            var contentH2FontSize           = parseInt($contentH2.css("font-size"))
+            var contentH2FontSizeBreakpoint = 0
+            var lastScrollTop               = 0
 
-            animation.css({
-                height: contentWidth + windowWidth - windowHeight
+            // Make height scrollable
+            $element.css({
+                height: (((contentWidth + windowWidth) / 2) - windowHeight)
             })
 
-            var contentH2FSPStop = 0
-
-            $(window).scroll(function(e) {
+            $window.scroll(function() {
                 var scrollTop   = $(this).scrollTop()
                 var scrollDir   = ""
                 var scrolledBy  = 0
-    
+
                 if (scrollTop < lastScrollTop) {
                     scrollDir = "up"
                 } else {
                     scrollDir = "down"
                 }
-    
+
                 scrolledBy      = lastScrollTop - scrollTop
                 lastScrollTop   = scrollTop
 
-                $(function() {
-                    if (scrolledBy < 0) {
-                        scrolledBy = scrolledBy * (-1)
+                var elementHeight           = $element.outerHeight()
+                var contentLeftTemp         = parseInt($content.css("left"))
+                var contentLeftNew          = contentLeftTemp + (scrolledBy * 2)
+                var contentH2FontSizeTemp   = parseInt($contentH2.css("font-size"))
+                var contentH2FontSizeNew    = contentH2FontSizeTemp + (contentH2FontSizeTemp / windowHeight * scrolledBy * 2)
+                var contentBottom           = (contentTop + elementHeight)
+                var contentMiddle           = (contentTop + (elementHeight / 2))
+                var isAboveContentTop       = (scrollTop < contentTop)
+                var isBelowContentTop       = (scrollTop >= contentTop)
+                var isAboveContentBottom    = (scrollTop <= contentBottom)
+                var isBelowContentBottom    = (scrollTop > contentBottom)
+                var isContentInView         = (isBelowContentTop && isAboveContentBottom)
+                var isBelowContentMiddle    = (scrollTop >= contentMiddle)
+                var isContentBottomInView   = (isBelowContentMiddle && isAboveContentBottom)
+                var isAtContentMiddle       = (scrollTop == contentMiddle)
+
+                if ((scrollDir == "down") || (scrollDir == "up")) {
+                    if (isAboveContentTop) { // Above Content
+                        $content.css({
+                            position: "absolute",
+                            width: "",
+                            left: contentLeft
+                        })
                     }
 
-                    var animationHeight     = animation.height()
-                    var contentLeft         = parseInt(content.css("left"))
-                    var contentH2FSTemp2    = parseInt(contentH2.css("font-size"))
-                    var modifyFont          = scrolledBy / windowHeight * contentH2FSTemp2
-
-                    if ((scrollTop >= contentOT) && (scrollTop <= (contentOT + animationHeight))) {
-                        if ((scrollTop >= contentOT / 2) && (scrollTop <= (contentOT + animationHeight) / 2)) {
-                            if (scrollDir == "up") {
-                                content.css({
-                                    position: "fixed",
-                                    width: "",
-                                    left: contentLeft+scrolledBy
-                                })
-                            } else {
-                                content.css({
-                                    position: "fixed",
-                                    width: "",
-                                    left: contentLeft-scrolledBy
-                                })
-                            }
-
-                            contentH2.css({
-                                fontSize: contentH2FS
+                    if (isAboveContentBottom) { // Above and Between Content
+                        if (!isContentBottomInView) { // Top Half
+                            $contentH2.css({
+                                fontSize: contentH2FontSize
                             })
-                        } else {
-                            if (scrollDir == "up") {
-                                content.css({
-                                    width: "100%"
+                        }
+
+                        if (isContentBottomInView) { // Bottom Half
+                            $content.css({
+                                position: "fixed",
+                                top: "0"
+                            })
+                        }
+                    }
+                }
+
+                if (scrollDir == "down") {
+                    if (isContentInView) {
+                        if (!isContentBottomInView) { // Top Half
+                            $content.css({
+                                position: "fixed",
+                                left: contentLeftNew
+                            })
+                        } else { // Bottom Half
+                            if (contentH2FontSizeNew > 71) { // Do something when font size reaches 72
+                                $content.css({
+                                    width: "100%",
+                                    left: contentLeftNew / 2
                                 })
 
-                                if (scrollTop < contentH2FSPStop) {
-                                    content.css({
-                                        left: (contentLeft+scrolledBy) / 2 * (-1)
-                                    })
-    
-                                    contentH2.css({
-                                        fontSize: contentH2FSTemp2+modifyFont
-                                    })
-                                }
-                            } else {
-                                content.css({
-                                    width: "100%"
+                                contentH2FontSizeBreakpoint = scrollTop
+                                $contentH2.css({
+                                    fontSize: contentH2FontSizeNew
+                                })
+                            } else { // Do something when font size is already 72
+                                $content.css({
+                                    left: "0"
                                 })
 
-                                if (contentH2FSTemp2-modifyFont > 72) {
-                                    contentH2FSPStop = scrollTop
-                                    content.css({
-                                        left: (contentLeft-scrolledBy) / 2 * (-1)
-                                    })
-
-                                    contentH2.css({
-                                        fontSize: contentH2FSTemp2-modifyFont
-                                    })
-                                }
+                                $contentH2.css({
+                                    fontSize: 72
+                                })
                             }
                         }
-                    } else if (scrollTop < contentOT) {
-                        content.css({
-                            position: "absolute",
-                            left: "100vw"
-                        })
-
-                        contentH2.css({
-                            fontSize: contentH2FS
-                        })
-                    } else if (scrollTop > (contentOT + animationHeight)) {
-                        content.css({
-                            position: "sticky",
-                            top: "0"
-                        })
-
-                        contentH2.css({
-                            fontSize: contentH2FSTemp2
-                        })
                     }
+                }
+    
+                if (scrollDir == "up") {
+                    if (isContentInView) {
+                        if (!isContentBottomInView) { // Top Half
+                            $content.css({
+                                position: "fixed",
+                                left: contentLeftNew
+                            })
+                        } else { // Bottom Half
+                            if (scrollTop < contentH2FontSizeBreakpoint) {
+                                $content.css({
+                                    width: "100%",
+                                    left: contentLeftNew / 2
+                                })
 
-                    if (scrollTop <= (contentOT + animationHeight)) {
-                        content.css({
-                            position: "fixed",
-                            top: "0"
-                        })
+                                $contentH2.css({
+                                    fontSize: contentH2FontSizeNew
+                                })
+                            } else {
+                                $content.css({
+                                    left: "0"
+                                })
+
+                                $contentH2.css({
+                                    fontSize: 72
+                                })
+                            }
+                        }
                     }
-                })
+                }
             })
         })
     })
@@ -592,6 +779,28 @@ jQuery(document).ready(function($) {
         $(".top-video .elementor-container").css({
             "height": "calc(100vh - "+topOffset+"px)",
             "min-height": "calc(100vh - "+topOffset+"px"
+        })
+    }
+
+    const isInView = (el) => {
+        var $window                  = $(window)
+        var windowHeight            = $window.height()
+        var windowTop               = $window.scrollTop()
+        var windowBottom            = (windowTop + windowHeight)
+
+        $.each($(el), function() {
+            var $element        = $(this)
+            var elementHeight   = $element.outerHeight()
+            var elementTop      = $element.offset().top
+            var elementBottom   = (elementTop + elementHeight)
+        
+            //check to see if this current container is within viewport
+            if ((windowTop >= elementTop) &&
+                (windowTop <= elementBottom)) {
+                $element.addClass("in-view")
+            } else {
+                $element.removeClass("in-view")
+            }
         })
     }
 })
