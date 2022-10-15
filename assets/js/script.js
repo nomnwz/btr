@@ -205,7 +205,7 @@ jQuery(document).ready(function($) {
             $.each($elements, function() {
                 var $element        = $(this)
                 var stickyItem      = $element.find(".section-intro")
-                var stickyBottom    = parseInt(stickyItem.css("top")) + stickyItem.outerHeight() + 60
+                var stickyBottom    = parseInt(stickyItem.css("top")) + stickyItem.outerHeight() + 0
                 var content         = $element.find(".section-content")
                 content.css({
                     "margin-top": stickyBottom
@@ -234,27 +234,27 @@ jQuery(document).ready(function($) {
             scrolledBy      = lastScrollTop - scrollTop
             lastScrollTop   = scrollTop
 
-            /**
-             * Header Transparency
-             */
-            $(function() {
-                var header = $("header")
-                if (header.length) {
-                    if ($(window).scrollTop() > $("#main").offset().top) {
-                        header.css({
-                            "height": "59px",
-                            "--bs-bg-opacity": 1
-                        })
-                        header.addClass("border-bottom border-light")
-                    } else {
-                        header.css({
-                            "height": "60px",
-                            "--bs-bg-opacity": 0.5
-                        })
-                        header.removeClass("border-bottom border-light")
-                    }
-                }
-            })
+            // /**
+            //  * Header Transparency
+            //  */
+            // $(function() {
+            //     var header = $("header")
+            //     if (header.length) {
+            //         if ($(window).scrollTop() > $("#main").offset().top) {
+            //             header.css({
+            //                 "height": "119px",
+            //                 "--bs-bg-opacity": 1
+            //             })
+            //             header.addClass("border-bottom border-light")
+            //         } else {
+            //             header.css({
+            //                 "height": "120px",
+            //                 "--bs-bg-opacity": 0.5
+            //             })
+            //             header.removeClass("border-bottom border-light")
+            //         }
+            //     }
+            // })
 
             /**
              * Video Autplay
@@ -600,11 +600,13 @@ jQuery(document).ready(function($) {
 const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.classList.remove("animation-wipe-out")
-            entry.target.classList.add("animation-wipe-in")
+            if (!entry.target.classList.contains("animation-wipe-in")) {
+                entry.target.classList.add("animation-wipe-in")
+            }
         } else {
-            entry.target.classList.remove("animation-wipe-in")
-            entry.target.classList.add("animation-wipe-out")
+            if (entry.target.classList.contains("animation-wipe-in")) {
+                entry.target.classList.remove("animation-wipe-in")
+            }
         }
     })
 })

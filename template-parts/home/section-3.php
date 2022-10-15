@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="col-12 col-md-6 order-1 order-md-2 mt-5 mt-5 mt-md-10 mt-lg-15 position-relative">
-        <div class="section-intro sticky-top" sticky-top="90">
+        <div class="section-intro sticky-top" sticky-top="30">
             <h2 class="section-heading ms-md-5"><?php _e( 'BTR Selection', 'btr' ); ?></h2>
         </div>
     </div>

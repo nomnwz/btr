@@ -1,6 +1,6 @@
 <div id="section1" class="section-container section-1 section-sticky position-relative bg-dark text-light w-100 vh-md-200 px-site py-5 d-flex row mx-0">
     <div class="col-12 col-md-6 order-1 order-md-1 mt-5 mt-md-10 mt-lg-15 position-relative">
-        <div class="section-intro sticky-top" sticky-top="90">
+        <div class="section-intro sticky-top" sticky-top="30">
             <h2 class="section-heading me-md-5"><?php _e( 'The BTR Experience', 'btr' ); ?></h2>
         </div>
     </div>

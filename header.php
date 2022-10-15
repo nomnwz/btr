@@ -34,7 +34,7 @@
             </div>
         </div>
         <div id="root">
-            <header class="bg-dark text-light sticky-top">
+            <header class="text-light">
                 <div class="header-wrap">
                     <div class="site-branding ps-site">
                         <?php
