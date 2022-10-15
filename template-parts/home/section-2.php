@@ -1,12 +1,12 @@
-<!-- <div id="section2" class="section-container section-2 image-background fixed-background position-relative text-light w-100 vh-100 px-site py-5 d-flex flex-column justify-content-center" data-background-src="<?php echo get_stylesheet_directory_uri() . '/assets/img/section-2-bg.jpg'; ?>"> -->
-<div id="section2" class="section-container section-2 bg-transparent position-relative text-light w-100 vh-100 px-site py-5 d-flex flex-column justify-content-center" data-background-src="<?php echo get_stylesheet_directory_uri() . '/assets/img/section-2-bg.jpg'; ?>">
-    <div class="section-intro text-center">
-        <h1 class="section-heading">Who is BTR</h1>
+<div id="section2" class="section-container section-2 bg-transparent position-relative text-light w-100 vh-100 px-site py-5 d-flex flex-column justify-content-center">
+    <div class="section-intro text-md-center">
+        <h2 class="section-heading"><?php _e( 'BTR’s Team', 'btr' ); ?></h2>
     </div>
     <div class="section-content mt-10">
         <div>
-            <p>BTR was conceived in the Middle East by a small group of elite intelligence and military operatives who wanted to create experiences for individuals who had already achieved extraordinary success in their professional lives, but wanted to continue to challenge themselves with the kinds of covert intelligence and para-military style missions that you would find on the battlefields, streets, and back alleys of averse nations; all while simulating the secret and murky world of global clandestine operations.</p>
-            <p>This small cadre has transformed their global network, covert experiences, and specialized training into a one-of-a-kind company that now provides exclusive clientele with experiences that cannot be found anywhere else.</p>
+            <p><?php _e( 'CIA, DIA & FBI operatives leverage their covert experience, specialized training and global network to provide the world’s most exclusive clientele ultra-challenging mission scenarios in which only the most extraordinary succeed.', 'btr' ); ?></p>
+            <p><?php _e( 'We know all the right people, in all the right places, all over the world to create a once-in-a-lifetime experience - twice if you dare.', 'btr' ); ?></p>
+            <p><?php _e( 'BTR is supported by a global team of security, medical and visual production professionals.', 'btr' ); ?></p>
         </div>
     </div>
 </div>

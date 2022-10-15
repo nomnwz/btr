@@ -1,6 +1,6 @@
 /*
 * Theme Name: BTR
-* Version: 1.0.4.6
+* Version: 1.0.4.7
 * Author: CodeIcon
 * Text Domain: btr
 */
@@ -120,6 +120,74 @@ a:hover {
 
 .pe-site, .px-site {
     padding-right: 60px;
+}
+
+.vh-150 {
+    min-height: 150vh;
+}
+
+.vh-200 {
+    min-height: 200vh;
+}
+
+.vh-300 {
+    min-height: 300vh;
+}
+
+@media (min-width: 576px) {
+    .vh-sm-150 {
+        min-height: 150vh;
+    }
+    
+    .vh-sm-200 {
+        min-height: 200vh;
+    }
+    
+    .vh-sm-300 {
+        min-height: 300vh;
+    }
+}
+
+@media (min-width: 768px) {
+    .vh-md-150 {
+        min-height: 150vh;
+    }
+    
+    .vh-md-200 {
+        min-height: 200vh;
+    }
+    
+    .vh-md-300 {
+        min-height: 300vh;
+    }
+}
+
+@media (min-width: 992px) {
+    .vh-lg-150 {
+        min-height: 150vh;
+    }
+    
+    .vh-lg-200 {
+        min-height: 200vh;
+    }
+    
+    .vh-lg-300 {
+        min-height: 300vh;
+    }
+}
+
+@media (min-width: 1200px) {
+    .vh-xl-150 {
+        min-height: 150vh;
+    }
+    
+    .vh-xl-200 {
+        min-height: 200vh;
+    }
+    
+    .vh-xl-300 {
+        min-height: 300vh;
+    }
 }
 
 #splash {
@@ -343,9 +411,11 @@ header {
 
 #videoAutoplay video {
     min-width: 100%;
-    max-width: 100%;
+    min-height: calc(100% + 60px);
     position: fixed;
     top: -42px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: -9999;
     object-fit: fill;
 }
@@ -394,10 +464,6 @@ header {
     position: relative;
 }
 
-.section-1, .section-3 {
-    min-height: 300vh;
-}
-
 .animation-container h2 {
     font-family: 'Gibson';
     font-size: 40rem;
@@ -422,25 +488,41 @@ header {
     justify-content: center;
 }
 
-.section-intro {
-    top: 0;
-    left: calc(100vw - 60px - calc(var(--bs-gutter-x) * .5));
-    position: absolute;
-    width: 100%;
-}
-
 .section-intro.sticky-top {
     z-index: 999;
 }
 
-h1.section-heading {
-    font-size: 6rem;
+h2.section-heading {
+    font-size: 2rem;
     letter-spacing: 1.2px;
 }
 
-.section-content {
-    position: absolute;
-    width: 100%;
+@media (min-width: 576px) {
+    h2.section-heading {
+        font-size: 2.7rem;
+        letter-spacing: 1.2px;
+    }
+}
+
+@media (min-width: 768px) {
+    h2.section-heading {
+        font-size: 3.4rem;
+        letter-spacing: 1.2px;
+    }
+}
+
+@media (min-width: 992px) {
+    h2.section-heading {
+        font-size: 4.1rem;
+        letter-spacing: 1.2px;
+    }
+}
+
+@media (min-width: 1200px) {
+    h2.section-heading {
+        font-size: 4.8rem;
+        letter-spacing: 1.2px;
+    }
 }
 
 .section-4 .section-content {
@@ -450,21 +532,6 @@ h1.section-heading {
 .list-group-item.content {
     font-size: 20px;
     line-height: 1.7;
-}
-
-.section-1 .list-group-item.content:before {
-    content: "\f3bf";
-    font-family: 'Font Awesome 6 Free';
-    font-size: 18px;
-    font-weight: 700;
-    display: inline-block;
-    margin-right: 10px;
-    transform: rotate(180deg);
-    -webkit-transform: rotate(180deg);
-}
-
-.section-1 .list-group-item.content p {
-    text-indent: 50px;
 }
 
 .training-list-item.list-group-item.content:before {
@@ -480,7 +547,7 @@ h1.section-heading {
 
 .training-list-item.list-group-item.content {
     font-size: 24px;
-    line-height: 1.2;
+    line-height: 1.4;
 }
 
 .training-list-item.list-group-item.content p {
@@ -557,7 +624,13 @@ h1.section-heading {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-
+    .section-contact .section-content.animation-wipe-in {
+        animation: wipe-in .6s;
+    }
+  
+    .section-contact .section-content.animation-wipe-out {
+        animation: wipe-out .6s;
+    }
 }
 
 @keyframes wipe-in {
@@ -576,28 +649,4 @@ h1.section-heading {
 	50% {
 		transform: scale(0, .025);
 	}
-}
-
-@media (max-width: 575px) {
-    h1.section-heading {
-        font-size: 2rem;
-    }
-}
-
-@media (min-width: 576px) {
-    h1.section-heading {
-        font-size: 3rem;
-    }
-}
-
-@media (min-width: 768px) {
-    h1.section-heading {
-        font-size: 4rem;
-    }
-}
-
-@media (min-width: 992px) {
-    h1.section-heading {
-        font-size: 4.5rem;
-    }
 }

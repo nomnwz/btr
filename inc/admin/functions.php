@@ -73,6 +73,28 @@ function btr_admin_register_otp_settings() {
             )
         ),
         array(
+            'id'        => 'contact_address',
+            'title'     => 'Contact Address',
+            'callback'  => 'btr_admin_textarea_field',
+            'page'      => 'otp_options',
+            'section'   => 'otp_general_options',
+            'args'		=> array(
+                'label_for'     => 'contact_address',
+                'option_name'   => 'otp_options'
+            )
+        ),
+        array(
+            'id'        => 'contact_phone',
+            'title'     => 'Contact Phone',
+            'callback'  => 'btr_admin_tel_field',
+            'page'      => 'otp_options',
+            'section'   => 'otp_general_options',
+            'args'		=> array(
+                'label_for'     => 'contact_phone',
+                'option_name'   => 'otp_options'
+            )
+        ),
+        array(
             'id'        => 'contact_email',
             'title'     => 'Contact Email',
             'callback'  => 'btr_admin_email_field',
@@ -258,6 +280,26 @@ function btr_admin_email_field( $args ) {
     $value      = isset( $options[$args['label_for']] ) ? $options[$args['label_for']] : '';
     ?>
     <input id="<?php echo $id; ?>" name="<?php echo $name; ?>" type="email" class="regular-text" value="<?php echo $value; ?>" />
+    <?php
+}
+
+function btr_admin_textarea_field( $args ) {
+    $options    = get_option( $args['option_name'] );
+    $id         = $args['option_name'] . '_' . $args['label_for'];
+    $name       = $args['option_name'] . '[' . $args['label_for'] . ']';
+    $value      = isset( $options[$args['label_for']] ) ? $options[$args['label_for']] : '';
+    ?>
+    <textarea id="<?php echo $id; ?>" name="<?php echo $name; ?>" class="regular-text" rows="2"><?php echo $value; ?></textarea>
+    <?php
+}
+
+function btr_admin_tel_field( $args ) {
+    $options    = get_option( $args['option_name'] );
+    $id         = $args['option_name'] . '_' . $args['label_for'];
+    $name       = $args['option_name'] . '[' . $args['label_for'] . ']';
+    $value      = isset( $options[$args['label_for']] ) ? $options[$args['label_for']] : '';
+    ?>
+    <input id="<?php echo $id; ?>" name="<?php echo $name; ?>" type="tel" class="regular-text" value="<?php echo $value; ?>" />
     <?php
 }
 

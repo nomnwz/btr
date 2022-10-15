@@ -83,7 +83,6 @@ jQuery(document).ready(function($) {
      */
     $(function() {
         $(document).on("strictload", function(e) {
-            // $(window).trigger("scroll")
             if ($("#videoAutoplay").length) {
                 loadVideo("#videoAutoplay", true, 0)
             }
@@ -182,13 +181,31 @@ jQuery(document).ready(function($) {
      * Sections
      */
     $(function() {
-        var container   = $(".section-1, .section-3")
-        if (container.length && $(window).width() > 767) {
-            var stickyItem      = container.find(".section-intro")
-            var stickyBottom    = parseInt(stickyItem.css("top")) + stickyItem.outerHeight() + 60
-            var content         = container.find(".section-content")
-            content.css({
-                "margin-top": stickyBottom
+        var $elements   = $(".section-container")
+        if ($elements.length && $(window).width() > 767) {
+            $.each($elements, function() {
+                var $element = $(this)
+                if ($element.hasClass("section-animate-it")) {
+                    createSectionAnimation(this)
+                }
+            })
+        }
+    })
+
+    /**
+     * Section Sticky
+     */
+    $(function() {
+        var $elements   = $(".section-sticky")
+        if ($elements.length && $(window).width() > 767) {
+            $.each($elements, function() {
+                var $element        = $(this)
+                var stickyItem      = $element.find(".section-intro")
+                var stickyBottom    = parseInt(stickyItem.css("top")) + stickyItem.outerHeight() + 60
+                var content         = $element.find(".section-content")
+                content.css({
+                    "margin-top": stickyBottom
+                })  
             })
         }
     })
@@ -198,319 +215,171 @@ jQuery(document).ready(function($) {
      */
     $(function() {
         // /**
-        //  * Global
-        //  */
-        // $(function() {
-        //     var animationContainer = ".animation-container"
-        //     $(window).scroll(function(e) {
-        //         isInView(animationContainer)
-        //     })
-        //     $(window).resize(function(e) {
-        //         isInView(animationContainer)
-        //     })
-        // })
-
-        // /**
-        //  * Animation
-        //  */
-        //  $(function() {
-        //     var $element    = $(".animation-container")
-        //     var breakpoint  = 0
-        //     $(window).scroll(function(e) {
-        //         if ($element.hasClass("in-view")) {
-        //             var elementHeight       = $element.outerHeight()
-        //             var elementHalfHeight   = elementHeight / 2
-        //             var elementTop          = $element.offset().top
-        //             var elementBottom       = elementTop + elementHeight
-        //             var windowTop           = $(window).scrollTop()
-        //             breakpoint              = windowTop + elementHalfHeight
-
-        //             if ((windowTop >= elementTop) &&
-        //                 (windowTop <= breakpoint)) {
-
-        //             } else {
-                        
-        //             }
-        //         }
-        //     })
-        // })
-
-        // /**
         //  * #1
         //  */
         // $(function() {
         //     if (!$("#animation1").length) return
 
-        //     var windowWidth     = $(window).width()
-        //     var windowHeight    = $(window).height()
-        //     var animation       = $("#animation1")
-        //     var content         = animation.find(".animation-content")
-        //     var contentWidth    = content.width()
-        //     var contentOT       = content.offset().top
-        //     var contentLeftTemp = ""
-        //     var contentFS       = parseInt(content.css("font-size"))
-        //     var contentH2       = content.find("h2")
-        //     var contentH2FS     = parseInt(contentH2.css("font-size"))
-        //     var contentH2FSTemp = 0
-        //     var lastScrollTop   = 0
+        //     var $window                     = $(window)
+        //     var windowWidth                 = $window.width()
+        //     var windowHeight                = $window.height()
+        //     var $element                    = $("#animation1")
+        //     var $content                    = $element.find(".animation-content")
+        //     var contentWidth                = $content.outerWidth()
+        //     var contentHeight               = $content.outerHeight()
+        //     var contentTop                  = $content.offset().top
+        //     var contentLeft                 = parseInt($content.css("left"))
+        //     var contentFontSize             = parseInt($content.css("font-size"))
+        //     var $contentH2                  = $content.find("h2")
+        //     var contentH2FontSize           = parseInt($contentH2.css("font-size"))
+        //     var contentH2FontSizeBreakpoint = 0
+        //     var lastScrollTop               = 0
 
-        //     animation.css({
-        //         height: contentWidth + windowWidth - windowHeight
+        //     // Make height scrollable
+        //     $element.css({
+        //         height: (((contentWidth + windowWidth) / 2) - windowHeight)
         //     })
 
-        //     var contentH2FSPStop = 0
+        //     var elementHeightDefault = $element.outerHeight()
 
-        //     $(window).scroll(function(e) {
+        //     $window.scroll(function() {
         //         var scrollTop   = $(this).scrollTop()
         //         var scrollDir   = ""
         //         var scrolledBy  = 0
-    
+
         //         if (scrollTop < lastScrollTop) {
         //             scrollDir = "up"
         //         } else {
         //             scrollDir = "down"
         //         }
-    
+
         //         scrolledBy      = lastScrollTop - scrollTop
         //         lastScrollTop   = scrollTop
 
-        //         $(function() {
-        //             if (scrolledBy < 0) {
-        //                 scrolledBy = scrolledBy * (-1)
+        //         var elementHeight           = $element.outerHeight()
+        //         var contentLeftTemp         = parseInt($content.css("left"))
+        //         var contentLeftNew          = contentLeftTemp + (scrolledBy * 2)
+        //         var contentH2FontSizeTemp   = parseInt($contentH2.css("font-size"))
+        //         var contentH2FontSizeNew    = contentH2FontSizeTemp + (contentH2FontSizeTemp / windowHeight * scrolledBy * 2)
+        //         var contentBottom           = (contentTop + elementHeight)
+        //         var contentMiddle           = (contentTop + (elementHeight / 2))
+        //         var isAboveContentTop       = (scrollTop < contentTop)
+        //         var isBelowContentTop       = (scrollTop >= contentTop)
+        //         var isAboveContentBottom    = (scrollTop <= contentBottom)
+        //         var isBelowContentBottom    = (scrollTop > contentBottom)
+        //         var isContentInView         = (isBelowContentTop && isAboveContentBottom)
+        //         var isBelowContentMiddle    = (scrollTop >= contentMiddle)
+        //         var isContentBottomInView   = (isBelowContentMiddle && isAboveContentBottom)
+        //         var isAtContentMiddle       = (scrollTop == contentMiddle)
+
+        //         if ((scrollDir == "down") || (scrollDir == "up")) {
+        //             if (isAboveContentTop) { // Above Content
+        //                 $content.css({
+        //                     position: "absolute",
+        //                     width: "",
+        //                     left: contentLeft
+        //                 })
         //             }
 
-        //             var animationHeight     = animation.height()
-        //             var contentLeft         = parseInt(content.css("left"))
-        //             var contentH2FSTemp2    = parseInt(contentH2.css("font-size"))
-        //             var modifyFont          = scrolledBy / windowHeight * contentH2FSTemp2
-
-        //             if ((scrollTop >= contentOT) && (scrollTop <= (contentOT + animationHeight))) {
-        //                 if ((scrollTop >= contentOT / 2) && (scrollTop <= (contentOT + animationHeight) / 2)) {
-        //                     // if (scrollTop == (contentOT / 2)) {
-        //                     //     contentLeftTemp = contentLeft
-        //                     // }
-        //                     if (scrollDir == "up") {
-        //                         content.css({
-        //                             position: "fixed",
-        //                             width: "",
-        //                             left: contentLeft+scrolledBy
-        //                         })
-        //                     } else {
-        //                         content.css({
-        //                             position: "fixed",
-        //                             width: "",
-        //                             left: contentLeft-scrolledBy
-        //                         })
-        //                     }
-
-        //                     contentH2.css({
-        //                         fontSize: contentH2FS
+        //             if (isAboveContentBottom) { // Above and Between Content
+        //                 if (!isContentBottomInView) { // Top Half
+        //                     $contentH2.css({
+        //                         fontSize: contentH2FontSize
         //                     })
-        //                 } else {
-        //                     if (scrollDir == "up") {
-        //                         content.css({
-        //                             width: "100%"
+        //                 }
+
+        //                 if (isContentBottomInView) { // Bottom Half
+        //                     if (scrollTop < contentH2FontSizeBreakpoint) {
+        //                         $element.css({
+        //                             height: elementHeightDefault
         //                         })
 
-        //                         if (scrollTop < contentH2FSPStop) {
-        //                             content.css({
-        //                                 left: (contentLeft+scrolledBy) / 2 * (-1)
-        //                             })
-    
-        //                             contentH2.css({
-        //                                 fontSize: contentH2FSTemp2+modifyFont
-        //                             })
-        //                         }
-        //                     } else {
-        //                         content.css({
-        //                             width: "100%"
+        //                         $content.css({
+        //                             position: "fixed",
+        //                             height: "100%",
+        //                             top: "0",
+        //                             transform: ""
         //                         })
-
-        //                         if (contentH2FSTemp2-modifyFont > 72) {
-        //                             contentH2FSPStop    = scrollTop
-        //                             content.css({
-        //                                 left: (contentLeft-scrolledBy) / 2 * (-1)
-        //                             })
-
-        //                             contentH2.css({
-        //                                 fontSize: contentH2FSTemp2-modifyFont
-        //                             })
-        //                         }
         //                     }
         //                 }
-        //             } else if (scrollTop < contentOT) {
-        //                 content.css({
-        //                     position: "absolute",
-        //                     left: "100vw"
-        //                 })
-
-        //                 contentH2.css({
-        //                     fontSize: contentH2FS
-        //                 })
-        //             } else if (scrollTop > (contentOT + animationHeight)) {
-        //                 content.css({
-        //                     position: "sticky",
-        //                     top: "0"
-        //                 })
-
-        //                 contentH2.css({
-        //                     fontSize: contentH2FSTemp2
-        //                 })
         //             }
+        //         }
 
-        //             if (scrollTop <= (contentOT + animationHeight)) {
-        //                 content.css({
-        //                     position: "fixed",
-        //                     top: "0"
-        //                 })
+        //         if (scrollDir == "down") {
+        //             if (isContentInView) {
+        //                 if (!isContentBottomInView) { // Top Half
+        //                     $content.css({
+        //                         position: "fixed",
+        //                         left: contentLeftNew
+        //                     })
+        //                 } else { // Bottom Half
+        //                     if (contentH2FontSizeNew > 71) { // Do something when font size reaches 72
+        //                         $content.css({
+        //                             width: "100%",
+        //                             left: contentLeftNew / 2
+        //                         })
+
+        //                         contentH2FontSizeBreakpoint = scrollTop
+
+        //                         $contentH2.css({
+        //                             fontSize: contentH2FontSizeNew
+        //                         })
+        //                     } else { // Do something when font size is already 72
+        //                         $element.css({
+        //                             height: (elementHeightDefault * 72 / 640) + windowHeight
+        //                         })
+
+        //                         $content.css({
+        //                             position: "sticky",
+        //                             left: "0",
+        //                             height: "unset",
+        //                             top: "50%",
+        //                             transform: "translateY(-50%)"
+        //                         })
+
+        //                         $contentH2.css({
+        //                             fontSize: 72
+        //                         })
+        //                     }
+        //                 }
         //             }
-        //         })
+        //         }
+    
+        //         if (scrollDir == "up") {
+        //             if (isContentInView) {
+        //                 if (!isContentBottomInView) { // Top Half
+        //                     $content.css({
+        //                         position: "fixed",
+        //                         left: contentLeftNew
+        //                     })
+        //                 } else { // Bottom Half
+        //                     if (scrollTop < contentH2FontSizeBreakpoint) {
+        //                         $content.css({
+        //                             width: "100%",
+        //                             left: contentLeftNew / 2
+        //                         })
+
+        //                         $contentH2.css({
+        //                             fontSize: contentH2FontSizeNew
+        //                         })
+        //                     } else {
+        //                         $content.css({
+        //                             position: "sticky",
+        //                             left: "0",
+        //                             height: "unset",
+        //                             top: "50%",
+        //                             transform: "translateY(-50%)"
+        //                         })
+
+        //                         $contentH2.css({
+        //                             fontSize: 72
+        //                         })
+        //                     }
+        //                 }
+        //             }
+        //         }
         //     })
         // })
-
-        /**
-         * #1
-         */
-        $(function() {
-            if (!$("#animation1").length) return
-
-            var $window                     = $(window)
-            var windowWidth                 = $window.width()
-            var windowHeight                = $window.height()
-            var $element                    = $("#animation1")
-            var $content                    = $element.find(".animation-content")
-            var contentWidth                = $content.outerWidth()
-            var contentHeight               = $content.outerHeight()
-            var contentTop                  = $content.offset().top
-            var contentLeft                 = parseInt($content.css("left"))
-            var contentFontSize             = parseInt($content.css("font-size"))
-            var $contentH2                  = $content.find("h2")
-            var contentH2FontSize           = parseInt($contentH2.css("font-size"))
-            var contentH2FontSizeBreakpoint = 0
-            var lastScrollTop               = 0
-
-            // Make height scrollable
-            $element.css({
-                height: (((contentWidth + windowWidth) / 2) - windowHeight)
-            })
-
-            $window.scroll(function() {
-                var scrollTop   = $(this).scrollTop()
-                var scrollDir   = ""
-                var scrolledBy  = 0
-
-                if (scrollTop < lastScrollTop) {
-                    scrollDir = "up"
-                } else {
-                    scrollDir = "down"
-                }
-
-                scrolledBy      = lastScrollTop - scrollTop
-                lastScrollTop   = scrollTop
-
-                var elementHeight           = $element.outerHeight()
-                var contentLeftTemp         = parseInt($content.css("left"))
-                var contentLeftNew          = contentLeftTemp + (scrolledBy * 2)
-                var contentH2FontSizeTemp   = parseInt($contentH2.css("font-size"))
-                var contentH2FontSizeNew    = contentH2FontSizeTemp + (contentH2FontSizeTemp / windowHeight * scrolledBy * 2)
-                var contentBottom           = (contentTop + elementHeight)
-                var contentMiddle           = (contentTop + (elementHeight / 2))
-                var isAboveContentTop       = (scrollTop < contentTop)
-                var isBelowContentTop       = (scrollTop >= contentTop)
-                var isAboveContentBottom    = (scrollTop <= contentBottom)
-                var isBelowContentBottom    = (scrollTop > contentBottom)
-                var isContentInView         = (isBelowContentTop && isAboveContentBottom)
-                var isBelowContentMiddle    = (scrollTop >= contentMiddle)
-                var isContentBottomInView   = (isBelowContentMiddle && isAboveContentBottom)
-                var isAtContentMiddle       = (scrollTop == contentMiddle)
-
-                if ((scrollDir == "down") || (scrollDir == "up")) {
-                    if (isAboveContentTop) { // Above Content
-                        $content.css({
-                            position: "absolute",
-                            width: "",
-                            left: contentLeft
-                        })
-                    }
-
-                    if (isAboveContentBottom) { // Above and Between Content
-                        if (!isContentBottomInView) { // Top Half
-                            $contentH2.css({
-                                fontSize: contentH2FontSize
-                            })
-                        }
-
-                        if (isContentBottomInView) { // Bottom Half
-                            $content.css({
-                                position: "fixed",
-                                top: "0"
-                            })
-                        }
-                    }
-                }
-
-                if (scrollDir == "down") {
-                    if (isContentInView) {
-                        if (!isContentBottomInView) { // Top Half
-                            $content.css({
-                                position: "fixed",
-                                left: contentLeftNew
-                            })
-                        } else { // Bottom Half
-                            if (contentH2FontSizeNew > 71) { // Do something when font size reaches 72
-                                $content.css({
-                                    width: "100%",
-                                    left: contentLeftNew / 2
-                                })
-
-                                contentH2FontSizeBreakpoint = scrollTop
-                                $contentH2.css({
-                                    fontSize: contentH2FontSizeNew
-                                })
-                            } else { // Do something when font size is already 72
-                                $content.css({
-                                    left: "0"
-                                })
-
-                                $contentH2.css({
-                                    fontSize: 72
-                                })
-                            }
-                        }
-                    }
-                }
-    
-                if (scrollDir == "up") {
-                    if (isContentInView) {
-                        if (!isContentBottomInView) { // Top Half
-                            $content.css({
-                                position: "fixed",
-                                left: contentLeftNew
-                            })
-                        } else { // Bottom Half
-                            if (scrollTop < contentH2FontSizeBreakpoint) {
-                                $content.css({
-                                    width: "100%",
-                                    left: contentLeftNew / 2
-                                })
-
-                                $contentH2.css({
-                                    fontSize: contentH2FontSizeNew
-                                })
-                            } else {
-                                $content.css({
-                                    left: "0"
-                                })
-
-                                $contentH2.css({
-                                    fontSize: 72
-                                })
-                            }
-                        }
-                    }
-                }
-            })
-        })
     })
 
     /**
@@ -589,86 +458,21 @@ jQuery(document).ready(function($) {
             })
 
             /**
-             * Section 1
+             * Section Sticky
              */
             $(function() {
-                // $(function() {
-                //     var section1    = $(".section-1")
-                //     var sectContent = section1.find(".section-intro")
-                //     var sectionPL   = sectContent.css("left")
-                //     var offsetLeft  = parseInt(sectContent.parent().css("padding-left")) + parseInt(sectContent.parent().parent().css("padding-left"))
-                //     var sectionW    = sectContent.outerWidth()
-                //     var animDiff    = parseInt(sectionW) - parseInt(sectionPL)
-                //     if (((sectContent.offset().top - sectContent.outerHeight()) < $(window).scrollTop()) && ($(window).scrollTop() < (sectContent.offset().top + sectContent.outerHeight()))) {
-                //         if (scrolledBy < 0) {
-                //             scrolledBy = scrolledBy * (-1)
-                //         }
-    
-                //         if ($(window).scrollTop() < (sectContent.offset().top + (sectContent.outerHeight() / 2))) {
-                //             var scrollLeft = scrolledBy / $(window).height() * parseInt(sectionW) * 2
-                //             if (scrollDir == "up") {
-                //                 if (parseInt($(window).scrollTop()+(sectContent.outerHeight() / 2)) < section1GL) {
-                //                     sectContent.css({
-                //                         position: "fixed",
-                //                         width: sectionW,
-                //                         left: parseInt(sectionPL)+scrollLeft
-                //                     })
-                //                 } else {
-                //                     sectContent.css({
-                //                         position: "sticky",
-                //                         width: sectionW,
-                //                         left: "calc(100vw - 60px - calc(var(--bs-gutter-x) * .5))"
-                //                     })
-                //                 }
-                //             } else {
-                //                 if (parseInt(sectionPL) > offsetLeft) {
-                //                     sectContent.css({
-                //                         position: "fixed",
-                //                         width: sectionW,
-                //                         left: parseInt(sectionPL)-scrollLeft
-                //                     })
-                //                 } else {
-                //                     if (parseInt(sectionPL) == offsetLeft) {
-                //                         section1GL = $(window).scrollTop()
-                //                     }
-                //                     sectContent.css({
-                //                         position: "sticky",
-                //                         width: sectionW,
-                //                         left: offsetLeft
-                //                     })
-                //                 }
-                //             }
-                //         } else {
-                            
-                //         }
-                //     }
-                // })
-                
-                var container   = $(".section-1")
-                if (container.length) {
-                    var containerTop    = container.offset().top
-                    var stickyItem      = container.find(".section-intro")
-                    if ($(window).scrollTop() > (containerTop + container.outerHeight())) {
-                        stickyItem.removeClass("sticky-top")
-                    } else {
-                        stickyItem.addClass("sticky-top")
-                    }
-                }
-            })
-
-            /**
-             * Section 3
-             */
-            $(function() {
-                var container   = $(".section-3")
-                if (container.length) {
-                    var containerTop    = container.offset().top
-                    var stickyItem      = container.find(".section-intro")
-                    if ($(window).scrollTop() > (containerTop + container.outerHeight())) {
-                        stickyItem.removeClass("sticky-top")
-                    } else {
-                        stickyItem.addClass("sticky-top")
-                    }
+                var $elements   = $(".section-sticky")
+                if ($elements.length && $(window).width() > 767) {
+                    $.each($elements, function() {
+                        var $element        = $(this)
+                        var containerTop    = $element.offset().top
+                        var stickyItem      = $element.find(".section-intro")
+                        if ($(window).scrollTop() > (containerTop + $element.outerHeight())) {
+                            stickyItem.removeClass("sticky-top")
+                        } else {
+                            stickyItem.addClass("sticky-top")
+                        }
+                    })
                 }
             })
         })
@@ -794,7 +598,7 @@ jQuery(document).ready(function($) {
             var elementTop      = $element.offset().top
             var elementBottom   = (elementTop + elementHeight)
         
-            //check to see if this current container is within viewport
+            // Check to see if this current container is within viewport
             if ((windowTop >= elementTop) &&
                 (windowTop <= elementBottom)) {
                 $element.addClass("in-view")
@@ -802,6 +606,101 @@ jQuery(document).ready(function($) {
                 $element.removeClass("in-view")
             }
         })
+    }
+
+    const createSectionAnimation = (element) => {
+        var $window             = $(window)
+        var windowWidth         = $window.width()
+        var windowHeight        = $window.height()
+        var $element            = $(element)
+        var elementHeight       = $element.outerHeight()
+        var elementColor        = $element.css("color")
+        var elementBGColor      = $element.css("background-color")
+        var $intro              = $element.find(".section-intro")
+        var introWidth          = $intro.outerWidth()
+        var introHeight         = $intro.outerHeight()
+        var introOffsetTop      = $intro.offset().top
+        var introOffsetLeft     = $intro.offset().left
+        var $content            = $element.find(".section-content")
+        var contentOffsetTop    = $content.offset().top
+        var animationScroll     = (windowWidth - introOffsetLeft - windowHeight)
+        var $animation          = $('<div id="'+$element.attr('id')+'-animation" class="section-animation"></div>')
+
+        $animation.css({
+            width: "100%",
+            height: animationScroll,
+            backgroundColor: elementBGColor,
+            color: elementColor
+        })
+
+        $animation.append('<div class="animator"></div>').html($intro)
+        
+        $intro.css({
+            width: introWidth,
+            position: "absolute",
+            left: windowWidth
+        })
+
+        $animation.insertBefore(element)
+
+        $animation                  = $("#"+$animation.attr("id"))
+        $intro                      = $animation.find(".section-intro")
+        var animationOffsetTop      = $animation.offset().top
+        var animationHeight         = $animation.outerHeight()
+        var animationOffsetBottom   = (animationOffsetTop + animationHeight + elementHeight)
+        var animationBreakpoint     = 0
+        var lastScrollTop           = 0
+
+        $window.scroll(function() {
+            var scrollTop   = $(this).scrollTop()
+            var scrolledBy  = lastScrollTop - scrollTop
+            var scrollDir   = "down"
+
+            if (scrollTop < lastScrollTop) {
+                scrollDir = "up"
+            }
+
+            lastScrollTop   = scrollTop
+
+            if (scrollTop < animationOffsetTop) {
+                $intro.css({
+                    position: "absolute",
+                    left: windowWidth
+                })
+
+                $animation.insertBefore(element)
+            } else if ((scrollTop >= animationOffsetTop) && (scrollTop <= animationOffsetBottom)) {
+                if (scrollDir == "down") {
+                    $intro.css({
+                        position: "fixed",
+                        left: parseInt($intro.css("left")) + scrolledBy
+                    })
+                } else {
+                    if (scrollTop <= animationBreakpoint) {
+                        $intro.css({
+                            position: "fixed",
+                            left: parseInt($intro.css("left")) + scrolledBy
+                        })
+                    } else {
+                        $intro.css({
+                            position: ""
+                        })
+                        
+                        $element.find("> div").first().append($intro)
+                    }
+                }
+
+                if ($intro.offset().left <= introOffsetLeft) {
+                    $intro.css({
+                        left: introOffsetLeft
+                    })
+                } else {
+                    animationBreakpoint = scrollTop
+                }
+            }
+        })
+        
+        return $animation
     }
 })
 
@@ -817,4 +716,4 @@ const observer = new IntersectionObserver(entries => {
     })
 })
   
-observer.observe(document.querySelector(".section-5 .section-content"))
+observer.observe(document.querySelector(".section-contact .section-content"))

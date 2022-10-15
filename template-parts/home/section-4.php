@@ -1,17 +1,28 @@
-<!-- <div id="section4" class="section-container section-4 image-background fixed-background text-light w-100 vh-100 px-site py-5 d-flex align-items-center justify-content-center" data-background-src="<?php echo get_stylesheet_directory_uri() . '/assets/img/section-4.jpg'; ?>">
-    <div class="section-intro">
-        <h1 class="section-heading">Join our global network</h1>
+<div id="section4" class="section-container section-4 section-sticky position-relative bg-transparent text-light w-100 vh-md-200 px-site py-5 d-flex row mx-0">  
+    <div class="col-12 col-md-6 order-1 order-md-1 mt-5 mt-5 mt-md-10 mt-lg-15 position-relative">
+        <div class="section-intro sticky-top" sticky-top="90">
+            <h2 class="section-heading me-md-5"><?php _e( 'Training', 'btr' ); ?></h2>
+        </div>
     </div>
-</div> -->
-
-<!-- <div id="section4" class="section-container section-4 image-background fixed-background position-relative text-light w-100 vh-100 px-site py-5 d-flex flex-column justify-content-center" data-background-src="<?php echo get_stylesheet_directory_uri() . '/assets/img/section-4-bg.jpg'; ?>"> -->
-<div id="section4" class="section-container section-4 bg-transparent position-relative text-light w-100 vh-100 px-site py-5 d-flex flex-column justify-content-center" data-background-src="<?php echo get_stylesheet_directory_uri() . '/assets/img/section-4-bg.jpg'; ?>">
-    <div class="section-intro text-center">
-        <h1 class="section-heading">Join our global network</h1>
-    </div>
-    <div class="section-content mt-10 mx-auto">
-        <div>
-            <p>BTR is more than just the experience. As a game player, you will not only have access to our global network of former intelligence professionals and covert operatives, but to other extraordinary individuals who have succeeded in completing their missions.</p>
+    <div class="col-12 col-md-6 order-2 order-md-2 d-flex align-items-md-end position-relative">
+        <div class="section-content">
+            <ul class="training-list content-list list-group p-md-5">
+                <li class="training-list-item content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0">
+                    <p><?php _e( 'Training is tailored for each unique mission & must be completed prior to mission execution', 'btr' ); ?></p>
+                </li>
+                <li class="training-list-item content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0">
+                    <p><?php _e( 'Training is conducted globally; locations are mission dependent', 'btr' ); ?></p>
+                </li>
+                <li class="training-list-item content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0">
+                    <p><?php _e( 'Training regimes can be more intense than actual mission scenarios', 'btr' ); ?></p>
+                </li>
+                <li class="training-list-item content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0">
+                    <p><?php _e( 'Training cycles are generally longer than actual mission scenarios and are completed 30 – 90 days prior to mission execution', 'btr' ); ?></p>
+                </li>
+                <li class="training-list-item content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0">
+                    <p><?php _e( 'Skills are fully transferable to the real world.', 'btr' ); ?></p>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
