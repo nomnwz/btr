@@ -1,4 +1,8 @@
 jQuery(document).ready(function($) {
+    $(function() {
+        $(window).scrollTop(0)
+    })
+
     /**
      * Splash
      */
@@ -208,178 +212,6 @@ jQuery(document).ready(function($) {
                 })  
             })
         }
-    })
-
-    /**
-     * Animation
-     */
-    $(function() {
-        // /**
-        //  * #1
-        //  */
-        // $(function() {
-        //     if (!$("#animation1").length) return
-
-        //     var $window                     = $(window)
-        //     var windowWidth                 = $window.width()
-        //     var windowHeight                = $window.height()
-        //     var $element                    = $("#animation1")
-        //     var $content                    = $element.find(".animation-content")
-        //     var contentWidth                = $content.outerWidth()
-        //     var contentHeight               = $content.outerHeight()
-        //     var contentTop                  = $content.offset().top
-        //     var contentLeft                 = parseInt($content.css("left"))
-        //     var contentFontSize             = parseInt($content.css("font-size"))
-        //     var $contentH2                  = $content.find("h2")
-        //     var contentH2FontSize           = parseInt($contentH2.css("font-size"))
-        //     var contentH2FontSizeBreakpoint = 0
-        //     var lastScrollTop               = 0
-
-        //     // Make height scrollable
-        //     $element.css({
-        //         height: (((contentWidth + windowWidth) / 2) - windowHeight)
-        //     })
-
-        //     var elementHeightDefault = $element.outerHeight()
-
-        //     $window.scroll(function() {
-        //         var scrollTop   = $(this).scrollTop()
-        //         var scrollDir   = ""
-        //         var scrolledBy  = 0
-
-        //         if (scrollTop < lastScrollTop) {
-        //             scrollDir = "up"
-        //         } else {
-        //             scrollDir = "down"
-        //         }
-
-        //         scrolledBy      = lastScrollTop - scrollTop
-        //         lastScrollTop   = scrollTop
-
-        //         var elementHeight           = $element.outerHeight()
-        //         var contentLeftTemp         = parseInt($content.css("left"))
-        //         var contentLeftNew          = contentLeftTemp + (scrolledBy * 2)
-        //         var contentH2FontSizeTemp   = parseInt($contentH2.css("font-size"))
-        //         var contentH2FontSizeNew    = contentH2FontSizeTemp + (contentH2FontSizeTemp / windowHeight * scrolledBy * 2)
-        //         var contentBottom           = (contentTop + elementHeight)
-        //         var contentMiddle           = (contentTop + (elementHeight / 2))
-        //         var isAboveContentTop       = (scrollTop < contentTop)
-        //         var isBelowContentTop       = (scrollTop >= contentTop)
-        //         var isAboveContentBottom    = (scrollTop <= contentBottom)
-        //         var isBelowContentBottom    = (scrollTop > contentBottom)
-        //         var isContentInView         = (isBelowContentTop && isAboveContentBottom)
-        //         var isBelowContentMiddle    = (scrollTop >= contentMiddle)
-        //         var isContentBottomInView   = (isBelowContentMiddle && isAboveContentBottom)
-        //         var isAtContentMiddle       = (scrollTop == contentMiddle)
-
-        //         if ((scrollDir == "down") || (scrollDir == "up")) {
-        //             if (isAboveContentTop) { // Above Content
-        //                 $content.css({
-        //                     position: "absolute",
-        //                     width: "",
-        //                     left: contentLeft
-        //                 })
-        //             }
-
-        //             if (isAboveContentBottom) { // Above and Between Content
-        //                 if (!isContentBottomInView) { // Top Half
-        //                     $contentH2.css({
-        //                         fontSize: contentH2FontSize
-        //                     })
-        //                 }
-
-        //                 if (isContentBottomInView) { // Bottom Half
-        //                     if (scrollTop < contentH2FontSizeBreakpoint) {
-        //                         $element.css({
-        //                             height: elementHeightDefault
-        //                         })
-
-        //                         $content.css({
-        //                             position: "fixed",
-        //                             height: "100%",
-        //                             top: "0",
-        //                             transform: ""
-        //                         })
-        //                     }
-        //                 }
-        //             }
-        //         }
-
-        //         if (scrollDir == "down") {
-        //             if (isContentInView) {
-        //                 if (!isContentBottomInView) { // Top Half
-        //                     $content.css({
-        //                         position: "fixed",
-        //                         left: contentLeftNew
-        //                     })
-        //                 } else { // Bottom Half
-        //                     if (contentH2FontSizeNew > 71) { // Do something when font size reaches 72
-        //                         $content.css({
-        //                             width: "100%",
-        //                             left: contentLeftNew / 2
-        //                         })
-
-        //                         contentH2FontSizeBreakpoint = scrollTop
-
-        //                         $contentH2.css({
-        //                             fontSize: contentH2FontSizeNew
-        //                         })
-        //                     } else { // Do something when font size is already 72
-        //                         $element.css({
-        //                             height: (elementHeightDefault * 72 / 640) + windowHeight
-        //                         })
-
-        //                         $content.css({
-        //                             position: "sticky",
-        //                             left: "0",
-        //                             height: "unset",
-        //                             top: "50%",
-        //                             transform: "translateY(-50%)"
-        //                         })
-
-        //                         $contentH2.css({
-        //                             fontSize: 72
-        //                         })
-        //                     }
-        //                 }
-        //             }
-        //         }
-    
-        //         if (scrollDir == "up") {
-        //             if (isContentInView) {
-        //                 if (!isContentBottomInView) { // Top Half
-        //                     $content.css({
-        //                         position: "fixed",
-        //                         left: contentLeftNew
-        //                     })
-        //                 } else { // Bottom Half
-        //                     if (scrollTop < contentH2FontSizeBreakpoint) {
-        //                         $content.css({
-        //                             width: "100%",
-        //                             left: contentLeftNew / 2
-        //                         })
-
-        //                         $contentH2.css({
-        //                             fontSize: contentH2FontSizeNew
-        //                         })
-        //                     } else {
-        //                         $content.css({
-        //                             position: "sticky",
-        //                             left: "0",
-        //                             height: "unset",
-        //                             top: "50%",
-        //                             transform: "translateY(-50%)"
-        //                         })
-
-        //                         $contentH2.css({
-        //                             fontSize: 72
-        //                         })
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     })
-        // })
     })
 
     /**
@@ -624,7 +456,12 @@ jQuery(document).ready(function($) {
         var $content            = $element.find(".section-content")
         var contentOffsetTop    = $content.offset().top
         var animationScroll     = (windowWidth - introOffsetLeft - windowHeight)
+        var isAnimationReverse  = $element.hasClass("section-animate-it-reverse")
         var $animation          = $('<div id="'+$element.attr('id')+'-animation" class="section-animation"></div>')
+
+        if (isAnimationReverse) {
+            animationScroll = (windowWidth + introOffsetLeft - introWidth - windowHeight)
+        }
 
         $animation.css({
             width: "100%",
@@ -635,11 +472,19 @@ jQuery(document).ready(function($) {
 
         $animation.append('<div class="animator"></div>').html($intro)
         
-        $intro.css({
-            width: introWidth,
-            position: "absolute",
-            left: windowWidth
-        })
+        if (isAnimationReverse) {
+            $intro.css({
+                width: introWidth,
+                position: "absolute",
+                left: introWidth * (-1)
+            })
+        } else {
+            $intro.css({
+                width: introWidth,
+                position: "absolute",
+                left: windowWidth
+            })
+        }
 
         $animation.insertBefore(element)
 
@@ -660,21 +505,55 @@ jQuery(document).ready(function($) {
                 scrollDir = "up"
             }
 
+            if (isAnimationReverse) {
+                scrolledBy = scrolledBy * (-1)
+            }
+
             lastScrollTop   = scrollTop
 
             if (scrollTop < animationOffsetTop) {
-                $intro.css({
-                    position: "absolute",
-                    left: windowWidth
-                })
+                if (isAnimationReverse) {
+                    $intro.css({
+                        position: "absolute",
+                        left: introWidth * (-1)
+                    })
+                } else {
+                    $intro.css({
+                        position: "absolute",
+                        left: windowWidth
+                    })
+                }
 
                 $animation.insertBefore(element)
             } else if ((scrollTop >= animationOffsetTop) && (scrollTop <= animationOffsetBottom)) {
                 if (scrollDir == "down") {
-                    $intro.css({
-                        position: "fixed",
-                        left: parseInt($intro.css("left")) + scrolledBy
-                    })
+                    if (isAnimationReverse) {
+                        if ($intro.offset().left < introOffsetLeft) {
+                            $intro.css({
+                                position: "fixed",
+                                left: parseInt($intro.css("left")) + scrolledBy
+                            })
+                        } else {
+                            $intro.css({
+                                position: ""
+                            })
+
+                            $($element.find("> div").get(1)).append($intro)
+                        }
+                    } else {
+                        if ($intro.offset().left > introOffsetLeft) {
+                            $intro.css({
+                                position: "fixed",
+                                left: parseInt($intro.css("left")) + scrolledBy
+                            })
+                        } else {
+                            $intro.css({
+                                position: ""
+                            })
+                            
+                            $element.find("> div").first().append($intro)
+                        }
+                    }
                 } else {
                     if (scrollTop <= animationBreakpoint) {
                         $intro.css({
@@ -686,16 +565,30 @@ jQuery(document).ready(function($) {
                             position: ""
                         })
                         
-                        $element.find("> div").first().append($intro)
+                        if (isAnimationReverse) {
+                            $($element.find("> div").get(1)).append($intro)
+                        } else {
+                            $element.find("> div").first().append($intro)
+                        }
                     }
                 }
 
-                if ($intro.offset().left <= introOffsetLeft) {
-                    $intro.css({
-                        left: introOffsetLeft
-                    })
+                if (isAnimationReverse) {
+                    if ($intro.offset().left >= introOffsetLeft) {
+                        $intro.css({
+                            left: introOffsetLeft
+                        })
+                    } else {
+                        animationBreakpoint = scrollTop
+                    }
                 } else {
-                    animationBreakpoint = scrollTop
+                    if ($intro.offset().left <= introOffsetLeft) {
+                        $intro.css({
+                            left: introOffsetLeft
+                        })
+                    } else {
+                        animationBreakpoint = scrollTop
+                    }
                 }
             }
         })
@@ -715,5 +608,7 @@ const observer = new IntersectionObserver(entries => {
         }
     })
 })
-  
-observer.observe(document.querySelector(".section-contact .section-content"))
+
+document.querySelectorAll(".section-content").forEach(element => {
+    observer.observe(element)
+})

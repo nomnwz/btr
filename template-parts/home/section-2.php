@@ -1,6 +1,8 @@
-<div id="section2" class="section-container section-2 bg-transparent position-relative text-light w-100 vh-100 px-site py-5 d-flex flex-column justify-content-center">
-    <div class="section-intro text-md-center">
-        <h2 class="section-heading"><?php _e( 'BTR’s Team', 'btr' ); ?></h2>
+<div id="section2" class="section-container section-2 bg-transparent background-overlay position-relative text-light w-100 vh-100 px-site py-5 d-flex flex-column justify-content-center">
+    <div class="d-flex">
+        <div class="section-intro">
+            <h2 class="section-heading"><?php _e( 'BTR’s Team', 'btr' ); ?></h2>
+        </div>
     </div>
     <div class="section-content mt-10">
         <div>

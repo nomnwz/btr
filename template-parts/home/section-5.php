@@ -1,6 +1,8 @@
 <div id="section5" class="section-container section-5 bg-dark position-relative text-light w-100 vh-100 px-site py-5 d-flex flex-column justify-content-center">
-    <div class="section-intro text-md-center">
-        <h2 class="section-heading"><?php _e( 'Lifetime Membership', 'btr' ); ?></h2>
+    <div class="d-flex">
+        <div class="section-intro">
+            <h2 class="section-heading"><?php _e( 'Lifetime Membership', 'btr' ); ?></h2>
+        </div>
     </div>
     <div class="section-content mt-10">
         <div>

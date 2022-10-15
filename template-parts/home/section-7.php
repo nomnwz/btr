@@ -1,4 +1,4 @@
-<div id="section7" class="section-container section-7 section-contact position-relative bg-dark text-light w-100 px-site py-5 d-flex flex-column justify-content-center align-items-center">
+<div id="section7" class="section-container section-7 position-relative bg-dark text-light w-100 vh-md-100 px-site py-5 d-flex flex-column justify-content-center align-items-start">
     <div class="section-intro mb-5">
         <h2 class="section-heading"><?php _e( 'Contact us', 'btr' ); ?></h2>
     </div>

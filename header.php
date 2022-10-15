@@ -14,25 +14,25 @@
     <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
-    <div id="splash" class="bg-dark text-light w-100 vh-100 position-fixed top-0 left-0">
-        <div class="splash-container d-flex flex-column justify-content-between">
-            <div class="d-flex flex-column justify-content-start align-items-center">
-                <h1 class="title"><?php _e( 'BTR', 'btr' ); ?></h1>
-                <h5 class="subtitle"><?php _e( 'Better Than Reality', 'btr' ); ?></h5>
-            </div>
-            <div class="d-flex flex-column justify-content-end align-items-center">
-                <div class="content">
-                    <p><span><?php _e( 'Where only', 'btr' ); ?></span> <?php _e( 'extraordinary people succeed...', 'btr' ); ?><p>
-                </div>
-                <button id="enterSite" class="btn btn-lg px-5 rounded-0 text-uppercase"><?php _e( 'Enter', 'btr' ); ?></button>
-            </div>
-        </div>
-    </div>
     <?php
     if ( btr_is_otp_active() && !btr_has_current_user_access() ) {
         do_action( 'otp_setup' );
     } else {
         ?>
+        <div id="splash" class="bg-dark text-light w-100 vh-100 position-fixed top-0 left-0">
+            <div class="splash-container d-flex flex-column">
+                <div class="d-flex flex-column justify-content-start align-items-center">
+                    <h1 class="title"><?php _e( 'BTR', 'btr' ); ?></h1>
+                    <h5 class="subtitle"><?php _e( 'Better Than Reality', 'btr' ); ?></h5>
+                </div>
+                <div class="d-flex flex-column justify-content-end align-items-center">
+                    <div class="content">
+                        <p><span><?php _e( 'Where only', 'btr' ); ?></span> <?php _e( 'extraordinary people succeed...', 'btr' ); ?><p>
+                    </div>
+                    <button id="enterSite" class="btn btn-lg px-5 rounded-0 text-uppercase"><?php _e( 'Enter', 'btr' ); ?></button>
+                </div>
+            </div>
+        </div>
         <div id="root">
             <header class="bg-dark text-light sticky-top">
                 <div class="header-wrap">
