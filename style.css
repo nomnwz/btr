@@ -1,6 +1,6 @@
 /*
 * Theme Name: BTR
-* Version: 1.0.4.9
+* Version: 1.0.5
 * Author: CodeIcon
 * Text Domain: btr
 */
@@ -468,14 +468,14 @@ header {
 }
 
 .animation-container h2 {
-    font-family: 'Gibson';
-    font-size: 40rem;
-    line-height: 1;
+    /* font-family: 'Gibson'; */
+    font-size: 34rem;
+    letter-spacing: 1.2px;
     font-weight: 900;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     color: rgba(var(--bs-light-rgb), .6);
-    white-space: nowrap;
-    /* color: rgb(185 68 53 / 10%);
+    /* white-space: nowrap;
+    color: rgb(185 68 53 / 10%);
     -webkit-text-stroke: 0.2rem;
     -webkit-text-stroke-color: #E9A39B; */
 }
@@ -627,11 +627,11 @@ h2.section-heading {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-    .section-content.animation-wipe-in {
+    .section-content.animate-it.animation-wipe-in {
         animation: wipe-in .6s;
     }
   
-    .section-content.animation-wipe-out {
+    .section-content.animate-it.animation-wipe-out {
         animation: wipe-out .6s;
     }
 }

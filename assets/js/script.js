@@ -595,6 +595,142 @@ jQuery(document).ready(function($) {
         
         return $animation
     }
+
+    // const createSectionAnimation1 = (element) => {
+    //     var $window             = $(window)
+    //     var windowWidth         = $window.width()
+    //     var windowHeight        = $window.height()
+    //     var $element            = $(element)
+    //     var elementHeight       = $element.outerHeight()
+    //     var elementColor        = $element.css("color")
+    //     var elementBGColor      = $element.css("background-color")
+    //     var $heading            = $element.find(".section-heading")
+    //     var headingWidth        = $heading.outerWidth()
+    //     var headingHeight       = $heading.outerHeight()
+    //     var headingOffsetTop    = $heading.offset().top
+    //     var headingOffsetLeft   = $heading.offset().left
+    //     var $content            = $element.find(".section-content")
+    //     var contentWidth        = $content.outerWidth()
+    //     var contentOffsetTop    = $content.offset().top
+    //     var animationScroll     = (windowWidth - headingOffsetLeft - windowHeight)
+    //     var $animation          = $('<div id="animation1" class="animation-container animation-1 position-relative bg-transparent text-light w-100 d-flex flex-row align-items-center"></div>')
+
+    //     $animation.append('<div class="animation-content"><h2>'+$heading.text()+'</h2></div>')
+        
+    //     $animation.insertBefore(element)
+
+    //     $animation                  = $("#"+$animation.attr("id"))
+    //     var $animationContent       = $animation.find(".animation-content")
+    //     var animationContentLeft    = $animationContent.css("left")
+    //     var $animationHeading       = $animationContent.find("h2")
+    //     var animationHeadingFS      = parseInt($animationHeading.css("font-size"))
+    //     var animationContentWidth   = $animationContent.outerWidth()
+
+    //     $animation.css({
+    //         height: (windowWidth + (animationContentWidth / 2))
+    //     })
+
+    //     var animationOffsetTop      = $animation.offset().top
+    //     var animationBreakpoint     = 0
+    //     var animationFSBreakpoint   = 0
+    //     var animationVisBreakpoint  = 0
+    //     var lastScrollTop           = 0
+
+    //     $heading.css({
+    //         visibility: "hidden"
+    //     })
+
+    //     $window.scroll(function() {
+    //         var scrollTop   = $(this).scrollTop()
+    //         var scrolledBy  = lastScrollTop - scrollTop
+    //         var scrollDir   = "down"
+
+    //         if (scrollTop < lastScrollTop) {
+    //             scrollDir = "up"
+    //         }
+
+    //         lastScrollTop   = scrollTop
+
+    //         $animation.css({
+    //             height: (windowWidth + ($animationHeading.outerWidth() / 2))
+    //         })
+
+    //         var animationHeight         = $animation.outerHeight()
+    //         var animationOffsetBottom   = (animationOffsetTop + animationHeight)
+
+    //         if (scrollTop < animationOffsetTop) {
+    //             $animationContent.css({
+    //                 position: "absolute",
+    //                 left: animationContentLeft,
+    //                 zIndex: 999999
+    //             })
+    //         } else if ((scrollTop >= animationOffsetTop) && (scrollTop <= animationOffsetBottom)) {
+    //             if (scrollDir == "down") {
+    //                 if (parseInt($animationContent.css("left")) > 72) {
+    //                     $animationContent.css({
+    //                         position: "fixed",
+    //                         left: parseInt($animationContent.css("left")) + (scrolledBy * 2)
+    //                     })
+
+    //                     animationBreakpoint = scrollTop
+    //                 } else {
+    //                     $animationContent.css({
+    //                         position: "fixed",
+    //                         left: 72
+    //                     })
+
+    //                     if (parseInt($animationHeading.css("font-size")) > parseInt($heading.css("font-size"))) {
+    //                         $animationHeading.css({
+    //                             fontSize: parseInt($animationHeading.css("font-size")) + (scrolledBy * 2)
+    //                         })
+
+    //                         animationFSBreakpoint = scrollTop
+    //                     } else {
+    //                         $animationHeading.css({
+    //                             maxWidth: headingWidth,
+    //                             fontSize: parseInt($heading.css("font-size"))
+    //                         })
+    //                     }
+    //                 }
+    //             } else {
+    //                 if (scrollTop < animationBreakpoint) {
+    //                     $animationContent.css({
+    //                         position: "fixed",
+    //                         left: parseInt($animationContent.css("left")) + (scrolledBy * 2)
+    //                     })
+    //                 } else {
+    //                     if (scrollTop < animationFSBreakpoint) {
+    //                         if (parseInt($animationHeading.css("font-size")) > animationHeadingFS) {
+    //                             $animationHeading.css({
+    //                                 fontSize: animationHeadingFS
+    //                             })
+    //                         } else {
+    //                             $animationHeading.css({
+    //                                 fontSize: parseInt($animationHeading.css("font-size")) + (scrolledBy * 2)
+    //                             })
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         } else if ((scrollTop >= (animationOffsetBottom - $animationHeading.outerHeight())) && scrollTop <= animationVisBreakpoint) {
+    //             $animationContent.css({
+    //                 position: ""
+    //             })
+
+    //             animationVisBreakpoint = scrollTop
+    //         }
+
+    //         if (scrollTop >= headingOffsetTop) {
+    //             $heading.css({
+    //                 visibility: "visible"
+    //             })
+    //         } else {
+    //             $heading.css({
+    //                 visibility: "hidden"
+    //             })
+    //         }
+    //     })
+    // }
 })
 
 const observer = new IntersectionObserver(entries => {
@@ -611,6 +747,6 @@ const observer = new IntersectionObserver(entries => {
     })
 })
 
-document.querySelectorAll(".section-content").forEach(element => {
+document.querySelectorAll(".section-content.animate-it").forEach(element => {
     observer.observe(element)
 })

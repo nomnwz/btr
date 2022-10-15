@@ -4,7 +4,7 @@
             <h2 class="section-heading"><?php _e( 'Lifetime Membership', 'btr' ); ?></h2>
         </div>
     </div>
-    <div class="section-content mt-10">
+    <div class="section-content animate-it mt-10">
         <div>
             <h4><?php _e( 'Why settle for ordinary?', 'btr' ); ?></h4>
             <p><?php _e( 'Succeed in a BTR mission and gain membership to one of the most unique and exclusive clubs on the planet providing lifetime access to BTR’s global network of intelligence professionals', 'btr' ); ?></p>
