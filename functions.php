@@ -227,7 +227,7 @@ function btr_otp_form() {
         <div class="position-relative">
             <div class="card p-2 text-center bg-light text-dark">
                 <h6 class="text-uppercase"><?php _e( 'Please enter temporary access code', 'btr' ); ?></h6>
-                <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2">
+                <div id="otp" class="inputs d-flex flex-row flex-wrap justify-content-center mt-2">
                     <input class="m-2 text-center form-control rounded" type="text" id="first" name="otp[]" maxlength="1" />
                     <input class="m-2 text-center form-control rounded" type="text" id="second" name="otp[]" maxlength="1" />
                     <input class="m-2 text-center form-control rounded" type="text" id="third" name="otp[]" maxlength="1" />
