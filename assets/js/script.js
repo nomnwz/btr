@@ -339,9 +339,9 @@ jQuery(document).ready(function($) {
                 } else {
                     e               = e || window.event
                     var keyCode     = e.which || e.keyCode
-                    var alphabets   = /^[A-Za-z]+$/
-                    var numbers     = /^[1-9]+$/
-                    var specials    = /^[!@#$%&]+$/
+                    var alphabets   = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+                    var numbers     = "123456789"
+                    var specials    = "!@#$%&"
                     var ctrl        = e.ctrlKey ? e.ctrlKey : ((keyCode === 17) ? true : false)
 
                     if ((i == (inputs.length - 1)) && keyCode == 13) { // Enter
@@ -353,16 +353,16 @@ jQuery(document).ready(function($) {
                     } else if (keyCode >= 65 && keyCode <= 90) { // Alphabets [A-Z] || [a-z]
                         $(input).val(String.fromCharCode(keyCode))
                     } else if ((keyCode >= 49 && keyCode <= 57) || (keyCode >= 97 && keyCode <= 105)) { // Numbers [1-9] || Numpad Numbers [1-9]
-                        if (e.key.match(specials) || !isNaN(e.key)) { // Special Characters
+                        if (specials.includes(e.key) || !isNaN(e.key)) { // Special Characters
                             $(input).val(e.key)
                         } else {
                             return false
                         }
-                    } else if (e.key.match(alphabets)) { // Alphabets [A-Z] || [a-z]
+                    } else if (alphabets.includes(e.key)) { // Alphabets [A-Z] || [a-z]
                         $(input).val(e.key.toUpperCase())
-                    } else if (e.key.match(numbers)) { // Numbers [1-9] || Numpad Numbers [1-9]
+                    } else if (numbers.includes(e.key)) { // Numbers [1-9] || Numpad Numbers [1-9]
                         $(input).val(e.key)
-                    } else if (e.key.match(specials)) { // Special Characters
+                    } else if (specials.includes(e.key)) { // Special Characters
                         $(input).val(e.key)
                     } else {
                         return false
