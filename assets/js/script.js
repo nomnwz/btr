@@ -339,40 +339,31 @@ jQuery(document).ready(function($) {
                 } else {
                     e               = e || window.event
                     var keyCode     = e.which || e.keyCode
-                    var specChars   = "!@#$%&"
+                    var alphabets   = /^[A-Za-z]+$/
+                    var numbers     = /^[1-9]+$/
+                    var specials    = /^[!@#$%&]+$/
                     var ctrl        = e.ctrlKey ? e.ctrlKey : ((keyCode === 17) ? true : false)
 
-                    if ((i == (inputs.length - 1)) && keyCode == 13) {
+                    if ((i == (inputs.length - 1)) && keyCode == 13) { // Enter
                         $(submitBtn).trigger("click")
-                    } else if (keyCode == 9) {
+                    } else if (keyCode == 9) { // Tab
                         return true
                     } else if (keyCode == 86 && ctrl) { // ctrl + V
-                        $(input).on("paste", function(e) {
-                            copyPasteCallback(e, input, (clipText) => {
-                                var textStrCount    = clipText.length
-                                var i2              = 0
-                                
-                                for (let x = 0; x < textStrCount; x++) {
-                                    $(inputs[i + x]).val(clipText.charAt(x))
-
-                                    i2 = x
-                                }
-                                
-                                if ($(inputs[i + i2]).length) {
-                                    $(inputs[i + i2]).focus()
-                                } else {
-                                    $(inputs[inputs.length - 1]).focus()
-                                }
-                            })
-                        })
+                        return true
                     } else if (keyCode >= 65 && keyCode <= 90) { // Alphabets [A-Z] || [a-z]
-                        $(input).val(e.key.toUpperCase())
+                        $(input).val(String.fromCharCode(keyCode))
                     } else if ((keyCode >= 49 && keyCode <= 57) || (keyCode >= 97 && keyCode <= 105)) { // Numbers [1-9] || Numpad Numbers [1-9]
-                        if (specChars.includes(e.key) || !isNaN(e.key)) { // Special Characters
+                        if (e.key.match(specials) || !isNaN(e.key)) { // Special Characters
                             $(input).val(e.key)
                         } else {
                             return false
                         }
+                    } else if (e.key.match(alphabets)) { // Alphabets [A-Z] || [a-z]
+                        $(input).val(e.key.toUpperCase())
+                    } else if (e.key.match(numbers)) { // Numbers [1-9] || Numpad Numbers [1-9]
+                        $(input).val(e.key)
+                    } else if (e.key.match(specials)) { // Special Characters
+                        $(input).val(e.key)
                     } else {
                         return false
                     }
@@ -382,6 +373,25 @@ jQuery(document).ready(function($) {
                         e.preventDefault()
                     }
                 }
+            })
+
+            $(input).on("paste", function(e) {
+                copyPasteCallback(e, input, (clipText) => {
+                    var textStrCount    = clipText.length
+                    var i2              = 0
+                    
+                    for (let x = 0; x < textStrCount; x++) {
+                        $(inputs[i + x]).val(clipText.charAt(x))
+
+                        i2 = x
+                    }
+                    
+                    if ($(inputs[i + i2]).length) {
+                        $(inputs[i + i2]).focus()
+                    } else {
+                        $(inputs[inputs.length - 1]).focus()
+                    }
+                })
             })
         }
     }
