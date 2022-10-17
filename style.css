@@ -1,6 +1,6 @@
 /*
 * Theme Name: BTR
-* Version: 1.0.6
+* Version: 1.0.6.1
 * Author: CodeIcon
 * Text Domain: btr
 */
@@ -273,7 +273,7 @@ a:hover {
 }
 
 .card {
-    width: 600px;
+    max-width: 600px;
     border: none;
     height: 300px;
     box-shadow: 0px 5px 20px 0px #d2dae3;
