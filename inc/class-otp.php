@@ -175,17 +175,12 @@ class OTP
      * 
      * @return string|int
      */
-    public function generate_otp( $digits = 6 ) {
-        $generator  = '1357902468';
+    public function generate_otp( $digits = 8 ) {
+        $generator  = '123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%&';
         $result     = '';
 
         for ( $i=1; $i <= $digits; $i++ ) {
-            if ( $i === 1 ) {
-                $generator1 = '135792468';
-                $result .= substr( $generator1, ( rand()%( strlen( $generator1 ) ) ), 1 );   
-            } else {
-                $result .= substr( $generator, ( rand()%( strlen( $generator ) ) ), 1 );   
-            }
+            $result .= substr( $generator, ( rand()%( strlen( $generator ) ) ), 1 );
         }
 
         return $result;

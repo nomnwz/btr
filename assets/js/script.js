@@ -22,7 +22,7 @@ jQuery(document).ready(function($) {
      * OTP
      */
     $(function() {
-        otpInput()
+        otpInput(".otp-container .validate")
         $(".otp-container .validate").on("click", function(e) {
             var inputs      = $("#otp > *[id]")
             var otp         = []
@@ -33,7 +33,7 @@ jQuery(document).ready(function($) {
                 otp.push(inputValue)
             }
 
-            otp = parseInt(otp.join(""))
+            otp = otp.join("")
 
             $(".otp-container .spinner").removeClass("d-none")
 
@@ -310,7 +310,23 @@ jQuery(document).ready(function($) {
         })
     })
 
-    const otpInput = () => {
+    const copyPasteCallback = (e, element, callback) => {
+        if (navigator.clipboard && navigator.clipboard.readText) { // Modern approach with Clipboard API
+            navigator.clipboard.readText().then(callback)
+        } else if (e.originalEvent && e.originalEvent.clipboardData) { // OriginalEvent is a property from jQuery, normalizing the event object
+            callback(e.originalEvent.clipboardData.getData("text"))
+        } else if (e.clipboardData) { // Used in some browsers for clipboardData
+            callback(e.clipboardData.getData("text/plain"))
+        } else if (window.clipboardData) { // Older clipboardData version for Internet Explorer only
+            callback(window.clipboardData.getData("Text"))
+        } else { // Last resort fallback, using a timer
+            setTimeout(() => {
+                callback($(element).val())                                    
+            }, 0)
+        }
+    }
+
+    const otpInput = (submitBtn) => {
         var inputs = $("#otp > *[id]")
         for (let i = 0; i < inputs.length; i++) {
             const input = inputs[i]
@@ -321,14 +337,50 @@ jQuery(document).ready(function($) {
                         $(inputs[i - 1]).focus()
                     }
                 } else {
-                    if (e.keyCode > 64 && e.keyCode < 91) {
-                        $(input).val(String.fromCharCode(e.keyCode))
+                    e               = e || window.event
+                    var keyCode     = e.which || e.keyCode
+                    var specChars   = "!@#$%&"
+                    var ctrl        = e.ctrlKey ? e.ctrlKey : ((keyCode === 17) ? true : false)
+
+                    if ((i == (inputs.length - 1)) && keyCode == 13) {
+                        $(submitBtn).trigger("click")
+                    } else if (keyCode == 9) {
+                        return true
+                    } else if (keyCode == 86 && ctrl) { // ctrl + V
+                        $(input).on("paste", function(e) {
+                            copyPasteCallback(e, input, (clipText) => {
+                                var textStrCount    = clipText.length
+                                var i2              = 0
+                                
+                                for (let x = 0; x < textStrCount; x++) {
+                                    $(inputs[i + x]).val(clipText.charAt(x))
+
+                                    i2 = x
+                                }
+                                
+                                if ($(inputs[i + i2]).length) {
+                                    $(inputs[i + i2]).focus()
+                                } else {
+                                    $(inputs[inputs.length - 1]).focus()
+                                }
+                            })
+                        })
+                    } else if (keyCode >= 65 && keyCode <= 90) { // Alphabets [A-Z] || [a-z]
+                        $(input).val(e.key.toUpperCase())
+                    } else if ((keyCode >= 49 && keyCode <= 57) || (keyCode >= 97 && keyCode <= 105)) { // Numbers [1-9] || Numpad Numbers [1-9]
+                        if (specChars.includes(e.key) || !isNaN(e.key)) { // Special Characters
+                            $(input).val(e.key)
+                        } else {
+                            return false
+                        }
                     } else {
-                        $(input).val(e.key)
+                        return false
                     }
 
-                    $(inputs[i + 1]).focus()
-                    e.preventDefault()
+                    if ($(input).val()) {
+                        $(inputs[i + 1]).focus()
+                        e.preventDefault()
+                    }
                 }
             })
         }
@@ -448,6 +500,7 @@ jQuery(document).ready(function($) {
         var elementHeight       = $element.outerHeight()
         var elementColor        = $element.css("color")
         var elementBGColor      = $element.css("background-color")
+        var elementBG           = $element.css("background")
         var $intro              = $element.find(".section-intro")
         var introWidth          = $intro.outerWidth()
         var introHeight         = $intro.outerHeight()
@@ -460,13 +513,14 @@ jQuery(document).ready(function($) {
         var $animation          = $('<div id="'+$element.attr('id')+'-animation" class="section-animation"></div>')
 
         if (isAnimationReverse) {
-            animationScroll = (windowWidth + introOffsetLeft - introWidth - windowHeight)
+            animationScroll = (windowWidth - introOffsetLeft + introWidth - windowHeight)
         }
 
         $animation.css({
             width: "100%",
             height: animationScroll,
             backgroundColor: elementBGColor,
+            background: elementBG,
             color: elementColor
         })
 
@@ -595,157 +649,26 @@ jQuery(document).ready(function($) {
         
         return $animation
     }
-
-    // const createSectionAnimation1 = (element) => {
-    //     var $window             = $(window)
-    //     var windowWidth         = $window.width()
-    //     var windowHeight        = $window.height()
-    //     var $element            = $(element)
-    //     var elementHeight       = $element.outerHeight()
-    //     var elementColor        = $element.css("color")
-    //     var elementBGColor      = $element.css("background-color")
-    //     var $heading            = $element.find(".section-heading")
-    //     var headingWidth        = $heading.outerWidth()
-    //     var headingHeight       = $heading.outerHeight()
-    //     var headingOffsetTop    = $heading.offset().top
-    //     var headingOffsetLeft   = $heading.offset().left
-    //     var $content            = $element.find(".section-content")
-    //     var contentWidth        = $content.outerWidth()
-    //     var contentOffsetTop    = $content.offset().top
-    //     var animationScroll     = (windowWidth - headingOffsetLeft - windowHeight)
-    //     var $animation          = $('<div id="animation1" class="animation-container animation-1 position-relative bg-transparent text-light w-100 d-flex flex-row align-items-center"></div>')
-
-    //     $animation.append('<div class="animation-content"><h2>'+$heading.text()+'</h2></div>')
-        
-    //     $animation.insertBefore(element)
-
-    //     $animation                  = $("#"+$animation.attr("id"))
-    //     var $animationContent       = $animation.find(".animation-content")
-    //     var animationContentLeft    = $animationContent.css("left")
-    //     var $animationHeading       = $animationContent.find("h2")
-    //     var animationHeadingFS      = parseInt($animationHeading.css("font-size"))
-    //     var animationContentWidth   = $animationContent.outerWidth()
-
-    //     $animation.css({
-    //         height: (windowWidth + (animationContentWidth / 2))
-    //     })
-
-    //     var animationOffsetTop      = $animation.offset().top
-    //     var animationBreakpoint     = 0
-    //     var animationFSBreakpoint   = 0
-    //     var animationVisBreakpoint  = 0
-    //     var lastScrollTop           = 0
-
-    //     $heading.css({
-    //         visibility: "hidden"
-    //     })
-
-    //     $window.scroll(function() {
-    //         var scrollTop   = $(this).scrollTop()
-    //         var scrolledBy  = lastScrollTop - scrollTop
-    //         var scrollDir   = "down"
-
-    //         if (scrollTop < lastScrollTop) {
-    //             scrollDir = "up"
-    //         }
-
-    //         lastScrollTop   = scrollTop
-
-    //         $animation.css({
-    //             height: (windowWidth + ($animationHeading.outerWidth() / 2))
-    //         })
-
-    //         var animationHeight         = $animation.outerHeight()
-    //         var animationOffsetBottom   = (animationOffsetTop + animationHeight)
-
-    //         if (scrollTop < animationOffsetTop) {
-    //             $animationContent.css({
-    //                 position: "absolute",
-    //                 left: animationContentLeft,
-    //                 zIndex: 999999
-    //             })
-    //         } else if ((scrollTop >= animationOffsetTop) && (scrollTop <= animationOffsetBottom)) {
-    //             if (scrollDir == "down") {
-    //                 if (parseInt($animationContent.css("left")) > 72) {
-    //                     $animationContent.css({
-    //                         position: "fixed",
-    //                         left: parseInt($animationContent.css("left")) + (scrolledBy * 2)
-    //                     })
-
-    //                     animationBreakpoint = scrollTop
-    //                 } else {
-    //                     $animationContent.css({
-    //                         position: "fixed",
-    //                         left: 72
-    //                     })
-
-    //                     if (parseInt($animationHeading.css("font-size")) > parseInt($heading.css("font-size"))) {
-    //                         $animationHeading.css({
-    //                             fontSize: parseInt($animationHeading.css("font-size")) + (scrolledBy * 2)
-    //                         })
-
-    //                         animationFSBreakpoint = scrollTop
-    //                     } else {
-    //                         $animationHeading.css({
-    //                             maxWidth: headingWidth,
-    //                             fontSize: parseInt($heading.css("font-size"))
-    //                         })
-    //                     }
-    //                 }
-    //             } else {
-    //                 if (scrollTop < animationBreakpoint) {
-    //                     $animationContent.css({
-    //                         position: "fixed",
-    //                         left: parseInt($animationContent.css("left")) + (scrolledBy * 2)
-    //                     })
-    //                 } else {
-    //                     if (scrollTop < animationFSBreakpoint) {
-    //                         if (parseInt($animationHeading.css("font-size")) > animationHeadingFS) {
-    //                             $animationHeading.css({
-    //                                 fontSize: animationHeadingFS
-    //                             })
-    //                         } else {
-    //                             $animationHeading.css({
-    //                                 fontSize: parseInt($animationHeading.css("font-size")) + (scrolledBy * 2)
-    //                             })
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //         } else if ((scrollTop >= (animationOffsetBottom - $animationHeading.outerHeight())) && scrollTop <= animationVisBreakpoint) {
-    //             $animationContent.css({
-    //                 position: ""
-    //             })
-
-    //             animationVisBreakpoint = scrollTop
-    //         }
-
-    //         if (scrollTop >= headingOffsetTop) {
-    //             $heading.css({
-    //                 visibility: "visible"
-    //             })
-    //         } else {
-    //             $heading.css({
-    //                 visibility: "hidden"
-    //             })
-    //         }
-    //     })
-    // }
 })
 
-const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            if (!entry.target.classList.contains("animation-wipe-in")) {
-                entry.target.classList.add("animation-wipe-in")
+const observer = new IntersectionObserver(
+    entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting || (entry.intersectionRatio > 1)) {
+                if (!entry.target.classList.contains("animation-wipe-in")) {
+                    entry.target.classList.add("animation-wipe-in")
+                }
+            } else {
+                if (entry.target.classList.contains("animation-wipe-in")) {
+                    entry.target.classList.remove("animation-wipe-in")
+                }
             }
-        } else {
-            if (entry.target.classList.contains("animation-wipe-in")) {
-                entry.target.classList.remove("animation-wipe-in")
-            }
-        }
-    })
-})
+        })
+    },
+    {
+        threshold: 1
+    }
+)
 
 document.querySelectorAll(".section-content.animate-it").forEach(element => {
     observer.observe(element)

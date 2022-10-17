@@ -234,6 +234,8 @@ function btr_otp_form() {
                     <input class="m-2 text-center form-control rounded" type="text" id="fourth" name="otp[]" maxlength="1" />
                     <input class="m-2 text-center form-control rounded" type="text" id="fifth" name="otp[]" maxlength="1" />
                     <input class="m-2 text-center form-control rounded" type="text" id="sixth" name="otp[]" maxlength="1" />
+                    <input class="m-2 text-center form-control rounded" type="text" id="seventh" name="otp[]" maxlength="1" />
+                    <input class="m-2 text-center form-control rounded" type="text" id="eighth" name="otp[]" maxlength="1" />
                 </div>
                 <div class="mt-4">
                     <button class="btn btn-danger px-4 validate"><?php _e( 'Continue', 'btr' ); ?></button> <span class="spinner ms-2 d-none"><i class="fas fa-spinner fa-spin"></i></span>

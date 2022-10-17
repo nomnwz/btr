@@ -1,4 +1,4 @@
-<div id="section3" class="section-container section-3 section-sticky section-animate-it section-animate-it-reverse position-relative bg-dark text-light w-100 vh-md-200 px-site py-5 d-flex row mx-0">
+<div id="section3" class="section-container section-3 section-sticky section-animate-it section-animate-it-reverse position-relative image-background fixed-background text-light w-100 vh-md-200 px-site py-5 d-flex row mx-0" data-background-src="<?php echo get_stylesheet_directory_uri() . '/assets/img/section-3.png'; ?>">
     <div class="col-12 col-md-6 order-2 order-md-1 d-flex align-items-md-end position-relative">
         <div class="section-content">
             <h4><?php _e( 'Missions and training are demanding, clients must be ready', 'btr' ); ?></h4>

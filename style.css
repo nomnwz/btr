@@ -1,6 +1,6 @@
 /*
 * Theme Name: BTR
-* Version: 1.0.5
+* Version: 1.0.6
 * Author: CodeIcon
 * Text Domain: btr
 */
@@ -18,8 +18,8 @@
 
 body {
     font-family: 'Fjalla One', sans-serif;
-    font-size: 16px;
-    line-height: 26px;
+    font-size: 20px;
+    line-height: 1.7;
     overflow-x: hidden;
 }
 
@@ -268,12 +268,12 @@ a:hover {
     height: calc(100% + 60px);
     background-color: #191919;
     content: "";
-    opacity: 0.4;
-    z-index: -1;
+    opacity: .5;
+    z-index: 0;
 }
 
 .card {
-    width: 400px;
+    width: 600px;
     border: none;
     height: 300px;
     box-shadow: 0px 5px 20px 0px #d2dae3;
@@ -626,13 +626,21 @@ h2.section-heading {
     }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .section-content.animate-it.animation-wipe-in {
-        animation: wipe-in .6s;
+@media (min-width: 768px) {
+    .section-content.animate-it {
+        visibility: hidden;
     }
-  
-    .section-content.animate-it.animation-wipe-out {
-        animation: wipe-out .6s;
+    
+    @media (prefers-reduced-motion: no-preference) {
+        .section-content.animate-it.animation-wipe-in {
+            visibility: visible;
+            animation: wipe-in .2s;
+        }
+      
+        .section-content.animate-it.animation-wipe-out {
+            visibility: visible;
+            animation: wipe-out .2s;
+        }
     }
 }
 

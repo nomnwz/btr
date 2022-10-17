@@ -1,8 +1,8 @@
-<div id="section7" class="section-container section-7 position-relative bg-dark text-light w-100 vh-md-100 px-site py-5 d-flex flex-column justify-content-center align-items-start">
+<div id="section7" class="section-container section-7 position-relative bg-dark text-light w-100 min-vh-100 px-site py-5 d-flex flex-column justify-content-center align-items-start">
     <div class="section-intro mb-5">
         <h2 class="section-heading"><?php _e( 'Contact us', 'btr' ); ?></h2>
     </div>
-    <div class="section-content w-100">
+    <div class="section-content animate-it w-100">
         <div class="row">
             <div class="col-md-9 mb-md-0 mb-5">
                 <form id="contact-form" name="contact-form" action="javascript:void(0);" method="post">

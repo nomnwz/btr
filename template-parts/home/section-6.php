@@ -1,4 +1,4 @@
-<div id="section6" class="section-container section-6 section-sticky position-relative bg-transparent background-overlay text-light w-100 vh-md-200 px-site py-5 d-flex row mx-0">  
+<div id="section6" class="section-container section-6 section-sticky position-relative image-background fixed-background text-light w-100 vh-md-200 px-site py-5 d-flex row mx-0" data-background-src="<?php echo get_stylesheet_directory_uri() . '/assets/img/section-6.png'; ?>">
     <div class="col-12 col-md-6 order-1 order-md-1 mt-5 mt-5 mt-md-10 mt-lg-15 position-relative">
         <div class="section-intro sticky-top" sticky-top="30">
             <h2 class="section-heading me-md-5"><?php _e( 'Our Commitment', 'btr' ); ?></h2>

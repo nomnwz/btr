@@ -19,7 +19,7 @@ function btr_create_tables() {
     if ( $wpdb->get_var( "SHOW tables LIKE '$table_name'" ) != $table_name ) {
         $sql = "CREATE TABLE $table_name (
             ID mediumint(9) NOT NULL AUTO_INCREMENT,
-            otp bigint(20) NOT NULL,
+            otp varchar(255) NOT NULL,
             user_ip varchar(255) NOT NULL,
             visits bigint(20) NOT NULL,
             is_accessed boolean NOT NULL,
