@@ -330,47 +330,22 @@ jQuery(document).ready(function($) {
         var inputs = $("#otp > *[id]")
         for (let i = 0; i < inputs.length; i++) {
             const input = inputs[i]
+            var oldValue, newValue
+
             $(input).on("keydown", function(e) {
+                oldValue = $(input).val()
+
                 if (e.key === "Backspace" ) {
                     $(input).val("")
                     if (i !== 0) {
                         $(inputs[i - 1]).focus()
                     }
                 } else {
-                    e               = e || window.event
-                    var keyCode     = e.which || e.keyCode
-                    var alphabets   = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-                    var numbers     = "123456789"
-                    var specials    = "!@#$%&"
-                    var ctrl        = e.ctrlKey ? e.ctrlKey : ((keyCode === 17) ? true : false)
+                    e           = e || window.event
+                    var keyCode = e.which || e.keyCode
 
                     if ((i == (inputs.length - 1)) && keyCode == 13) { // Enter
                         $(submitBtn).trigger("click")
-                    } else if (keyCode == 9) { // Tab
-                        return true
-                    } else if (keyCode == 86 && ctrl) { // ctrl + V
-                        return true
-                    } else if (keyCode >= 65 && keyCode <= 90) { // Alphabets [A-Z] || [a-z]
-                        $(input).val(String.fromCharCode(keyCode))
-                    } else if ((keyCode >= 49 && keyCode <= 57) || (keyCode >= 97 && keyCode <= 105)) { // Numbers [1-9] || Numpad Numbers [1-9]
-                        if (specials.includes(e.key) || !isNaN(e.key)) { // Special Characters
-                            $(input).val(e.key)
-                        } else {
-                            return false
-                        }
-                    } else if (alphabets.includes(e.key)) { // Alphabets [A-Z] || [a-z]
-                        $(input).val(e.key.toUpperCase())
-                    } else if (numbers.includes(e.key)) { // Numbers [1-9] || Numpad Numbers [1-9]
-                        $(input).val(e.key)
-                    } else if (specials.includes(e.key)) { // Special Characters
-                        $(input).val(e.key)
-                    } else {
-                        return false
-                    }
-
-                    if ($(input).val()) {
-                        $(inputs[i + 1]).focus()
-                        e.preventDefault()
                     }
                 }
             })
@@ -392,6 +367,28 @@ jQuery(document).ready(function($) {
                         $(inputs[inputs.length - 1]).focus()
                     }
                 })
+            })
+
+            $(input).on("propertychange input", function(e) {
+                newValue        = $(input).val()
+                var alphabets   = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+                var numbers     = "123456789"
+                var specials    = "!@#$%&"
+
+                if (numbers.includes(newValue)) { // Numbers [1-9]
+                    $(input).val(newValue)
+                } else if (alphabets.includes(newValue)) { // Alphabets [A-Z]
+                    $(input).val(newValue.toUpperCase())
+                } else if (specials.includes(newValue)) { // Special Characters [! @ # $ % &]
+                    $(input).val(newValue)
+                } else {
+                    $(input).val("")
+                }
+
+                if ($(input).val()) {
+                    $(inputs[i + 1]).focus()
+                    e.preventDefault()
+                }
             })
         }
     }
