@@ -1,6 +1,6 @@
 /*
 * Theme Name: BTR
-* Version: 1.0.6.4
+* Version: 1.0.6.7
 * Author: CodeIcon
 * Text Domain: btr
 */
@@ -285,6 +285,22 @@ a:hover {
 
 .card h6 {
     font-size: 20px
+}
+
+@media (max-width: 767px) {
+    .card {
+        max-width: 80%;
+        height: auto;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 575px) {
+    .card {
+        max-width: 90%;
+        height: auto;
+        margin: 0 auto;
+    }
 }
 
 .inputs input {
