@@ -13,14 +13,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php wp_head(); ?>
 </head>
-<body <?php body_class(); ?>>
+<body <?php body_class( 'bg-black' ); ?>>
     <?php
     if ( btr_is_otp_active() && !btr_has_current_user_access() ) {
         do_action( 'otp_setup' );
     } else {
         ?>
-        <div id="splash" class="bg-dark text-light w-100 vh-100 position-fixed top-0 left-0">
-            <div class="splash-container d-flex flex-column">
+        <div id="splash" class="bg-black text-light w-100 vh-100 position-fixed top-0 left-0 image-background fixed-background">
+            <!-- <div class="splash-container d-flex flex-column">
                 <div class="d-flex flex-column justify-content-start align-items-center">
                     <h1 class="title"><?php _e( 'BTR', 'btr' ); ?></h1>
                     <h5 class="subtitle"><?php _e( 'Better Than Reality', 'btr' ); ?></h5>
@@ -31,12 +31,16 @@
                     </div>
                     <button id="enterSite" class="btn btn-lg px-5 rounded-0 text-uppercase"><?php _e( 'Enter', 'btr' ); ?></button>
                 </div>
+            </div> -->
+            <div class="position-relative h-100 w-100">
+                <button id="enterSite" class="btn btn-lg px-5 rounded-0 text-uppercase"><?php _e( 'Enter', 'btr' ); ?></button>
             </div>
         </div>
         <div id="root">
+            <?php get_template_part( 'template-parts/home/video' ); ?>
             <header class="text-light">
                 <div class="header-wrap">
-                    <div class="site-branding ps-site">
+                    <div class="site-branding ps-site" style="z-index:1;">
                         <?php
                         if ( has_custom_logo() ) {
                             echo '<div class="site-logo">' . get_custom_logo() . '</div>';
@@ -47,8 +51,8 @@
                         }
                         ?>
                     </div>
-                    <div class="site-menu site-menu h-100 d-grid">
-                        <div class="language text-dark" role="radiogroup" aria-labelledby="languageSwitcher">
+                    <div class="site-menu site-menu h-100 d-grid" style="z-index:1;">
+                        <div class="language text-black" role="radiogroup" aria-labelledby="languageSwitcher">
                             <p class="d-none" id="languageSwitcher">Choose a language for this website</p>
                             <div class="language-container language-container-left language-container-en">
                                 <input class="language-control" type="radio" id="language1" name="language-switch" checked>

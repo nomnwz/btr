@@ -223,9 +223,9 @@ function btr_increase_visits() {
 add_action( 'otp_setup', 'btr_otp_form' );
 function btr_otp_form() {
     ?>
-    <div class="otp-container bg-dark text-light w-100 vh-100 d-flex justify-content-center align-items-center">
+    <div class="otp-container bg-black text-light w-100 vh-100 d-flex justify-content-center align-items-center">
         <div class="position-relative">
-            <div class="card p-2 text-center bg-light text-dark">
+            <div class="card p-2 text-center bg-light text-black">
                 <h6 class="text-uppercase"><?php _e( 'Please enter temporary access code', 'btr' ); ?></h6>
                 <div id="otp" class="inputs d-flex flex-row flex-wrap justify-content-center mt-2">
                     <input class="m-2 text-center form-control rounded" type="text" id="first" name="otp[]" maxlength="1" />

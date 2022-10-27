@@ -93,15 +93,15 @@ jQuery(document).ready(function($) {
         })
     })
 
-    /**
-     * Fixed Top
-     */
-    $(function() {
-        fixedTopPosFix()
-        $(window).resize(function(e) { 
-            fixedTopPosFix()
-        })
-    })
+    // /**
+    //  * Fixed Top
+    //  */
+    // $(function() {
+    //     fixedTopPosFix()
+    //     $(window).resize(function(e) { 
+    //         fixedTopPosFix()
+    //     })
+    // })
 
     /**
      * Sticky Top
@@ -205,11 +205,15 @@ jQuery(document).ready(function($) {
             $.each($elements, function() {
                 var $element        = $(this)
                 var stickyItem      = $element.find(".section-intro")
-                var stickyBottom    = parseInt(stickyItem.css("top")) + stickyItem.outerHeight() + 0
+                // var stickyBottom    = parseInt(stickyItem.css("top")) + stickyItem.outerHeight() + 0
+                var stickyBottom    = parseInt(stickyItem.css("top")) + $(window).height() - stickyItem.outerHeight()
                 var content         = $element.find(".section-content")
-                content.css({
-                    "margin-top": stickyBottom
-                })  
+                $element.css({
+                    height: $(window).height() + content.outerHeight()
+                })
+                // content.css({
+                //     "margin-top": stickyBottom
+                // })
             })
         }
     })
@@ -261,7 +265,7 @@ jQuery(document).ready(function($) {
              */
             $(function() {
                 var target = "#videoAutoplay video"
-                if ($(window).scrollTop() > $(window).height()) {
+                if ($(window).scrollTop() > $(target).outerHeight()) {
                     $(target).get(0).pause()
                 } else {
                     if ($(target).get(0).currentTime != 0 && $(target).get(0).currentTime != $(target).get(0).duration) {
@@ -407,7 +411,8 @@ jQuery(document).ready(function($) {
 
     const loadVideo = (el, play = true, delay = 3000) => {
         const load = () => {
-            $(el+" video source").attr("src", $(el+" video source").attr("data-src"))
+            // $(el+" video source").attr("src", $(el+" video source").attr("data-src"))
+            $(el+" video").prop("loop", false)
             $(el+" video").get(0).load()
             if (play) {
                 $(el+" video").get(0).play()
@@ -671,9 +676,6 @@ const observer = new IntersectionObserver(
                 }
             }
         })
-    },
-    {
-        threshold: 1
     }
 )
 

@@ -1,6 +1,6 @@
 /*
 * Theme Name: BTR
-* Version: 1.0.6.7
+* Version: 1.0.6.8
 * Author: CodeIcon
 * Text Domain: btr
 */
@@ -17,7 +17,7 @@
 }
 
 body {
-    font-family: 'Fjalla One', sans-serif;
+    font-family: 'Gibson';
     font-size: 20px;
     line-height: 1.7;
     overflow-x: hidden;
@@ -28,7 +28,7 @@ body {
 }
 
 header {
-    font-family: 'Gibson';
+    font-family: 'Fjalla One', sans-serif;
     z-index: 99999;
 }
 
@@ -194,6 +194,8 @@ a:hover {
     z-index: 99999999;
     padding-left: 10px;
     padding-right: 10px;
+    background-image: url('assets/img/landing.png');
+    background-size: contain;
 }
 
 .splash-container {
@@ -234,7 +236,11 @@ a:hover {
     font-weight: 700;
 }
 
-.splash-container .btn {
+button#enterSite {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 120px;
     background-color: rgba(var(--bs-secondary-rgb), 1);
     border-color: rgba(var(--bs-secondary-rgb), 1);
     color: #000;
@@ -244,7 +250,7 @@ a:hover {
     letter-spacing: 0.1em;
 }
 
-.splash-container .btn:hover {
+button#enterSite:hover {
     color: #000;
     background-color: rgba(var(--bs-secondary-rgb), 0.7);
     border-color: rgba(var(--bs-secondary-rgb), 0.7);
@@ -329,6 +335,7 @@ header.bg-dark, header.bg-light {
 
 header {
     height: 120px;
+    margin-bottom: -120px;
 }
 
 .header-wrap {
@@ -428,7 +435,7 @@ header {
     height: 100vh;
 }
 
-#videoAutoplay video {
+/* #videoAutoplay video {
     min-width: 100%;
     min-height: calc(100% + 60px);
     position: fixed;
@@ -437,7 +444,7 @@ header {
     transform: translateX(-50%);
     z-index: -9999;
     object-fit: fill;
-}
+} */
 
 #videoAutoplay .video-reloader {
     position: absolute;
@@ -507,8 +514,12 @@ header {
     justify-content: center;
 }
 
-.section-intro.sticky-top {
+.section-intro, .section-content {
     z-index: 999;
+}
+
+.section-intro {
+    font-family: 'Fjalla One', sans-serif;
 }
 
 h2.section-heading {
