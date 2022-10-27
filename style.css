@@ -1,6 +1,6 @@
 /*
 * Theme Name: BTR
-* Version: 1.0.6.9
+* Version: 1.0.7
 * Author: CodeIcon
 * Text Domain: btr
 */
@@ -21,6 +21,7 @@ body {
     font-size: 20px;
     line-height: 1.7;
     overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
 #root {
