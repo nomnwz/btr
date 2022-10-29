@@ -121,6 +121,11 @@ jQuery(document).ready(function($) {
             $("#"+targetVideo+" video").get(0).pause()
             $("#"+targetVideo+" video").get(0).currentTime = 0
             $("#"+targetVideo+" video").get(0).play()
+            if (!$("#"+targetVideo+" video").is(":visible")) {
+                $("#"+targetVideo+" video").css({
+                    display: "block"
+                })
+            }
             $(this).hide("slow")
         })
     })
