@@ -1,6 +1,6 @@
 /*
 * Theme Name: BTR
-* Version: 1.0.7
+* Version: 1.0.8
 * Author: CodeIcon
 * Text Domain: btr
 */
@@ -436,17 +436,6 @@ header {
     height: 100vh;
 }
 
-/* #videoAutoplay video {
-    min-width: 100%;
-    min-height: calc(100% + 60px);
-    position: fixed;
-    top: -60px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: -9999;
-    object-fit: fill;
-} */
-
 #videoAutoplay .video-reloader {
     position: absolute;
     top: 0;
@@ -492,16 +481,10 @@ header {
 }
 
 .animation-container h2 {
-    /* font-family: 'Gibson'; */
     font-size: 34rem;
     letter-spacing: 1.2px;
     font-weight: 900;
-    /* text-transform: uppercase; */
     color: rgba(var(--bs-light-rgb), .6);
-    /* white-space: nowrap;
-    color: rgb(185 68 53 / 10%);
-    -webkit-text-stroke: 0.2rem;
-    -webkit-text-stroke-color: #E9A39B; */
 }
 
 #animation1 .animation-content {

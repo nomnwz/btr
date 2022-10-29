@@ -93,16 +93,6 @@ jQuery(document).ready(function($) {
         })
     })
 
-    // /**
-    //  * Fixed Top
-    //  */
-    // $(function() {
-    //     fixedTopPosFix()
-    //     $(window).resize(function(e) { 
-    //         fixedTopPosFix()
-    //     })
-    // })
-
     /**
      * Sticky Top
      */
@@ -204,16 +194,10 @@ jQuery(document).ready(function($) {
         if ($elements.length && $(window).width() > 767) {
             $.each($elements, function() {
                 var $element        = $(this)
-                var stickyItem      = $element.find(".section-intro")
-                // var stickyBottom    = parseInt(stickyItem.css("top")) + stickyItem.outerHeight() + 0
-                var stickyBottom    = parseInt(stickyItem.css("top")) + $(window).height() - stickyItem.outerHeight()
                 var content         = $element.find(".section-content")
                 $element.css({
                     height: $(window).height() + content.outerHeight()
                 })
-                // content.css({
-                //     "margin-top": stickyBottom
-                // })
             })
         }
     })
@@ -237,28 +221,6 @@ jQuery(document).ready(function($) {
 
             scrolledBy      = lastScrollTop - scrollTop
             lastScrollTop   = scrollTop
-
-            // /**
-            //  * Header Transparency
-            //  */
-            // $(function() {
-            //     var header = $("header")
-            //     if (header.length) {
-            //         if ($(window).scrollTop() > $("#main").offset().top) {
-            //             header.css({
-            //                 "height": "119px",
-            //                 "--bs-bg-opacity": 1
-            //             })
-            //             header.addClass("border-bottom border-light")
-            //         } else {
-            //             header.css({
-            //                 "height": "120px",
-            //                 "--bs-bg-opacity": 0.5
-            //             })
-            //             header.removeClass("border-bottom border-light")
-            //         }
-            //     }
-            // })
 
             /**
              * Video Autplay
@@ -397,21 +359,9 @@ jQuery(document).ready(function($) {
         }
     }
 
-    const removeEl = (el, delay = 3000) => {
-        if ($(el).length) {
-            if (delay) {
-                setTimeout(() => {
-                    $(el).remove()
-                }, delay)
-            } else {
-                $(el).remove()
-            }
-        }
-    }
-
     const loadVideo = (el, play = true, delay = 3000) => {
         const load = () => {
-            // $(el+" video source").attr("src", $(el+" video source").attr("data-src"))
+            $(el+" video").prop("muted", false)
             $(el+" video").prop("loop", false)
             $(el+" video").get(0).load()
             if (play) {
@@ -425,26 +375,6 @@ jQuery(document).ready(function($) {
                 }, delay)
             } else {
                 load()
-            }
-        }
-    }
-
-    const fixedTopPosFix = () => {
-        var fixed = $("*").filter(function() { 
-            return $(this).attr("id") !== "wpadminbar" && $(this).attr("id") !== "splash" && $(this).css("position") == "fixed"
-        })
-        for (let i = 0; i < fixed.length; i++) {
-            const fixedTop = fixed[i]
-            if ($(fixedTop).length) {
-                var top = parseInt($(fixedTop).css("top"))
-
-                if ($("#wpadminbar").length && $(window).width() > 600) {
-                    top = top + $("#wpadminbar").outerHeight()
-                }
-
-                $(fixedTop).css({
-                    top: top
-                })
             }
         }
     }
@@ -479,28 +409,6 @@ jQuery(document).ready(function($) {
         $(".top-video .elementor-container").css({
             "height": "calc(100vh - "+topOffset+"px)",
             "min-height": "calc(100vh - "+topOffset+"px"
-        })
-    }
-
-    const isInView = (el) => {
-        var $window                  = $(window)
-        var windowHeight            = $window.height()
-        var windowTop               = $window.scrollTop()
-        var windowBottom            = (windowTop + windowHeight)
-
-        $.each($(el), function() {
-            var $element        = $(this)
-            var elementHeight   = $element.outerHeight()
-            var elementTop      = $element.offset().top
-            var elementBottom   = (elementTop + elementHeight)
-        
-            // Check to see if this current container is within viewport
-            if ((windowTop >= elementTop) &&
-                (windowTop <= elementBottom)) {
-                $element.addClass("in-view")
-            } else {
-                $element.removeClass("in-view")
-            }
         })
     }
 

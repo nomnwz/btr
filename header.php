@@ -20,18 +20,6 @@
     } else {
         ?>
         <div id="splash" class="bg-black text-light w-100 vh-100 position-fixed top-0 left-0 image-background fixed-background">
-            <!-- <div class="splash-container d-flex flex-column">
-                <div class="d-flex flex-column justify-content-start align-items-center">
-                    <h1 class="title"><?php _e( 'BTR', 'btr' ); ?></h1>
-                    <h5 class="subtitle"><?php _e( 'Better Than Reality', 'btr' ); ?></h5>
-                </div>
-                <div class="d-flex flex-column justify-content-end align-items-center">
-                    <div class="content">
-                        <p><span><?php _e( 'Where only', 'btr' ); ?></span> <?php _e( 'extraordinary people succeed...', 'btr' ); ?><p>
-                    </div>
-                    <button id="enterSite" class="btn btn-lg px-5 rounded-0 text-uppercase"><?php _e( 'Enter', 'btr' ); ?></button>
-                </div>
-            </div> -->
             <div class="position-relative h-100 w-100">
                 <button id="enterSite" class="btn btn-lg px-5 rounded-0 text-uppercase"><?php _e( 'Enter', 'btr' ); ?></button>
             </div>
