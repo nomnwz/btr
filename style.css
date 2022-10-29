@@ -1,6 +1,6 @@
 /*
 * Theme Name: BTR
-* Version: 1.1.0
+* Version: 1.1.1
 * Author: CodeIcon
 * Text Domain: btr
 */
@@ -430,6 +430,28 @@ header {
     background-image: url(assets/svg/ar.svg);
     background-position: 5px 10px;
     background-size: 20px;
+}
+
+.elementor embed, .elementor iframe, .elementor object, .elementor video {
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+    line-height: 1;
+    border: none;
+}
+
+.elementor .elementor-background-video, .elementor .elementor-background-video-embed, .elementor .elementor-background-video-hosted {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+}
+
+.elementor .elementor-html5-video {
+    -o-object-fit: cover;
+    object-fit: cover;
 }
 
 #videoAutoplay {
