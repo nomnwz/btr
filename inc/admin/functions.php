@@ -73,28 +73,6 @@ function btr_admin_register_otp_settings() {
             )
         ),
         array(
-            'id'        => 'contact_address',
-            'title'     => 'Contact Address',
-            'callback'  => 'btr_admin_textarea_field',
-            'page'      => 'otp_options',
-            'section'   => 'otp_general_options',
-            'args'		=> array(
-                'label_for'     => 'contact_address',
-                'option_name'   => 'otp_options'
-            )
-        ),
-        array(
-            'id'        => 'contact_phone',
-            'title'     => 'Contact Phone',
-            'callback'  => 'btr_admin_tel_field',
-            'page'      => 'otp_options',
-            'section'   => 'otp_general_options',
-            'args'		=> array(
-                'label_for'     => 'contact_phone',
-                'option_name'   => 'otp_options'
-            )
-        ),
-        array(
             'id'        => 'contact_email',
             'title'     => 'Contact Email',
             'callback'  => 'btr_admin_email_field',
@@ -348,4 +326,4 @@ function btr_admin_ajax_generate_otps() {
     }
 
     wp_die();
-}
+} 

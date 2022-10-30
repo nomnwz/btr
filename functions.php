@@ -113,24 +113,6 @@ function btr_get_otp_email() {
 }
 
 /**
- * Get Contact address
- */
-function btr_get_contact_address() {
-    $options = get_option( 'otp_options' );
-    $default = '123 ABCD, XYZ 0000, Lorem';
-    return ( isset( $options['contact_address'] ) ? ( $options['contact_address'] ?: $default ) : $default );
-}
-
-/**
- * Get Contact phone
- */
-function btr_get_contact_phone() {
-    $options = get_option( 'otp_options' );
-    $default = '+ xx xxx xxx xx';
-    return ( isset( $options['contact_phone'] ) ? ( $options['contact_phone'] ?: $default ) : $default );
-}
-
-/**
  * Get Contact email
  */
 function btr_get_contact_email() {
