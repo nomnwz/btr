@@ -1,4 +1,4 @@
-<div id="section2" class="section-container section-2 section-sticky position-relative text-light w-100 px-site pb-5 d-flex row mx-0">
+<div id="section2" class="section-container section-2 section-sticky position-relative text-light w-100 px-site py-5 d-flex row mx-0">
     <div class="col-12 h-100 position-absolute top-0 start-0 px-0">
         <?php echo do_shortcode( '[nk_awb awb_type="image" awb_image="' . get_stylesheet_directory_uri() . '/assets/img/section-2.png' . '" awb_parallax="scroll" awb_parallax_mobile="true" awb_styles="width:100%; height:100%;"]' ); ?>
     </div>

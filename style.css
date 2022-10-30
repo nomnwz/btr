@@ -1,6 +1,6 @@
 /*
 * Theme Name: BTR
-* Version: 1.1.3
+* Version: 1.1.4
 * Author: CodeIcon
 * Text Domain: btr
 */
@@ -526,10 +526,6 @@ h2.section-heading {
         font-size: 4.8rem;
         letter-spacing: 1.2px;
     }
-}
-
-.section-4 .section-content {
-    max-width: 500px;
 }
 
 .list-group-item.content {
