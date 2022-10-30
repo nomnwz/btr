@@ -1,6 +1,6 @@
 /*
 * Theme Name: BTR
-* Version: 1.1.5
+* Version: 1.1.6
 * Author: CodeIcon
 * Text Domain: btr
 */
@@ -346,12 +346,6 @@ header {
     align-items: center;
 }
 
-.site-branding h2 {
-    margin-bottom: 0;
-    font-size: 42px;
-    font-weight: 700;
-}
-
 .site-title {
     font-family: 'gibson';
     font-size: 90px;
@@ -360,6 +354,7 @@ header {
     color: #000;
     text-shadow: 0.5px -0.5px 0px #fff;
     user-select: none;
+    margin-bottom: 0;
 }
 
 .custom-logo {
@@ -584,6 +579,10 @@ h2.section-heading {
     .custom-logo {
         width: 200px;
     }
+
+    .site-title {
+        font-size: 70px;
+    }
     
     .site-menu {
         width: 200px;
@@ -617,6 +616,10 @@ h2.section-heading {
 
     .custom-logo {
         width: 150px;
+    }
+
+    .site-title {
+        font-size: 45px;
     }
     
     .site-menu {
