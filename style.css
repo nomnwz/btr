@@ -1,6 +1,6 @@
 /*
 * Theme Name: BTR
-* Version: 1.1.6
+* Version: 1.1.7
 * Author: CodeIcon
 * Text Domain: btr
 */
@@ -616,10 +616,6 @@ h2.section-heading {
 
     .custom-logo {
         width: 150px;
-    }
-
-    .site-title {
-        font-size: 45px;
     }
     
     .site-menu {
