@@ -4,7 +4,7 @@
     </div>
     <div class="col-12 col-md-6 order-1 order-md-1 mt-5 mt-5 mt-md-10 mt-lg-15 px-0 position-relative">
         <div class="section-intro sticky-top" sticky-top="30">
-            <h2 class="section-heading me-md-5"><?php _e( 'Our Training Program', 'btr' ); ?></h2>
+            <h2 class="section-heading me-md-5"><?php _e( 'The Training Program', 'btr' ); ?></h2>
         </div>
     </div>
     <div class="col-12 col-md-6 order-2 order-md-2 d-flex align-items-md-end px-0 position-relative">

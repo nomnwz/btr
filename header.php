@@ -32,8 +32,8 @@
                         <?php
                         if ( has_custom_logo() ) {
                             echo '<div class="site-logo">' . get_custom_logo() . '</div>';
-                        } elseif ( file_exists( get_stylesheet_directory() . '/assets/img/logo.png' ) ) {
-                            echo '<div class="site-logo"><img class="custom-logo" src="' . get_stylesheet_directory_uri() . '/assets/img/logo.png' . '"></div>';
+                        } elseif ( file_exists( get_stylesheet_directory() . '/assets/img/logo-2.png' ) ) {
+                            echo '<div class="site-logo"><img class="custom-logo" src="' . get_stylesheet_directory_uri() . '/assets/img/logo-2.png' . '"></div>';
                         } else {
                             echo '<h2 class="site-title">' . get_bloginfo( 'name' ) . '</h2>';
                         }

@@ -1,17 +1,25 @@
-<div id="section2" class="section-container section-2 position-relative text-light w-100 vh-100 px-site py-5 d-flex flex-column justify-content-center">
-    <div class="w-100 h-100 position-absolute top-0 start-0 px-0">
+<div id="section2" class="section-container section-2 section-sticky position-relative text-light w-100 px-site pb-5 d-flex row mx-0">
+    <div class="col-12 h-100 position-absolute top-0 start-0 px-0">
         <?php echo do_shortcode( '[nk_awb awb_type="image" awb_image="' . get_stylesheet_directory_uri() . '/assets/img/section-2.png' . '" awb_parallax="scroll" awb_parallax_mobile="true" awb_styles="width:100%; height:100%;"]' ); ?>
     </div>
-    <div class="d-flex">
-        <div class="section-intro">
-            <h2 class="section-heading"><?php _e( 'The Team', 'btr' ); ?></h2>
+    <div class="col-12 col-md-6 order-1 order-md-1 mt-5 mt-md-10 mt-lg-15 px-0 position-relative">
+        <div class="section-intro sticky-top" sticky-top="30">
+            <h2 class="section-heading me-md-5"><?php _e( 'The Team', 'btr' ); ?></h2>
         </div>
     </div>
-    <div class="section-content mt-10">
-        <div>
-            <p><?php _e( 'CIA, DIA & FBI operatives leverage their covert experience, specialized training and global network to provide the world’s most exclusive clientele ultra-challenging mission scenarios in which only the most extraordinary succeed.', 'btr' ); ?></p>
-            <p><?php _e( 'We know all the right people, in all the right places, all over the world to create a once-in-a-lifetime experience - twice if you dare.', 'btr' ); ?></p>
-            <p><?php _e( 'BTR is supported by a global team of security, medical and visual production professionals.', 'btr' ); ?></p>
+    <div class="col-12 col-md-6 order-2 order-md-2 d-flex align-items-md-end px-0 position-relative">
+        <div class="section-content">
+            <ul class="content-list list-group ps-0">
+                <li class="content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0 border-bottom border-light">
+                    <p><?php _e( 'CIA, DIA & FBI operatives leverage their covert experience, specialized training and global network to provide the world’s most exclusive clientele ultra-challenging mission scenarios in which only the most extraordinary succeed.', 'btr' ); ?></p>
+                </li>
+                <li class="content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0 border-bottom border-light">
+                    <p><?php _e( 'We know all the right people, in all the right places, all over the world to create a once-in-a-lifetime experience - twice if you dare.', 'btr' ); ?></p>
+                </li>
+                <li class="content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0">
+                    <p><?php _e( 'BTR is supported by a global team of security, medical and visual production professionals.', 'btr' ); ?></p>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
