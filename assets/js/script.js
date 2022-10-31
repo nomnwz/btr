@@ -199,9 +199,10 @@ jQuery(document).ready(function($) {
         if ($elements.length && $(window).width() > 767) {
             $.each($elements, function() {
                 var $element        = $(this)
+                var heading           = $element.find(".section-heading")
                 var content         = $element.find(".section-content")
-                $element.css({
-                    height: $(window).height() + content.outerHeight()
+                content.css({
+                    marginTop: heading.outerHeight()
                 })
             })
         }

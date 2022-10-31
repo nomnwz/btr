@@ -28,17 +28,7 @@
             <?php get_template_part( 'template-parts/home/video' ); ?>
             <header class="text-light">
                 <div class="header-wrap">
-                    <div class="site-branding ps-site" style="z-index:1;">
-                        <?php
-                        if ( has_custom_logo() ) {
-                            echo '<div class="site-logo">' . get_custom_logo() . '</div>';
-                        } elseif ( file_exists( get_stylesheet_directory() . '/assets/img/logo.png' ) ) {
-                            echo '<div class="site-logo"><img class="custom-logo" src="' . get_stylesheet_directory_uri() . '/assets/img/logo.png' . '"></div>';
-                        } else {
-                            echo '<h2 class="site-title">' . get_bloginfo( 'name' ) . '</h2>';
-                        }
-                        ?>
-                    </div>
+                    <div class="site-branding ps-site" style="z-index:1;"></div>
                     <div class="site-menu site-menu h-100 d-grid" style="z-index:1;">
                         <div class="language text-black" role="radiogroup" aria-labelledby="languageSwitcher">
                             <p class="d-none" id="languageSwitcher">Choose a language for this website</p>
