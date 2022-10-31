@@ -5,7 +5,7 @@
 
 get_header();
     if ( btr_is_otp_active() ) {
-        if ( btr_has_current_user_access() ) {
+        if ( btr_has_current_user_otp_access() ) {
             btr_increase_visits();
             get_template_part( 'template-parts/page', 'home' );
         }

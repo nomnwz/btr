@@ -133,18 +133,23 @@ if ( is_admin() ) {
 
 /**
  * OTP Functions
+ * 
+ * @return bool
  */
-function btr_has_current_user_access() {
+function btr_has_current_user_otp_access() {
     if ( is_user_logged_in() ) return true;
 
     $user_ip    = btr_get_current_user_ip();
-    $otp_id     = ( new OTP() )->exist( $user_ip, 'user_ip' );
+    $otp_exist  = ( new OTP() )->exist( $user_ip, 'user_ip' );
     $has_access = false;
     
-    if ( $otp_id ) {
-        $object = ( new OTP( array( 'ID' => $otp_id ) ) )->get();
-        if ( $object->is_accessed && !$object->is_expired ) {
-            $has_access = true;
+    if ( $otp_exist ) {
+        $otps = ( new OTP( array( 'user_ip' => $user_ip ) ) )->get_by( 'user_ip' );
+        
+        foreach ( $otps as $object ) {
+            if ( $object->is_accessed && !$object->is_expired ) {
+                return true;
+            }
         }
     }
 
@@ -153,35 +158,35 @@ function btr_has_current_user_access() {
 
 function btr_give_otp_access( $otp ) {
     $user_ip    = btr_get_current_user_ip();
-    $otp_id     = ( new OTP() )->exist( $otp, 'otp' );
+    $otp_exist  = ( new OTP() )->exist( $otp, 'otp' );
     $given      = false;
 
-    if ( $otp_id ) {
-        $object = ( new OTP( array( 'ID' => $otp_id ) ) )->get();
+    if ( $otp_exist ) {
+        $otps = ( new OTP( array( 'otp' => $otp ) ) )->get_by( 'otp' );
 
-        if ( !$object->is_accessed && !$object->is_expired ) {
-            $object->user_ip        = $user_ip;
-            $object->is_accessed    = true;
-            $object->accessed_at    = date( 'Y-m-d H:i:s' );
-            $object->expires_at     = date( 'Y-m-d H:i:s', strtotime( '+' . btr_get_otp_access_period() . ' days' ) );
-            $args                   = (array) $object;
-            $otp_id                 = ( new OTP( $args ) )->update();
+        foreach ( $otps as $object ) {
+            if ( !$object->is_accessed && !$object->is_expired ) {
+                $object->user_ip        = $user_ip;
+                $object->is_accessed    = true;
+                $object->accessed_at    = date( 'Y-m-d H:i:s' );
+                $object->expires_at     = date( 'Y-m-d H:i:s', strtotime( '+' . btr_get_otp_access_period() . ' days' ) );
+                $args                   = (array) $object;
+                $otp_id                 = ( new OTP( $args ) )->update();
+        
+                if ( $otp_id ) {
+                    $given      = true;
+                    $subject    = 'OTP ' . $object->otp . ' accessed';
+                    $message    = 'OTP ' . $object->otp . ' was accessed at ' . $object->accessed_at . '. Access details are below:';
+                    $message    .= "\n";
+                    $message    .= "\n";
+                    $message    .= 'User IP: ' . $object->user_ip;
+                    $message    .= "\n";
+                    $message    .= 'Expiring at: ' . $object->expires_at;
+                    
+                    wp_mail( btr_get_otp_email(), $subject, $message );
     
-            if ( $otp_id ) {
-                $given      = true;
-                $subject    = 'OTP ' . $object->otp . ' accessed';
-                $message    = 'OTP ' . $object->otp . ' was accessed at ' . $object->accessed_at . '. Access details are below:';
-                $message    .= "\n";
-                $message    .= "\n";
-                $message    .= 'User IP: ' . $object->user_ip;
-                $message    .= "\n";
-                $message    .= 'Expiring at: ' . $object->expires_at;
-                
-                wp_mail( btr_get_otp_email(), $subject, $message );
-
-                $object = ( new OTP( array( 'ID' => $otp_id ) ) )->get();
-
-                do_action( 'btr_otp_access_given', $object );
+                    do_action( 'btr_otp_access_given', $object );
+                }
             }
         }
     }
@@ -191,14 +196,21 @@ function btr_give_otp_access( $otp ) {
 
 function btr_increase_visits() {
     $user_ip    = btr_get_current_user_ip();
-    $otp_id     = ( new OTP() )->exist( $user_ip, 'user_ip' );
+    $otp_exist  = ( new OTP() )->exist( $user_ip, 'user_ip' );
 
-    if ( $otp_id ) {
-        $object         = ( new OTP( array( 'ID' => $otp_id ) ) )->get();
-        $object->visits = $object->visits + 1;
-        $args           = (array) $object;
+    if ( $otp_exist ) {
+        $otps   = ( new OTP( array( 'user_ip' => $user_ip ) ) )->get_by( 'user_ip' );
 
-        ( new OTP( $args ) )->update();
+        foreach ( $otps as $object ) {
+            if ( $object->is_accessed && !$object->is_expired ) {
+                $object->visits = $object->visits + 1;
+                $args           = (array) $object;
+        
+                ( new OTP( $args ) )->update();
+
+                return;
+            }
+        }
     }
 }
 

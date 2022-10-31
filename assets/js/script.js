@@ -232,7 +232,7 @@ jQuery(document).ready(function($) {
              */
             $(function() {
                 var target = "#videoAutoplay video"
-                if ($(window).scrollTop() > $(target).outerHeight()) {
+                if ($(window).scrollTop() > $(window).height()) {
                     $(target).get(0).pause()
                 } else {
                     if ($(target).get(0).currentTime != 0 && $(target).get(0).currentTime != $(target).get(0).duration) {
