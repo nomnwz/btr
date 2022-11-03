@@ -1,6 +1,6 @@
 /*
 * Theme Name: BTR
-* Version: 1.2.2
+* Version: 1.2.3
 * Author: CodeIcon
 * Text Domain: btr
 */
@@ -459,6 +459,10 @@ header {
 h2.section-heading {
     font-size: 2rem;
     letter-spacing: 1.2px;
+}
+
+.rtl .wpcf7 form .wpcf7-response-output {
+    direction: rtl;
 }
 
 @media (min-width: 576px) {
