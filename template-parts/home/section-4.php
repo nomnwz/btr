@@ -9,7 +9,7 @@
     </div>
     <div class="col-12 col-md-6 d-flex px-0 position-relative">
         <div class="section-content">
-            <ul class="content-list list-group ps-0">
+            <ul class="content-list list-group <?php echo ( is_rtl() ? 'pe-0' : 'ps-0' ); ?>">
                 <li class="content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0 border-bottom border-light">
                     <p><?php _e( 'Training is tailored for each unique mission & must be completed prior to mission execution.', 'btr' ); ?></p>
                 </li>
