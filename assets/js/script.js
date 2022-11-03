@@ -50,13 +50,21 @@ jQuery(document).ready(function($) {
                         if ($(".otp-container .message").hasClass("text-danger")) {
                             $(".otp-container .message").removeClass("text-danger")
 
-                            $(".otp-container .message").text("Validation error!")
+                            if ($("body").hasClass("rtl")) {
+                                $(".otp-container .message").text("Validation error!")
+                            } else {
+                                $(".otp-container .message").text("خطئ في التحقق!")
+                            }
                         }
 
                         if (!$(".otp-container .message").hasClass("text-success")) {
                             $(".otp-container .message").addClass("text-success")
 
-                            $(".otp-container .message").text("Successfully validated!")
+                            if ($("body").hasClass("rtl")) {
+                                $(".otp-container .message").text("Successfully validated!")
+                            } else {
+                                $(".otp-container .message").text("تم التحقق بنجاح!")
+                            }
                         }
 
                         setTimeout(() => {
@@ -71,7 +79,11 @@ jQuery(document).ready(function($) {
                             $(".otp-container .message").addClass("text-danger")
                         }
 
-                        $(".otp-container .message").text("Validation error!")
+                        if ($("body").hasClass("rtl")) {
+                            $(".otp-container .message").text("Validation error!")
+                        } else {
+                            $(".otp-container .message").text("خطئ في التحقق!")
+                        }
                     }
                     $(".otp-container .spinner").addClass("d-none")
                 },
