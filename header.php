@@ -30,21 +30,27 @@
                 <div class="header-wrap">
                     <div class="site-branding ps-site" style="z-index:1;"></div>
                     <div class="site-menu site-menu h-100 d-grid" style="z-index:1;">
-                        <div class="language text-black" role="radiogroup" aria-labelledby="languageSwitcher">
-                            <p class="d-none" id="languageSwitcher">Choose a language for this website</p>
-                            <div class="language-container language-container-left language-container-en">
-                                <input class="language-control" type="radio" id="language1" name="language-switch" checked>
-                                <label class="language-label" for="language1">
-                                    EN<span class="d-none"> English</span>
-                                </label>
+                        <?php
+                        if ( function_exists('pll_home_url') ) {
+                            ?>
+                            <div class="language text-black" role="radiogroup" aria-labelledby="languageSwitcher">
+                                <p class="d-none" id="languageSwitcher">Choose a language for this website</p>
+                                <div class="language-container language-container-left language-container-en">
+                                    <input class="language-control" type="radio" id="language1" name="language-switch" <?php checked( pll_current_language(), 'en', true ); ?>>
+                                    <label class="language-label" for="language1">
+                                        <a href="<?php echo pll_home_url( 'en' ); ?>">EN<span class="d-none"> English</span></a>
+                                    </label>
+                                </div>
+                                <div class="language-container language-container-right language-container-ar">
+                                    <input class="language-control" type="radio" id="language2" name="language-switch" <?php checked( pll_current_language(), 'ar', true ); ?>>
+                                    <label class="language-label" for="language2">
+                                    <a href="<?php echo pll_home_url( 'ar' ); ?>">AR<span class="d-none"> العربية</span></a>
+                                    </label>
+                                </div>
                             </div>
-                            <div class="language-container language-container-right language-container-ar">
-                                <input class="language-control" type="radio" id="language2" name="language-switch">
-                                <label class="language-label" for="language2">
-                                    AR<span class="d-none"> العربية</span>
-                                </label>
-                            </div>
-                        </div>
+                            <?php
+                        }
+                        ?>
                     </div>
                 </div>
             </header>

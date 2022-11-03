@@ -1,6 +1,6 @@
 /*
 * Theme Name: BTR
-* Version: 1.2.1
+* Version: 1.2.2
 * Author: CodeIcon
 * Text Domain: btr
 */
@@ -372,6 +372,10 @@ header {
 .language-control:checked:focus + .language-label {
     z-index: 2;
     box-shadow: 0 0 8px #85bffd;
+}
+
+.language-label a {
+    color: unset;
 }
 
 #videoAutoplay {
