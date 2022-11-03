@@ -11,7 +11,7 @@
                 ?>
             </div>
             <div class="col-md-3 text-center">
-                <ul class="list-unstyled mb-0">
+                <ul class="list-unstyled mb-0 px-0">
                     <li>
                         <i class="fas fa-envelope mt-4 fa-2x"></i>
                         <p><?php echo btr_get_contact_email(); ?></p>
