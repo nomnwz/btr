@@ -31,7 +31,7 @@
                     <div class="site-branding ps-site" style="z-index:1;"></div>
                     <div class="site-menu site-menu h-100 d-grid" style="z-index:1;">
                         <?php
-                        if ( function_exists('pll_home_url') ) {
+                        if ( function_exists( 'pll_home_url' ) ) {
                             ?>
                             <div class="language text-black" role="radiogroup" aria-labelledby="languageSwitcher">
                                 <p class="d-none" id="languageSwitcher">Choose a language for this website</p>

@@ -5,7 +5,10 @@
     <div class="section-content animate-it w-100">
         <div class="row">
             <div class="col-md-9 mb-md-0 mb-5">
-                <?php echo do_shortcode( '[contact-form-7 id="122" title="Contact form 1"]' ); ?>
+                <?php
+                $form_id = function_exists( 'pll_home_url' ) ? ( pll_current_language() == 'ar' ? '132' : '122' ) : '122';
+                echo do_shortcode( '[contact-form-7 id="' . $form_id . '" title="Contact form 1"]' );
+                ?>
             </div>
             <div class="col-md-3 text-center">
                 <ul class="list-unstyled mb-0">
