@@ -11,22 +11,22 @@
         <div class="section-content">
             <ul class="content-list list-group ps-0">
                 <li class="content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0 border-bottom border-light">
-                    <p><?php _e( 'Missions and training are demanding, clients must be ready', 'btr' ); ?></p>
+                    <p><?php _e( 'Missions and training are demanding, clients must be ready.', 'btr' ); ?></p>
                 </li>
                 <li class="content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0 border-bottom border-light">
-                    <p><?php _e( 'Comprehensive medical physical required', 'btr' ); ?></p>
+                    <p><?php _e( 'Comprehensive medical physical required.', 'btr' ); ?></p>
                 </li>
                 <li class="content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0 border-bottom border-light">
-                    <p><?php _e( 'Comprehensive psychological stability assessment required', 'btr' ); ?></p>
+                    <p><?php _e( 'Comprehensive psychological stability assessment required.', 'btr' ); ?></p>
                 </li>
                 <li class="content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0 border-bottom border-light">
-                    <p><?php _e( 'Not all applicants are selected', 'btr' ); ?></p>
+                    <p><?php _e( 'Not all applicants are selected.', 'btr' ); ?></p>
                 </li>
                 <li class="content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0 border-bottom border-light">
-                    <p><?php _e( 'Not all successful applicants are approved for all missions', 'btr' ); ?></p>
+                    <p><?php _e( 'Not all successful applicants are approved for all missions.', 'btr' ); ?></p>
                 </li>
                 <li class="content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0">
-                    <p><?php _e( 'This is not a game...', 'btr' ); ?></p>
+                    <p><?php _e( 'This is not a game.', 'btr' ); ?></p>
                 </li>
             </ul>
         </div>

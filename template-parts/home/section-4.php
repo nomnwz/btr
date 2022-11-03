@@ -11,16 +11,16 @@
         <div class="section-content">
             <ul class="content-list list-group ps-0">
                 <li class="content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0 border-bottom border-light">
-                    <p><?php _e( 'Training is tailored for each unique mission & must be completed prior to mission execution', 'btr' ); ?></p>
+                    <p><?php _e( 'Training is tailored for each unique mission & must be completed prior to mission execution.', 'btr' ); ?></p>
                 </li>
                 <li class="content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0 border-bottom border-light">
-                    <p><?php _e( 'Training is conducted globally; locations are mission dependent', 'btr' ); ?></p>
+                    <p><?php _e( 'Training is conducted globally; locations are mission dependent.', 'btr' ); ?></p>
                 </li>
                 <li class="content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0 border-bottom border-light">
-                    <p><?php _e( 'Training regimes can be more intense than actual mission scenarios', 'btr' ); ?></p>
+                    <p><?php _e( 'Training regimes can be more intense than actual mission scenarios.', 'btr' ); ?></p>
                 </li>
                 <li class="content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0 border-bottom border-light">
-                    <p><?php _e( 'Training cycles are generally longer than actual mission scenarios and are completed 30 – 90 days prior to mission execution', 'btr' ); ?></p>
+                    <p><?php _e( 'Training cycles are generally longer than actual mission scenarios and are completed 30 – 90 days prior to mission execution.', 'btr' ); ?></p>
                 </li>
                 <li class="content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0">
                     <p><?php _e( 'Skills are fully transferable to the real world.', 'btr' ); ?></p>
