@@ -51,9 +51,9 @@ jQuery(document).ready(function($) {
                             $(".otp-container .message").removeClass("text-danger")
 
                             if ($("body").hasClass("rtl")) {
-                                $(".otp-container .message").text("Validation error!")
-                            } else {
                                 $(".otp-container .message").text("خطئ في التحقق!")
+                            } else {
+                                $(".otp-container .message").text("Validation error!")
                             }
                         }
 
@@ -61,9 +61,9 @@ jQuery(document).ready(function($) {
                             $(".otp-container .message").addClass("text-success")
 
                             if ($("body").hasClass("rtl")) {
-                                $(".otp-container .message").text("Successfully validated!")
-                            } else {
                                 $(".otp-container .message").text("تم التحقق بنجاح!")
+                            } else {
+                                $(".otp-container .message").text("Successfully validated!")
                             }
                         }
 
@@ -80,9 +80,9 @@ jQuery(document).ready(function($) {
                         }
 
                         if ($("body").hasClass("rtl")) {
-                            $(".otp-container .message").text("Validation error!")
-                        } else {
                             $(".otp-container .message").text("خطئ في التحقق!")
+                        } else {
+                            $(".otp-container .message").text("Validation error!")
                         }
                     }
                     $(".otp-container .spinner").addClass("d-none")
