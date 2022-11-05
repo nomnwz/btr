@@ -124,6 +124,14 @@ jQuery(document).ready(function($) {
             videoAutoplayHeight()
         })
 
+        $("#videoAutoplay video").on("timeupdate", function(e) {
+            if (this.currentTime > 145) {
+                this.pause()
+                this.currentTime = 0
+                $(this).trigger("ended")
+            }
+        })
+
         $("#videoAutoplay video").on("ended", function(e) {
             $("#videoAutoplay .video-reloader").show("slow")
         })
