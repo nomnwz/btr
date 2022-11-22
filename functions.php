@@ -10,6 +10,11 @@ if ( !defined( 'BTR_VERSION' ) ) {
 }
 
 /**
+ * @since 1.3.0
+ */
+$btr_db_version = '1.1';
+
+/**
  * Setup
  */
 add_action( 'after_setup_theme', 'btr_setup' );
@@ -140,11 +145,11 @@ function btr_has_current_user_otp_access() {
     if ( is_user_logged_in() ) return true;
 
     $user_ip    = btr_get_current_user_ip();
-    $otp_exist  = ( new OTP() )->exist( $user_ip, 'user_ip' );
+    $otp_exist  = ( new OTP() )->exist( $user_ip, 'user_ip', 'array' );
     $has_access = false;
     
     if ( $otp_exist ) {
-        $otps = ( new OTP( array( 'user_ip' => $user_ip ) ) )->get_by( 'user_ip' );
+        $otps = ( new OTP( array( 'user_ip' => $user_ip ) ) )->get_by( 'user_ip', 'array' );
         
         foreach ( $otps as $object ) {
             if ( $object->is_accessed && !$object->is_expired ) {
@@ -166,7 +171,7 @@ function btr_give_otp_access( $otp ) {
 
         foreach ( $otps as $object ) {
             if ( !$object->is_accessed && !$object->is_expired ) {
-                $object->user_ip        = $user_ip;
+                $object->user_ip        = btr_str_to_serialized_array( $user_ip, $object->user_ip );
                 $object->is_accessed    = true;
                 $object->accessed_at    = date( 'Y-m-d H:i:s' );
                 $object->expires_at     = date( 'Y-m-d H:i:s', strtotime( '+' . btr_get_otp_access_period() . ' days' ) );
@@ -179,7 +184,7 @@ function btr_give_otp_access( $otp ) {
                     $message    = 'OTP ' . $object->otp . ' was accessed at ' . $object->accessed_at . '. Access details are below:';
                     $message    .= "\n";
                     $message    .= "\n";
-                    $message    .= 'User IP: ' . $object->user_ip;
+                    $message    .= 'User IP: ' . $user_ip;
                     $message    .= "\n";
                     $message    .= 'Expiring at: ' . $object->expires_at;
                     
@@ -196,10 +201,10 @@ function btr_give_otp_access( $otp ) {
 
 function btr_increase_visits() {
     $user_ip    = btr_get_current_user_ip();
-    $otp_exist  = ( new OTP() )->exist( $user_ip, 'user_ip' );
+    $otp_exist  = ( new OTP() )->exist( $user_ip, 'user_ip', 'array' );
 
     if ( $otp_exist ) {
-        $otps   = ( new OTP( array( 'user_ip' => $user_ip ) ) )->get_by( 'user_ip' );
+        $otps   = ( new OTP( array( 'user_ip' => $user_ip ) ) )->get_by( 'user_ip', 'array' );
 
         foreach ( $otps as $object ) {
             if ( $object->is_accessed && !$object->is_expired ) {
@@ -288,4 +293,92 @@ function btr_ajax_increase_visits() {
     btr_increase_visits();
     wp_send_json_success();
     wp_die();
+}
+
+/**
+ * Get database version
+ * 
+ * @since 1.3.0
+ * 
+ * @return string
+ */
+function btr_get_db_version() {
+    $db_version = get_option( 'btr_db_version' );
+
+    if ( !$db_version ) {
+        $db_version = '1.0';
+    }
+
+    return $db_version;
+}
+
+/**
+ * Update database version
+ * 
+ * @since 1.3.0
+ * 
+ * @param string $version
+ * 
+ * @return bool
+ */
+function btr_update_db_version( $version ) {
+    return update_option( 'btr_db_version', $version );
+}
+
+/**
+ * Convert string to serialized array
+ * 
+ * @since 1.3.0
+ * 
+ * @param string $input
+ * @param string $value
+ * 
+ * @return mixed
+ */
+function btr_str_to_serialized_array( $input, $value ) {
+    if ( !empty( $value ) && $value !== '-' ) {
+        $_output    = maybe_unserialize( $value );
+
+        if ( !is_array( $_output ) ) {
+            $output = (array) $input;
+        } else {
+            $output = $_output;
+            
+            if ( !in_array( $input, $output ) && $input !== serialize( $output ) ) {
+                $output[]  = $input;
+            }
+        }
+    } else {
+        $output = (array) $input;
+    }
+
+    return serialize( $output );
+}
+
+/**
+ * Database fix to convert all non-array user ips into array
+ * 
+ * @since 1.3.0
+ */
+add_action( 'init', 'btr_database_fix' );
+function btr_database_fix() {
+    global $wpdb, $btr_db_version;
+
+    if ( $btr_db_version > btr_get_db_version() ) {
+        $table_name = $wpdb->prefix . 'otps';
+        $result = $wpdb->query( "ALTER TABLE {$table_name} MODIFY user_ip longtext NOT NULL;" );
+    
+        if ( $result ) {
+            $otps = ( new OTP() )->get_all();
+
+            foreach ( $otps as $otp ) {
+                $user_ip        = ( $otp->user_ip == '-' ) ? array() : $otp->user_ip;
+                $otp->user_ip   = btr_str_to_serialized_array( $user_ip, $otp->user_ip );
+                $args           = (array) $otp;
+                $otp_id         = ( new OTP( $args ) )->update();
+            }
+
+            btr_update_db_version( $btr_db_version );
+        }
+    }
 }

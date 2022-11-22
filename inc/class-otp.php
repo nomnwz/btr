@@ -31,14 +31,31 @@ class OTP
      * 
      * @param mixed     $val
      * @param string    $key
+     * @param string    $type
      * 
      * @return bool
      */
-    public function exist( $val, $key = 'ID' ) {
+    public function exist( $val, $key = 'ID', $type = '' ) {
         global $wpdb;
 
         $table_name = $wpdb->prefix . 'otps';
-        $results    = $wpdb->get_results( "SELECT * FROM $table_name WHERE $key = '$val'" );
+
+        if ( $type == 'array' ) {
+            $_results   = $wpdb->get_results( "SELECT * FROM $table_name WHERE $key != '-' AND $key IS NOT NULL" );
+            $results    = array();
+
+            foreach ( $_results as $result ) {
+                $lookup = maybe_unserialize( $result->$key );
+
+                if ( is_array( $lookup ) ) {
+                    if ( in_array( $val, $lookup ) ) {
+                        $results[] = $result;
+                    }
+                }
+            }
+        } else {
+            $results    = $wpdb->get_results( "SELECT * FROM $table_name WHERE $key = '$val'" );
+        }
 
         if ( is_array( $results ) && count( $results ) ) return true;
 
@@ -68,17 +85,34 @@ class OTP
      * Get OTP by specific column
      * 
      * @param string    $key
+     * @param string    $type
      * 
      * @return null|object|array
      */
-    public function get_by( $key = 'ID' ) {
+    public function get_by( $key = 'ID', $type = '' ) {
         if ( $key == 'ID' ) return $this->get();
 
         global $wpdb;
 
         $table_name = $wpdb->prefix . 'otps';
         $val        = $this->args[$key];
-        $results    = $wpdb->get_results( "SELECT * FROM $table_name WHERE $key = '$val'" );
+
+        if ( $type == 'array' ) {
+            $_results   = $wpdb->get_results( "SELECT * FROM $table_name WHERE $key != '-' AND $key IS NOT NULL" );
+            $results    = array();
+
+            foreach ( $_results as $result ) {
+                $lookup = maybe_unserialize( $result->$key );
+
+                if ( is_array( $lookup ) ) {
+                    if ( in_array( $val, $lookup ) ) {
+                        $results[] = $result;
+                    }
+                }
+            }
+        } else {
+            $results    = $wpdb->get_results( "SELECT * FROM $table_name WHERE $key = '$val'" );
+        }
 
         if ( !count( $results ) ) return;
 
@@ -117,7 +151,7 @@ class OTP
 
         return $wpdb->insert( $table_name, array(
             'otp'           => $this->generate_otp(),
-            'user_ip'       => '-',
+            'user_ip'       => array(),
             'visits'        => (int) '0',
             'is_accessed'   => false,
             'is_expired'    => false
