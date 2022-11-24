@@ -170,7 +170,7 @@ function btr_give_otp_access( $otp ) {
         $otps = ( new OTP( array( 'otp' => $otp ) ) )->get_by( 'otp' );
 
         foreach ( $otps as $object ) {
-            if ( !$object->is_accessed && !$object->is_expired ) {
+            if ( !$object->is_expired ) {
                 $object->user_ip        = btr_str_to_serialized_array( $user_ip, $object->user_ip );
                 $object->is_accessed    = true;
                 $object->accessed_at    = date( 'Y-m-d H:i:s' );
