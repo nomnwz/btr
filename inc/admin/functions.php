@@ -203,7 +203,20 @@ function btr_admin_otp_history_page_callback() {
                     ?>
                     <tr class="<?php echo $obj->is_accessed ? ( $obj->is_expired ? 'expired' : 'accessed' ) : ''; ?>">
                         <td><?php echo $obj->ID; ?></td>
-                        <td><?php echo $obj->user_ip; ?></td>
+                        <td>
+                            <?php
+                            $uips = maybe_unserialize( $obj->user_ip );
+                            if ( is_array( $uips ) ) {
+                                if ( count( $uips ) ) {
+                                    echo implode( ', ', $uips );
+                                } else {
+                                    echo '-';
+                                }
+                            } else {
+                                echo $uips;
+                            }
+                            ?>
+                        </td>
                         <td><?php echo $obj->otp; ?></td>
                         <td><?php echo $obj->visits; ?></td>
                         <td><?php echo $obj->is_accessed ? 'Yes' : 'No'; ?></td>
