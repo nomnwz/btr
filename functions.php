@@ -12,7 +12,7 @@ if ( !defined( 'BTR_VERSION' ) ) {
 /**
  * @since 1.3.0
  */
-$btr_db_version = '1.1';
+$btr_db_version = '1.3.1';
 
 /**
  * Setup
