@@ -7,7 +7,7 @@
             <div class="col-md-9 mb-md-0 mb-5">
                 <?php
                 $form_id = function_exists( 'pll_home_url' ) ? ( pll_current_language() == 'ar' ? '132' : '122' ) : '122';
-                echo do_shortcode( '[contact-form-7 id="' . $form_id . '" title="Contact form 1"]' );
+                echo do_shortcode( '[contact-form-7 id="' . $form_id . '" title="Contact us"]' );
                 ?>
             </div>
             <div class="col-md-3 text-center">

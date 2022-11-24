@@ -240,6 +240,24 @@ function btr_otp_form() {
                     <button class="btn btn-danger px-4 validate"><?php _e( 'Continue', 'btr' ); ?></button> <span class="spinner ms-2 d-none"><i class="fas fa-spinner fa-spin"></i></span>
                     <p class="mt-2 message"></p>
                 </div>
+                <span class="cursor-pointer" role="button" data-bs-toggle="modal" data-bs-target="#requestNewTAC"><?php _e( 'Having trouble logging in with your TAC?', 'btr' ); ?></span>
+            </div>
+            <div class="modal fade" tabindex="-1" id="requestNewTAC" aria-labelledby="requestNewTACLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content bg-black text-light border-light box-shadow">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="requestNewTACLabel"><?php _e( 'Request new TAC', 'btr' ); ?></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p><?php _e( 'We regret any problems you may be experiencing with your Temporary Access Code (TAC). Please provide the information below and we will send you a new TAC as soon as possible.', 'btr' ); ?></p>
+                            <?php
+                            $form_id = function_exists( 'pll_home_url' ) ? ( pll_current_language() == 'ar' ? '135' : '134' ) : '134';
+                            echo do_shortcode( '[contact-form-7 id="' . $form_id . '" title="Request new TAC"]' );
+                            ?>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
