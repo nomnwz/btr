@@ -301,7 +301,7 @@ function btr_admin_generate_otps() {
     if ( !$otp_id ) {
         $otp_id = ( new OTP( array(
             'otp'       => $otp,
-            'user_ip'   => '-'
+            'user_ip'   => serialize( array() )
         ) ) )->create();
     
         return $otp_id;

@@ -151,7 +151,7 @@ class OTP
 
         return $wpdb->insert( $table_name, array(
             'otp'           => $this->generate_otp(),
-            'user_ip'       => array(),
+            'user_ip'       => serialize( array() ),
             'visits'        => (int) '0',
             'is_accessed'   => false,
             'is_expired'    => false
