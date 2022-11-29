@@ -22,8 +22,11 @@
                 <li class="content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0 border-bottom border-light">
                     <p><?php _e( 'Training cycles are generally longer than actual mission scenarios and are completed 30 – 90 days prior to mission execution.', 'btr' ); ?></p>
                 </li>
-                <li class="content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0">
+                <li class="content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0 border-bottom border-light">
                     <p><?php _e( 'Skills are fully transferable to the real world.', 'btr' ); ?></p>
+                </li>
+                <li class="content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0">
+                    <p><?php _e( 'Formal Certificates of Training awarded to successful candidates.', 'btr' ); ?></p>
                 </li>
             </ul>
         </div>

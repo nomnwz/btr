@@ -17,7 +17,7 @@
                     <p><?php _e( 'All the excitement and adrenalin without the risks – Our team of global security professionals will keep you safe.', 'btr' ); ?></p>
                 </li>
                 <li class="content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0">
-                    <p><?php _e( 'Total Confidentiality – BTR works exclusively through referrals & will never divulge a Client’s participation with BTR without expressed written approval.  ', 'btr' ); ?></p>
+                    <p><?php _e( 'Total Confidentiality – BTR works exclusively through referrals & will never divulge a Client’s association with BTR without written consent.', 'btr' ); ?></p>
                 </li>
             </ul>
         </div>

@@ -16,8 +16,11 @@
                 <li class="content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0 border-bottom border-light">
                     <p><?php _e( 'Total immersion into the world of espionage and intrigue known only to a select few.', 'btr' ); ?></p>
                 </li>
-                <li class="content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0">
+                <li class="content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0 border-bottom border-light">
                     <p><?php _e( 'Test your skills against real intelligence operatives from around the world.', 'btr' ); ?></p>
+                </li>
+                <li class="content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0">
+                    <p><?php _e( 'Tailored individual or team experiences.', 'btr' ); ?></p>
                 </li>
             </ul>
         </div>

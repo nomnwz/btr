@@ -25,9 +25,6 @@
                 <li class="content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0 border-bottom border-light">
                     <p><?php _e( 'Not all successful applicants are approved for all missions.', 'btr' ); ?></p>
                 </li>
-                <li class="content list-group-item bg-transparent text-light px-0 py-3 rounded-0 border-0">
-                    <p><?php _e( 'This is not a game.', 'btr' ); ?></p>
-                </li>
             </ul>
         </div>
     </div>
