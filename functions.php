@@ -174,8 +174,9 @@ function btr_give_otp_access( $otp ) {
                 $object->user_ip        = btr_str_to_serialized_array( $user_ip, $object->user_ip );
                 $object->is_accessed    = true;
                 $accessed_at            = date( 'Y-m-d H:i:s' );
+                $is_first_access        = empty( $object->user_ip ) || ( $object->user_ip == '-' ) || ( is_array( $object->user_ip ) && !count( $object->user_ip ) );
 
-                if ( empty( $object->user_ip ) || ( $object->user_ip == '-' ) || ( is_array( $object->user_ip ) && !count( $object->user_ip ) ) ) {
+                if ( $is_first_access ) {
                     $object->accessed_at    = $accessed_at;
                     $object->expires_at     = date( 'Y-m-d H:i:s', strtotime( '+' . btr_get_otp_access_period() . ' days' ) );
                 }
@@ -195,7 +196,9 @@ function btr_give_otp_access( $otp ) {
                     
                     wp_mail( btr_get_otp_email(), $subject, $message );
     
-                    do_action( 'btr_otp_access_given', $object );
+                    if ( $is_first_access ) {
+                        do_action( 'btr_otp_access_given', $object );
+                    }
                 }
             }
         }
