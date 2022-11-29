@@ -173,15 +173,20 @@ function btr_give_otp_access( $otp ) {
             if ( !$object->is_expired ) {
                 $object->user_ip        = btr_str_to_serialized_array( $user_ip, $object->user_ip );
                 $object->is_accessed    = true;
-                $object->accessed_at    = date( 'Y-m-d H:i:s' );
-                $object->expires_at     = date( 'Y-m-d H:i:s', strtotime( '+' . btr_get_otp_access_period() . ' days' ) );
+                $accessed_at            = date( 'Y-m-d H:i:s' );
+
+                if ( empty( $object->user_ip ) || ( $object->user_ip == '-' ) || ( is_array( $object->user_ip ) && !count( $object->user_ip ) ) ) {
+                    $object->accessed_at    = $accessed_at;
+                    $object->expires_at     = date( 'Y-m-d H:i:s', strtotime( '+' . btr_get_otp_access_period() . ' days' ) );
+                }
+
                 $args                   = (array) $object;
                 $otp_id                 = ( new OTP( $args ) )->update();
         
                 if ( $otp_id ) {
                     $given      = true;
                     $subject    = 'OTP ' . $object->otp . ' accessed';
-                    $message    = 'OTP ' . $object->otp . ' was accessed at ' . $object->accessed_at . '. Access details are below:';
+                    $message    = 'OTP ' . $object->otp . ' was accessed at ' . $accessed_at . '. Access details are below:';
                     $message    .= "\n";
                     $message    .= "\n";
                     $message    .= 'User IP: ' . $user_ip;
