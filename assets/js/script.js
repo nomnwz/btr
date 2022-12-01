@@ -1,8 +1,15 @@
-jQuery(document).ready(function($) {
-    $(function() {
-        $(window).scrollTop(0)
-    })
+// Reset scroll top
+history.scrollRestoration = "manual";
+jQuery(window).on("load", function() {
+    jQuery(window).scrollTop(0, 0)
 
+    if (jQuery("#videoAutoplay").length) {
+        jQuery("#videoAutoplay video").get(0).currentTime = 0
+        jQuery("#videoAutoplay video").get(0).pause()
+    }
+})
+
+jQuery(document).ready(function($) {
     /**
      * Splash
      */
