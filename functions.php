@@ -299,15 +299,22 @@ function btr_ajax_validate_otp() {
 
 add_action( 'btr_otp_access_given', 'btr_schedule_otp_expiry' );
 function btr_schedule_otp_expiry( $object ) {
-    wp_schedule_single_event( strtotime( $object->expires_at ), 'btr_otp_expire', array( $object ) );
+    wp_schedule_event( strtotime( $object->expires_at ), 'hourly', 'btr_otp_expire', array( $object ) );
 }
 
 add_action( 'btr_otp_expire', 'btr_otp_expire' );
 function btr_otp_expire( $object ) {
-    $object->is_expired = true;
-    $args               = (array) $object;
+    if ( !$object->is_expired ) {
+        $_object            = $object;
+        $object->is_expired = true;
+        $args               = (array) $object;
+    
+        $updated            = ( new OTP( $args ) )->update();
 
-    ( new OTP( $args ) )->update();
+        if ( $updated ) {
+            wp_unschedule_event( wp_next_scheduled( 'btr_otp_expire', array( $_object ) ), 'btr_otp_expire', array( $_object ) );
+        }
+    }
 }
 
 /**
