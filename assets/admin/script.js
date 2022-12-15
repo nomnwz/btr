@@ -70,6 +70,9 @@ jQuery(document).ready(function($) {
     $(function() {
         var otpExp = $(".btr-expire-otp")
         otpExp.on("click", function(e) {
+            let confirmed = confirm("Do you really want to delete the otp?")
+            if (!confirmed) return
+            
             e.preventDefault()
             var otpId = parseInt($(this).attr("data-id"))
             if (otpId) {
