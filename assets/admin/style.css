@@ -102,6 +102,17 @@ input:checked + .btr-slider:before {
     text-decoration: line-through;
 }
 
+.btr-table tr .btr-spinner {
+    display: inline-block;
+    margin-top: 6px;
+    background: #fff;
+    margin-left: 4px;
+}
+
+.btr-table tr .btr-spinner:after {
+    background: #808080;
+}
+
 .btr-message {
     font-size: 16px;
     font-weight: 600;

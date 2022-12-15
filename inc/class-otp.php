@@ -149,13 +149,15 @@ class OTP
 
         $table_name = $wpdb->prefix . 'otps';
 
-        return $wpdb->insert( $table_name, array(
+        $wpdb->insert( $table_name, array(
             'otp'           => $this->generate_otp(),
             'user_ip'       => serialize( array() ),
             'visits'        => (int) '0',
             'is_accessed'   => false,
             'is_expired'    => false
         ) );
+
+        return $wpdb->insert_id;
     }
 
     /**
@@ -175,7 +177,7 @@ class OTP
         $table_name = $wpdb->prefix . 'otps';
         $object     = $this->get();
 
-        return $wpdb->update( $table_name, array(
+        $updated    = $wpdb->update( $table_name, array(
             'otp'           => $object->otp,
             'user_ip'       => isset( $this->args['user_ip'] ) ? $this->args['user_ip'] : $object->user_ip,
             'visits'        => isset( $this->args['visits'] ) ? $this->args['visits'] : $object->visits,
@@ -184,6 +186,8 @@ class OTP
             'accessed_at'   => isset( $this->args['accessed_at'] ) ? $this->args['accessed_at'] : $object->accessed_at,
             'expires_at'    => isset( $this->args['expires_at'] ) ? $this->args['expires_at'] : $object->expires_at
         ), array( 'ID' => $this->args['ID'] ) );
+
+        return false === $updated ? false : $this->args['ID'];
     }
 
     /**
@@ -200,9 +204,11 @@ class OTP
 
         $table_name = $wpdb->prefix . 'otps';
 
-        return $wpdb->delete( $table_name, array(
+        $deleted    = $wpdb->delete( $table_name, array(
             'ID' => $this->args['ID']
         ) );
+
+        return false === $deleted ? false : $this->args['ID'];
     }
 
     /**

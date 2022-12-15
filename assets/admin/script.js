@@ -63,4 +63,39 @@ jQuery(document).ready(function($) {
             }
         })
     })
+
+    /**
+     * OTP Expire
+     */
+    $(function() {
+        var otpExp = $(".btr-expire-otp")
+        otpExp.on("click", function(e) {
+            e.preventDefault()
+            var otpId = parseInt($(this).attr("data-id"))
+            if (otpId) {
+                $("<div class='btr-spinner'></div>").insertAfter(this)
+                $.ajax({
+                    type: "post",
+                    dataType: "json",
+                    url: wp_obj.ajax_url,
+                    data: {
+                        action: "btr_otp_expire",
+                        otp_id: otpId
+                    },
+                    success: (res) => {
+                        console.log(res)
+                        if (res.success) {
+                            setTimeout(() => {
+                                location.reload()
+                            }, 500)
+                        }
+                        $(this).parent().children(".btr-spinner").remove()
+                    },
+                    error: (err) => {
+                        $(this).parent().children(".btr-spinner").remove()
+                    }
+                })
+            }
+        })
+    })
 })

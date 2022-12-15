@@ -196,6 +196,7 @@ function btr_admin_otp_history_page_callback() {
                 <th>Created at</th>
                 <th>Accessed at</th>
                 <th>Expires at</th>
+                <th>Trigger</th>
             </tr>
             <?php
             if ( $otps ) {
@@ -224,6 +225,15 @@ function btr_admin_otp_history_page_callback() {
                         <td><?php echo $obj->created_at; ?></td>
                         <td><?php echo $obj->accessed_at; ?></td>
                         <td><?php echo $obj->expires_at; ?></td>
+                        <td>
+                            <?php
+                            if ( $obj->is_accessed && !$obj->is_expired ) {
+                                ?>
+                                <button class="button button-primary btr-expire-otp" data-id="<?php echo $obj->ID; ?>">Expire It</button>
+                                <?php
+                            }
+                            ?>
+                        </td>
                     </tr>
                     <?php
                 }
@@ -310,6 +320,21 @@ function btr_admin_generate_otps() {
     }
 }
 
+function btr_admin_otp_expire( $otp_id ) {
+    $object = ( new OTP( array( 'ID' => $otp_id ) ) )->get();
+
+    if ( !$object->is_expired ) {
+        $object->is_expired = true;
+        $args               = (array) $object;
+    
+        $updated            = ( new OTP( $args ) )->update();
+
+        if ( $updated ) {
+            wp_clear_scheduled_hook( 'btr_otp_expire', array( $otp_id ) );
+        }
+    }
+}
+
 add_action( 'wp_ajax_btr_generate_otps', 'btr_admin_ajax_generate_otps' );
 function btr_admin_ajax_generate_otps() {
     $otp_count  = isset( $_POST['otp_count'] ) ? (int) $_POST['otp_count'] : 0;
@@ -339,4 +364,20 @@ function btr_admin_ajax_generate_otps() {
     }
 
     wp_die();
-} 
+}
+
+add_action( 'wp_ajax_btr_otp_expire', 'btr_admin_ajax_otp_expire' );
+function btr_admin_ajax_otp_expire() {
+    $otp_id     = isset( $_POST['otp_id'] ) ? (int) $_POST['otp_id'] : 0;
+    $otp_exist  = ( new OTP() )->exist( $otp_id );
+
+    if ( $otp_id && $otp_exist ) {
+        btr_admin_otp_expire( $otp_id );
+
+        wp_send_json_success();
+    } else {
+        wp_send_json_error();
+    }
+
+    wp_die();
+}

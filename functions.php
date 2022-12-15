@@ -171,10 +171,10 @@ function btr_give_otp_access( $otp ) {
 
         foreach ( $otps as $object ) {
             if ( !$object->is_expired ) {
+                $is_first_access        = empty( $object->user_ip ) || ( $object->user_ip == '-' ) || ( is_array( maybe_unserialize( $object->user_ip ) ) && !count( maybe_unserialize( $object->user_ip ) ) );
                 $object->user_ip        = btr_str_to_serialized_array( $user_ip, $object->user_ip );
                 $object->is_accessed    = true;
                 $accessed_at            = date( 'Y-m-d H:i:s' );
-                $is_first_access        = empty( $object->user_ip ) || ( $object->user_ip == '-' ) || ( is_array( $object->user_ip ) && !count( $object->user_ip ) );
 
                 if ( $is_first_access ) {
                     $object->accessed_at    = $accessed_at;
@@ -197,7 +197,7 @@ function btr_give_otp_access( $otp ) {
                     wp_mail( btr_get_otp_email(), $subject, $message );
     
                     if ( $is_first_access ) {
-                        do_action( 'btr_otp_access_given', $object );
+                        do_action( 'btr_otp_first_access_given', (int) $otp_id, $object->expires_at );
                     }
                 }
             }
@@ -297,22 +297,27 @@ function btr_ajax_validate_otp() {
     wp_die();
 }
 
-add_action( 'btr_otp_access_given', 'btr_schedule_otp_expiry' );
-function btr_schedule_otp_expiry( $object ) {
-    wp_schedule_event( strtotime( $object->expires_at ), 'hourly', 'btr_otp_expire', array( $object ) );
+add_action( 'btr_otp_first_access_given', 'btr_schedule_otp_expiry', 10, 2 );
+function btr_schedule_otp_expiry( $otp_id, $expires_at ) {
+    wp_schedule_event( strtotime( $expires_at ), 'hourly', 'btr_otp_expire', array( $otp_id ) );
 }
 
 add_action( 'btr_otp_expire', 'btr_otp_expire' );
-function btr_otp_expire( $object ) {
-    if ( !$object->is_expired ) {
-        $_object            = $object;
-        $object->is_expired = true;
-        $args               = (array) $object;
-    
-        $updated            = ( new OTP( $args ) )->update();
+function btr_otp_expire( $otp_id ) {
+    if ( is_admin() ) {
+        btr_admin_otp_expire( $otp_id );
+    } else {
+        $object = ( new OTP( array( 'ID' => $otp_id ) ) )->get();
 
-        if ( $updated ) {
-            wp_unschedule_event( wp_next_scheduled( 'btr_otp_expire', array( $_object ) ), 'btr_otp_expire', array( $_object ) );
+        if ( !$object->is_expired ) {
+            $object->is_expired = true;
+            $args               = (array) $object;
+        
+            $updated            = ( new OTP( $args ) )->update();
+    
+            if ( $updated ) {
+                wp_clear_scheduled_hook( 'btr_otp_expire', array( $otp_id ) );
+            }
         }
     }
 }
